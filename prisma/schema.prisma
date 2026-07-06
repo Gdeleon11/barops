@@ -269,6 +269,7 @@ model Recipe {
   id        String       @id @default(cuid())
   branchId  String
   name      String
+  category  String?
   yield     String?
   salePrice Float        @default(0)
   createdAt DateTime     @default(now())

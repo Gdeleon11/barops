@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { currentBranchId } from "@/lib/session";
 import { Card, Badge, money } from "@/components/ui";
-import { EntityForm } from "./_shared";
+import RecipeForm from "./recipe-form";
 
 export default async function Recetas() {
   const branchId = await currentBranchId();
@@ -9,18 +9,9 @@ export default async function Recetas() {
 
   return (
     <div className="p-5 lg:p-6">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <p className="text-sm text-on-surface-variant">{recipes.length} recetas / escandallos</p>
-        <EntityForm
-          endpoint="/api/x/recipe"
-          title="Nueva receta"
-          submitLabel="Crear"
-          fields={[
-            { name: "name", label: "Nombre", required: true, placeholder: "Margarita Clásica" },
-            { name: "yield", label: "Rendimiento", placeholder: "1 copa" },
-            { name: "salePrice", label: "Precio venta", type: "number", def: 0 },
-          ]}
-        />
+        <RecipeForm />
       </div>
       <div className="grid gap-3 lg:grid-cols-2">
         {recipes.map((r: any) => {
@@ -31,7 +22,10 @@ export default async function Recetas() {
             <Card key={r.id} className="p-4">
               <div className="mb-2 flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-on-surface">{r.name}</p>
+                  <p className="flex items-center gap-2 font-medium text-on-surface">
+                    {r.name}
+                    {r.category && <Badge tone="primary">{r.category}</Badge>}
+                  </p>
                   <p className="text-xs text-on-surface-variant">{r.yield || "—"}</p>
                 </div>
                 <Badge tone={foodCostPct <= 30 ? "secondary" : foodCostPct <= 40 ? "tertiary" : "error"}>

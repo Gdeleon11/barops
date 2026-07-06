@@ -18,15 +18,6 @@ export default function MockupPage({ params }: { params: { slug: string } }) {
             <span className="material-symbols-outlined text-primary">{item.icon}</span>
             <h1 className="font-display text-lg font-semibold text-on-surface">{item.title}</h1>
           </div>
-          <a
-            href={`/mockups/${item.slug}.html`}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1 rounded-lg bg-surface-container px-3 py-1.5 text-xs text-on-surface-variant hover:text-on-surface"
-          >
-            <span className="material-symbols-outlined text-[16px]">palette</span>
-            Ver diseño original
-          </a>
         </div>
         <div className="flex-1 overflow-y-auto">
           <Screen />

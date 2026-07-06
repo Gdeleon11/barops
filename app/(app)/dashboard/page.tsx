@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { currentBranchId } from "@/lib/session";
-import { PageHeader, StatCard, Card, Badge, money } from "@/components/ui";
+import { PageHeader, StatCard, Card, Badge, money, ORDER_STATUS_ES } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
                       <td className="py-2 font-mono text-on-surface">#{o.number}</td>
                       <td className="text-on-surface-variant">{o.table?.name ?? "—"}</td>
                       <td className="text-on-surface-variant">{o.waiter?.name ?? "—"}</td>
-                      <td><Badge tone={statusTone[o.status] ?? "surface"}>{o.status}</Badge></td>
+                      <td><Badge tone={statusTone[o.status] ?? "surface"}>{ORDER_STATUS_ES[o.status] ?? o.status}</Badge></td>
                       <td className="text-right font-medium text-on-surface">{money(o.total)}</td>
                     </tr>
                   ))}

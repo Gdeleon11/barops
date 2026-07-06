@@ -92,3 +92,8 @@ export function EmptyLink({ href, label }: { href: string; label: string }) {
     </Link>
   );
 }
+
+export const ORDER_STATUS_ES: Record<string, string> = {
+  OPEN: "Abierta", SENT: "En cocina", PREPARING: "Preparando",
+  READY: "Lista", SERVED: "Servida", PAID: "Pagada", CANCELLED: "Cancelada",
+};

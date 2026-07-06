@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { currentBranchId } from "@/lib/session";
-import { Card, Badge, StatCard, money } from "@/components/ui";
+import { Card, Badge, StatCard, money, ORDER_STATUS_ES } from "@/components/ui";
 import { RefreshButton } from "./_shared";
 
 export default async function MonitoreoCaja() {
@@ -35,7 +35,7 @@ export default async function MonitoreoCaja() {
                 <td className="text-on-surface-variant">{new Date(o.createdAt).toLocaleTimeString("es-MX", { timeStyle: "short" })}</td>
                 <td className="text-on-surface-variant">{o.table?.name ?? "—"}</td>
                 <td className="text-on-surface-variant">{o.waiter?.name ?? "—"}</td>
-                <td><Badge tone={o.status === "PAID" ? "secondary" : "primary"}>{o.status}</Badge></td>
+                <td><Badge tone={o.status === "PAID" ? "secondary" : "primary"}>{ORDER_STATUS_ES[o.status] ?? o.status}</Badge></td>
                 <td className="text-right font-medium text-on-surface">{money(o.total)}</td>
               </tr>
             ))}
