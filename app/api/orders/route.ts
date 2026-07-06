@@ -85,3 +85,16 @@ export async function GET() {
   });
   return NextResponse.json({ orders });
 }
+
+export async function PATCH(req: Request) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  const branchId = await currentBranchId();
+  const { id, status } = await req.json();
+  const ok = ["OPEN","SENT","PREPARING","READY","SERVED","PAID","CANCELLED"].includes(status);
+  if (!id || !ok) return NextResponse.json({ error: "Datos inválidos" }, { status: 400 });
+  const existing = await prisma.order.findFirst({ where: { id, branchId } });
+  if (!existing) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
+  const order = await prisma.order.update({ where: { id }, data: { status } });
+  return NextResponse.json({ ok: true, order });
+}

@@ -220,3 +220,146 @@ model Shift {
   salesTotal  Float    @default(0)
   notes       String?
 }
+
+// ---- Extended operational models (scalar FKs to keep it simple) ----
+
+model WaitlistEntry {
+  id         String   @id @default(cuid())
+  branchId   String
+  name       String
+  partySize  Int      @default(2)
+  phone      String?
+  quotedWait Int      @default(15)
+  status     String   @default("WAITING") // WAITING | SEATED | CANCELLED
+  createdAt  DateTime @default(now())
+}
+
+model Supplier {
+  id       String  @id @default(cuid())
+  branchId String
+  name     String
+  contact  String?
+  phone    String?
+  email    String?
+  category String?
+}
+
+model PurchaseOrder {
+  id           String         @id @default(cuid())
+  branchId     String
+  supplierName String
+  number       Int
+  status       String         @default("DRAFT") // DRAFT | SENT | RECEIVED
+  total        Float          @default(0)
+  createdAt    DateTime       @default(now())
+  items        PurchaseItem[]
+}
+
+model PurchaseItem {
+  id              String        @id @default(cuid())
+  purchaseOrderId String
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  name            String
+  qty             Float         @default(1)
+  unit            String        @default("unidad")
+  cost            Float         @default(0)
+}
+
+model Recipe {
+  id        String       @id @default(cuid())
+  branchId  String
+  name      String
+  yield     String?
+  salePrice Float        @default(0)
+  createdAt DateTime     @default(now())
+  items     RecipeItem[]
+}
+
+model RecipeItem {
+  id         String @id @default(cuid())
+  recipeId   String
+  recipe     Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient String
+  qty        Float  @default(0)
+  unit       String @default("ml")
+  cost       Float  @default(0)
+}
+
+model Device {
+  id        String   @id @default(cuid())
+  branchId  String
+  name      String
+  type      String   @default("POS") // POS | KDS | PRINTER | ROUTER | AP | TABLET
+  ip        String?
+  status    String   @default("ONLINE") // ONLINE | OFFLINE | WARNING
+  firmware  String   @default("1.0.0")
+  latencyMs Int      @default(0)
+  uptime    Float    @default(100)
+  lastSeen  DateTime @default(now())
+}
+
+model MaintenanceTask {
+  id         String   @id @default(cuid())
+  branchId   String
+  deviceName String
+  task       String
+  dueDate    DateTime
+  status     String   @default("PENDING") // PENDING | DONE | OVERDUE
+  assignee   String?
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  branchId  String
+  actor     String
+  action    String
+  target    String?
+  severity  String   @default("INFO") // INFO | WARNING | CRITICAL
+  detail    String?
+  createdAt DateTime @default(now())
+}
+
+model Alert {
+  id           String   @id @default(cuid())
+  branchId     String
+  title        String
+  message      String
+  level        String   @default("INFO") // INFO | WARNING | CRITICAL
+  acknowledged Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model Campaign {
+  id        String   @id @default(cuid())
+  branchId  String
+  name      String
+  channel   String   @default("WhatsApp")
+  audience  String   @default("Todos")
+  sent      Int      @default(0)
+  delivered Int      @default(0)
+  opened    Int      @default(0)
+  status    String   @default("DRAFT") // DRAFT | SENT | SCHEDULED
+  createdAt DateTime @default(now())
+}
+
+model PriceRule {
+  id           String  @id @default(cuid())
+  branchId     String
+  name         String
+  categoryName String?
+  discountPct  Float   @default(0)
+  startHour    Int     @default(17)
+  endHour      Int     @default(20)
+  days         String  @default("L-V")
+  active       Boolean @default(true)
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  tenantId  String
+  number    String
+  amount    Float
+  status    String   @default("DUE") // PAID | DUE
+  period    String
+  createdAt DateTime @default(now())
+}

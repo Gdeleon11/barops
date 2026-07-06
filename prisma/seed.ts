@@ -136,6 +136,84 @@ async function main() {
     });
   }
 
+
+  // ---- Extended operational demo data ----
+  await prisma.device.createMany({ data: [
+    { branchId: centro.id, name: "Router Principal", type: "ROUTER", ip: "192.168.1.1", status: "ONLINE", firmware: "2.4.1", latencyMs: 4, uptime: 99.9 },
+    { branchId: centro.id, name: "AP Terraza", type: "AP", ip: "192.168.1.2", status: "ONLINE", firmware: "2.4.1", latencyMs: 9, uptime: 99.2 },
+    { branchId: centro.id, name: "AP Salón", type: "AP", ip: "192.168.1.3", status: "WARNING", firmware: "2.3.0", latencyMs: 38, uptime: 96.5 },
+    { branchId: centro.id, name: "POS Barra 1", type: "POS", ip: "192.168.1.20", status: "ONLINE", firmware: "2.4.1", latencyMs: 12, uptime: 99.5 },
+    { branchId: centro.id, name: "POS Caja", type: "POS", ip: "192.168.1.21", status: "ONLINE", firmware: "2.3.0", latencyMs: 15, uptime: 98.9 },
+    { branchId: centro.id, name: "KDS Cocina", type: "KDS", ip: "192.168.1.30", status: "ONLINE", firmware: "2.4.1", latencyMs: 10, uptime: 99.1 },
+    { branchId: centro.id, name: "Impresora Barra", type: "PRINTER", ip: "192.168.1.40", status: "OFFLINE", firmware: "1.9.0", latencyMs: 0, uptime: 80.0 },
+    { branchId: centro.id, name: "Tablet Mesero 1", type: "TABLET", ip: "192.168.1.50", status: "ONLINE", firmware: "2.3.0", latencyMs: 22, uptime: 97.8 },
+  ]});
+
+  await prisma.supplier.createMany({ data: [
+    { branchId: centro.id, name: "Casa Sauza", contact: "Ventas MX", phone: "555-1000", category: "Licores" },
+    { branchId: centro.id, name: "Oaxaca Spirits", contact: "Mezcal Dept", phone: "555-2000", category: "Licores" },
+    { branchId: centro.id, name: "Central de Abastos", contact: "Frutas y verduras", phone: "555-3000", category: "Alimentos" },
+    { branchId: centro.id, name: "Cervecería Local", contact: "Distribución", phone: "555-4000", category: "Cervezas" },
+  ]});
+
+  const po1 = await prisma.purchaseOrder.create({ data: { branchId: centro.id, supplierName: "Casa Sauza", number: 1001, status: "SENT", total: 7600, items: { create: [ { name: "Tequila Blanco", qty: 20, unit: "L", cost: 380 } ] } } });
+  await prisma.purchaseOrder.create({ data: { branchId: centro.id, supplierName: "Central de Abastos", number: 1002, status: "RECEIVED", total: 840, items: { create: [ { name: "Limón", qty: 30, unit: "kg", cost: 28 } ] } } });
+  await prisma.purchaseOrder.create({ data: { branchId: centro.id, supplierName: "Cervecería Local", number: 1003, status: "DRAFT", total: 5400, items: { create: [ { name: "Barril IPA", qty: 3, unit: "barril", cost: 1800 } ] } } });
+
+  await prisma.recipe.create({ data: { branchId: centro.id, name: "Margarita Clásica", yield: "1 copa", salePrice: 145, items: { create: [ { ingredient: "Tequila", qty: 45, unit: "ml", cost: 17 }, { ingredient: "Triple sec", qty: 20, unit: "ml", cost: 8 }, { ingredient: "Limón", qty: 25, unit: "ml", cost: 3 }, { ingredient: "Sal / hielo", qty: 1, unit: "porción", cost: 2 } ] } } });
+  await prisma.recipe.create({ data: { branchId: centro.id, name: "Mezcalita de Tamarindo", yield: "1 copa", salePrice: 165, items: { create: [ { ingredient: "Mezcal", qty: 45, unit: "ml", cost: 23 }, { ingredient: "Pulpa tamarindo", qty: 30, unit: "ml", cost: 9 }, { ingredient: "Chile / sal", qty: 1, unit: "porción", cost: 3 } ] } } });
+  await prisma.recipe.create({ data: { branchId: centro.id, name: "Tabla de Quesos", yield: "2-3 personas", salePrice: 240, items: { create: [ { ingredient: "Quesos surtidos", qty: 200, unit: "g", cost: 70 }, { ingredient: "Embutidos", qty: 100, unit: "g", cost: 45 }, { ingredient: "Pan / uvas", qty: 1, unit: "porción", cost: 20 } ] } } });
+
+  const inThreeDays = new Date(now.getTime() + 3 * 86400e3);
+  const pastDue = new Date(now.getTime() - 2 * 86400e3);
+  await prisma.maintenanceTask.createMany({ data: [
+    { branchId: centro.id, deviceName: "Cafetera Industrial", task: "Descalcificación", dueDate: inThreeDays, status: "PENDING", assignee: "Chef Diego" },
+    { branchId: centro.id, deviceName: "Refrigerador Barra", task: "Limpieza de condensador", dueDate: pastDue, status: "PENDING", assignee: "Ana Bartender" },
+    { branchId: centro.id, deviceName: "Campana extractora", task: "Cambio de filtros", dueDate: inThreeDays, status: "DONE", assignee: "Mantenimiento" },
+  ]});
+
+  await prisma.alert.createMany({ data: [
+    { branchId: centro.id, title: "Meta de ventas alcanzada", message: "Se superó la meta diaria de $10,000", level: "INFO", acknowledged: false },
+    { branchId: centro.id, title: "Impresora sin papel", message: "Impresora Barra reporta falta de papel", level: "WARNING", acknowledged: false },
+  ]});
+
+  await prisma.campaign.createMany({ data: [
+    { branchId: centro.id, name: "Happy Hour Jueves", channel: "WhatsApp", audience: "Frecuentes", sent: 320, delivered: 310, opened: 148, status: "SENT" },
+    { branchId: centro.id, name: "Promo VIP Fin de Semana", channel: "WhatsApp", audience: "VIP", sent: 85, delivered: 84, opened: 61, status: "SENT" },
+    { branchId: centro.id, name: "Reactivación clientes", channel: "WhatsApp", audience: "Todos", sent: 0, delivered: 0, opened: 0, status: "DRAFT" },
+  ]});
+
+  await prisma.priceRule.createMany({ data: [
+    { branchId: centro.id, name: "Happy Hour Cócteles", categoryName: "Cócteles", discountPct: 25, startHour: 17, endHour: 20, days: "L-V", active: true },
+    { branchId: centro.id, name: "2x1 Cervezas", categoryName: "Cervezas", discountPct: 50, startHour: 18, endHour: 21, days: "Mié", active: true },
+    { branchId: centro.id, name: "Vinos Domingo", categoryName: "Vinos", discountPct: 15, startHour: 14, endHour: 23, days: "Dom", active: false },
+  ]});
+
+  await prisma.invoice.createMany({ data: [
+    { tenantId: tenant.id, number: "F-2026-05", amount: 1499, status: "PAID", period: "Mayo 2026" },
+    { tenantId: tenant.id, number: "F-2026-06", amount: 1499, status: "PAID", period: "Junio 2026" },
+    { tenantId: tenant.id, number: "F-2026-07", amount: 1499, status: "DUE", period: "Julio 2026" },
+  ]});
+
+  await prisma.auditLog.createMany({ data: [
+    { branchId: centro.id, actor: "admin@barops.pro", action: "LOGIN", target: "Sesión", severity: "INFO" },
+    { branchId: centro.id, actor: "gerente@barops.pro", action: "CIERRE_CAJA", target: "Turno #12", severity: "INFO" },
+    { branchId: centro.id, actor: "mesero@barops.pro", action: "DESCUENTO_MANUAL", target: "Ticket #45", severity: "WARNING", detail: "Descuento del 20% aplicado sin autorización de gerente." },
+    { branchId: centro.id, actor: "desconocido", action: "INTENTO_LOGIN_FALLIDO", target: "admin@barops.pro", severity: "CRITICAL", detail: "3 intentos fallidos consecutivos desde IP 190.20.10.5." },
+    { branchId: centro.id, actor: "admin@barops.pro", action: "BRIEFING", target: "Turno", severity: "INFO", detail: "Reserva VIP a las 21h (mesa terraza). 86 de mezcal espadín." },
+  ]});
+
+  await prisma.waitlistEntry.createMany({ data: [
+    { branchId: centro.id, name: "Familia Ramírez", partySize: 5, phone: "5512340000", quotedWait: 20, status: "WAITING" },
+    { branchId: centro.id, name: "Pareja Gómez", partySize: 2, phone: "5512341111", quotedWait: 10, status: "WAITING" },
+  ]});
+
+  const gerente = await prisma.user.findFirst({ where: { email: "gerente@barops.pro" } });
+  if (gerente) {
+    await prisma.shift.create({ data: { branchId: centro.id, userId: gerente.id, openedAt: new Date(now.getTime() - 30 * 86400e3), closedAt: new Date(now.getTime() - 30 * 86400e3 + 8 * 3600e3), openingCash: 2000, closingCash: 12450, salesTotal: 10450 } });
+  }
+
+
   console.log("Seed completo ✅  Login: admin@barops.pro / admin123");
 }
 

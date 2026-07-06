@@ -57,9 +57,6 @@ export default function Sidebar() {
                       >
                         <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
                         <span className="truncate">{item.title}</span>
-                        {!item.native && (
-                          <span className="ml-auto text-[9px] uppercase text-outline">UI</span>
-                        )}
                       </Link>
                     </li>
                   );

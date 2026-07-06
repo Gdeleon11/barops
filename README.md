@@ -14,7 +14,16 @@ Plataforma full‑stack de gestión de bares y restaurantes. Construida con **Ne
 - 📅 Reservas — alta y gestión de estados
 - 🧑‍🍳 Personal y desempeño
 
-**42 pantallas de diseño adicionales** (KDS, BDS, compras, firmware, topología de red, marketing WhatsApp, facturación SaaS, etc.) integradas y navegables desde el mismo panel.
+**Las 34 pantallas restantes también son operativas** con datos reales y acciones funcionales:
+- Operación: KDS/BDS (avanzar comandas), Plano de salón en vivo, Lista de espera
+- Caja/Turnos: apertura, monitoreo en vivo, cierre con reconciliación, Reporte Z, bitácora
+- Inventario/Cocina: recetas y escandallos (food cost), control de botellas, compras y proveedores
+- Analítica/Clientes: ventas por producto, precios/happy hour, fidelización, reconocimiento VIP, analítica, marketing y CRM por WhatsApp (campañas)
+- Personal: turnos/asistencia, comisiones y propinas, auditoría por empleado
+- Dispositivos/Red: terminales, topología, rendimiento, firmware OTA, mantenimiento, alertas
+- Seguridad/Admin: usuarios, matriz de permisos, log de auditoría, invitaciones, suscripción y planes SaaS
+
+> Nota: las pantallas de hardware/red/firmware y facturación operan sobre datos reales de la base con acciones funcionales; no se conectan a dispositivos físicos ni a una pasarela de pago (eso requeriría integraciones externas). El diseño original de cada pantalla sigue disponible con el botón "Ver diseño original".
 
 ## 🚀 Despliegue en Vercel (paso a paso)
 
