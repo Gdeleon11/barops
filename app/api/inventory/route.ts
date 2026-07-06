@@ -6,6 +6,7 @@ import { currentBranchId } from "@/lib/session";
 
 const createSchema = z.object({
   name: z.string().min(1),
+  category: z.string().optional().nullable(),
   unit: z.string().default("unidad"),
   stock: z.number().min(0).default(0),
   parLevel: z.number().min(0).default(0),

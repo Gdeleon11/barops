@@ -19,14 +19,14 @@ export function EntityForm({
   fields,
   submitLabel = "Guardar",
   title,
-  transform,
+  fixed,
 }: {
   endpoint: string;
   method?: string;
   fields: Field[];
   submitLabel?: string;
   title?: string;
-  transform?: (v: Record<string, any>) => Record<string, any>;
+  fixed?: Record<string, any>;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -45,7 +45,7 @@ export function EntityForm({
       if (f.type === "number") val = Number(val) || 0;
       payload[f.name] = val;
     }
-    const body = transform ? transform(payload) : payload;
+    const body = fixed ? { ...payload, ...fixed } : payload;
     try {
       const res = await fetch(endpoint, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const data = await res.json();

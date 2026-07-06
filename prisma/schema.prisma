@@ -119,6 +119,7 @@ model InventoryItem {
   branchId  String
   branch    Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
   name      String
+  category  String?
   unit      String   @default("unit")
   stock     Float    @default(0)
   parLevel  Float    @default(0)

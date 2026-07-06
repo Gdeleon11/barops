@@ -26,7 +26,7 @@ export default async function CrmWhatsapp() {
             { name: "name", label: "Mensaje/Campaña", required: true, placeholder: "2x1 en cócteles hoy 🍸" },
             { name: "audience", label: "Segmento", type: "select", options: [{ value: "Todos", label: "Todos" }, { value: "VIP", label: "VIP" }, { value: "Frecuentes", label: "Frecuentes" }, { value: "Nuevos", label: "Nuevos" }], def: "VIP" },
           ]}
-          transform={(v) => ({ ...v, channel: "WhatsApp", status: "SENT" })}
+          fixed={{ channel: "WhatsApp", status: "SENT" }}
         />
       </div>
       <div className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">

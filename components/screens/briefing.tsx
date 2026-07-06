@@ -24,7 +24,7 @@ export default async function Briefing() {
             { name: "detail", label: "Nota / novedad del turno", type: "textarea", span: 4, required: true, placeholder: "Reservas VIP, 86 de productos, incidencias…" },
             { name: "severity", label: "Prioridad", type: "select", options: [{ value: "INFO", label: "Info" }, { value: "WARNING", label: "Atención" }, { value: "CRITICAL", label: "Crítico" }], def: "INFO" },
           ]}
-          transform={(v) => ({ ...v, actor: user.name ?? "Staff", action: "BRIEFING", target: "Turno" })}
+          fixed={{ actor: user.name ?? "Staff", action: "BRIEFING", target: "Turno" }}
         />
       </div>
       <div className="space-y-3">
