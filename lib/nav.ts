@@ -15,6 +15,7 @@ export const NAV: NavGroup[] = [
     items: [
       { slug: "panel_de_control_general", title: "Dashboard Ejecutivo", icon: "dashboard", href: "/dashboard", native: true },
       { slug: "punto_de_venta_pos_operativo", title: "Punto de Venta (POS)", icon: "point_of_sale", href: "/pos", native: true },
+      { slug: "cuentas_por_cobrar", title: "Cuentas por Cobrar", icon: "request_quote", href: "/accounts", native: true },
       { slug: "gesti_n_de_mesas_y_salones", title: "Mesas y Salones", icon: "table_restaurant", href: "/tables", native: true },
       { slug: "plano_de_sal_n_din_mico_y_servicio_activo", title: "Plano de Salón", icon: "grid_view", href: "/m/plano_de_sal_n_din_mico_y_servicio_activo" },
       { slug: "lista_de_espera_y_asignaci_n_de_mesas", title: "Lista de Espera", icon: "hourglass_top", href: "/m/lista_de_espera_y_asignaci_n_de_mesas" },

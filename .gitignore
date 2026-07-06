@@ -8,3 +8,4 @@ out
 .vercel
 /prisma/dev.db
 next-env.d.ts
+.pytest_cache

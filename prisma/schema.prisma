@@ -204,6 +204,7 @@ model OrderItem {
   name      String
   qty       Int     @default(1)
   price     Float
+  status    String  @default("PENDING") // PENDING | PREPARING | READY | SERVED
   notes     String?
 }
 

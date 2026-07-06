@@ -4,41 +4,43 @@ import { Card, Badge } from "@/components/ui";
 import { RowAction, RefreshButton } from "./_shared";
 
 const DRINK_CATS = ["Cócteles", "Cervezas", "Vinos", "Destilados"];
-const NEXT: Record<string, string> = { SENT: "PREPARING", PREPARING: "READY", READY: "SERVED" };
-const COLS = ["SENT", "PREPARING", "READY"];
-const COL_LABEL: Record<string, string> = { SENT: "En cola", PREPARING: "Preparando", READY: "Listo para servir" };
-const COL_TONE: Record<string, "primary" | "tertiary" | "secondary"> = { SENT: "primary", PREPARING: "tertiary", READY: "secondary" };
+const NEXT: Record<string, string> = { PENDING: "PREPARING", PREPARING: "READY", READY: "SERVED" };
+const COLS = ["PENDING", "PREPARING", "READY"];
+const COL_LABEL: Record<string, string> = { PENDING: "En cola", PREPARING: "Preparando", READY: "Listo para servir" };
+const COL_TONE: Record<string, "primary" | "tertiary" | "secondary"> = { PENDING: "primary", PREPARING: "tertiary", READY: "secondary" };
+const NEXT_LABEL: Record<string, string> = { PREPARING: "Preparar", READY: "Marcar listo", SERVED: "Marcar servido" };
 
 export async function Board({ kind }: { kind: "kitchen" | "bar" }) {
   const branchId = await currentBranchId();
   const orders = await prisma.order.findMany({
-    where: { branchId, status: { in: ["SENT", "PREPARING", "READY"] } },
+    where: { branchId, status: { notIn: ["PAID", "CANCELLED"] } },
     orderBy: { createdAt: "asc" },
     include: { table: true, items: { include: { product: { include: { category: true } } } } },
   });
 
-  const filtered = orders
-    .map((o: any) => {
-      const items = o.items.filter((it: any) => {
-        const cat = it.product?.category?.name ?? "";
-        const isDrink = DRINK_CATS.includes(cat);
-        return kind === "bar" ? isDrink : !isDrink;
-      });
-      return { ...o, relItems: items };
-    })
-    .filter((o: any) => o.relItems.length > 0);
+  type Row = { item: any; order: any };
+  const rows: Row[] = [];
+  for (const o of orders as any[]) {
+    for (const it of o.items) {
+      const cat = it.product?.category?.name ?? "";
+      const isDrink = DRINK_CATS.includes(cat);
+      if ((kind === "bar") !== isDrink) continue;
+      if (it.status === "SERVED") continue;
+      rows.push({ item: it, order: o });
+    }
+  }
 
   return (
     <div className="p-5 lg:p-6">
       <div className="mb-4 flex items-center justify-between">
         <p className="text-sm text-on-surface-variant">
-          {filtered.length} comandas activas · {kind === "bar" ? "barra" : "cocina"}
+          {rows.length} ítems activos · {kind === "bar" ? "barra" : "cocina"}
         </p>
         <RefreshButton />
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         {COLS.map((col) => {
-          const list = filtered.filter((o: any) => o.status === col);
+          const list = rows.filter((r) => (r.item.status ?? "PENDING") === col);
           return (
             <div key={col}>
               <div className="mb-2 flex items-center justify-between">
@@ -46,28 +48,22 @@ export async function Board({ kind }: { kind: "kitchen" | "bar" }) {
                 <Badge tone={COL_TONE[col]}>{list.length}</Badge>
               </div>
               <div className="space-y-3">
-                {list.map((o: any) => {
-                  const mins = Math.floor((Date.now() - new Date(o.createdAt).getTime()) / 60000);
+                {list.map(({ item, order }) => {
+                  const mins = Math.floor((Date.now() - new Date(order.createdAt).getTime()) / 60000);
                   const late = mins >= 12;
                   return (
-                    <Card key={o.id} className={`p-3 ${late ? "border-error/50" : ""}`}>
-                      <div className="mb-2 flex items-center justify-between">
-                        <span className="font-mono text-sm font-bold text-on-surface">#{o.number}</span>
-                        <span className={`text-xs ${late ? "text-error" : "text-on-surface-variant"}`}>{mins} min · {o.table?.name ?? "Barra"}</span>
+                    <Card key={item.id} className={`p-3 ${late ? "border-error/50" : ""}`}>
+                      <div className="mb-1 flex items-center justify-between">
+                        <span className="font-mono text-xs font-bold text-on-surface">#{order.number} · {order.table?.name ?? "Barra"}</span>
+                        <span className={`text-xs ${late ? "text-error" : "text-on-surface-variant"}`}>{mins} min</span>
                       </div>
-                      <ul className="mb-3 space-y-1">
-                        {o.relItems.map((it: any) => (
-                          <li key={it.id} className="flex justify-between text-sm text-on-surface">
-                            <span>{it.qty}× {it.name}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="mb-2 text-sm font-medium text-on-surface">{item.qty}× {item.name}</p>
                       {NEXT[col] && (
                         <RowAction
-                          endpoint="/api/orders"
+                          endpoint="/api/order-items"
                           method="PATCH"
-                          payload={{ id: o.id, status: NEXT[col] }}
-                          label={col === "READY" ? "Marcar servido" : `Pasar a ${COL_LABEL[NEXT[col]]}`}
+                          payload={{ itemId: item.id, status: NEXT[col] }}
+                          label={NEXT_LABEL[NEXT[col]]}
                           icon="arrow_forward"
                           tone={COL_TONE[NEXT[col]] ?? "primary"}
                         />
@@ -81,9 +77,9 @@ export async function Board({ kind }: { kind: "kitchen" | "bar" }) {
           );
         })}
       </div>
-      {filtered.length === 0 && (
+      {rows.length === 0 && (
         <Card className="mt-4 p-10 text-center text-on-surface-variant">
-          No hay comandas activas. Envía una orden desde el POS (botón "Enviar a cocina").
+          No hay ítems activos. Envía una comanda desde el POS (botón "Enviar a cocina").
         </Card>
       )}
     </div>
