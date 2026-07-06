@@ -20,6 +20,12 @@ export default function InventoryClient({ items }: { items: Item[] }) {
     router.refresh();
   }
 
+  async function del(id: string, name: string) {
+    if (!confirm(`¿Eliminar "${name}"?`)) return;
+    await fetch("/api/inventory", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    router.refresh();
+  }
+
   async function create(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -91,6 +97,7 @@ export default function InventoryClient({ items }: { items: Item[] }) {
                         <div className="inline-flex items-center gap-1">
                           <button onClick={() => adjust(i.id, -1)} className="rounded bg-surface-container-high px-2 py-0.5 text-on-surface">−</button>
                           <button onClick={() => adjust(i.id, 1)} className="rounded bg-surface-container-high px-2 py-0.5 text-on-surface">+</button>
+                          <button onClick={() => del(i.id, i.name)} className="rounded bg-surface-container-high px-1.5 py-0.5 text-error" title="Eliminar"><span className="material-symbols-outlined text-[15px]">delete</span></button>
                         </div>
                       </td>
                       <td>{low ? <Badge tone="error">Reponer</Badge> : <Badge tone="secondary">OK</Badge>}</td>

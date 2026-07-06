@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { currentBranchId } from "@/lib/session";
 import { Card, Badge, money } from "@/components/ui";
 import RecipeForm from "./recipe-form";
+import { RowAction } from "./_shared";
 
 export default async function Recetas() {
   const branchId = await currentBranchId();
@@ -28,9 +29,12 @@ export default async function Recetas() {
                   </p>
                   <p className="text-xs text-on-surface-variant">{r.yield || "—"}</p>
                 </div>
-                <Badge tone={foodCostPct <= 30 ? "secondary" : foodCostPct <= 40 ? "tertiary" : "error"}>
-                  Food cost {foodCostPct.toFixed(0)}%
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <Badge tone={foodCostPct <= 30 ? "secondary" : foodCostPct <= 40 ? "tertiary" : "error"}>
+                    Food cost {foodCostPct.toFixed(0)}%
+                  </Badge>
+                  <RowAction endpoint="/api/x/recipe" method="DELETE" payload={{ id: r.id }} label="" icon="delete" tone="error" confirm={`¿Eliminar receta ${r.name}?`} />
+                </div>
               </div>
               <ul className="mb-2 space-y-1 border-y border-outline-variant/30 py-2">
                 {r.items.map((it: any) => (

@@ -36,3 +36,15 @@ export async function PATCH(req: Request) {
   const item = await prisma.inventoryItem.update({ where: { id }, data: { stock: newStock } });
   return NextResponse.json({ ok: true, item });
 }
+
+export async function DELETE(req: Request) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  const branchId = await currentBranchId();
+  const { id } = await req.json();
+  if (!id) return NextResponse.json({ error: "Falta id" }, { status: 400 });
+  const existing = await prisma.inventoryItem.findFirst({ where: { id, branchId } });
+  if (!existing) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
+  await prisma.inventoryItem.delete({ where: { id } });
+  return NextResponse.json({ ok: true });
+}

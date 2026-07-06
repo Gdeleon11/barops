@@ -11,6 +11,12 @@ export type NavGroup = { label: string; items: NavItem[] };
 // Native (full-stack, DB-backed) screens
 export const NAV: NavGroup[] = [
   {
+    label: "Inicio",
+    items: [
+      { slug: "onboarding", title: "Configuración inicial", icon: "rocket_launch", href: "/onboarding", native: true },
+    ],
+  },
+  {
     label: "Operación",
     items: [
       { slug: "panel_de_control_general", title: "Dashboard Ejecutivo", icon: "dashboard", href: "/dashboard", native: true },

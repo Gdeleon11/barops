@@ -94,6 +94,7 @@ export default async function Botellas() {
                             <div className="inline-flex gap-1">
                               <RowAction endpoint="/api/inventory" method="PATCH" payload={{ id: i.id, delta: -1 }} label="−" tone="surface" />
                               <RowAction endpoint="/api/inventory" method="PATCH" payload={{ id: i.id, delta: 1 }} label="+" tone="surface" />
+                              <RowAction endpoint="/api/inventory" method="DELETE" payload={{ id: i.id }} label="" icon="delete" tone="error" confirm={`¿Eliminar ${i.name}?`} />
                             </div>
                           </td>
                         </tr>

@@ -40,7 +40,12 @@ export default async function Compras() {
                   <td className="text-on-surface-variant">{new Date(o.createdAt).toLocaleDateString("es-MX")}</td>
                   <td className="text-right text-on-surface">{money(o.total)}</td>
                   <td><Badge tone={tone[o.status]}>{label[o.status] ?? o.status}</Badge></td>
-                  <td className="text-right">{o.status !== "RECEIVED" && <RowAction endpoint="/api/x/purchase" method="PATCH" payload={{ id: o.id, status: "RECEIVED" }} label="Marcar recibida" icon="inventory" tone="secondary" />}</td>
+                  <td className="text-right">
+                    <div className="inline-flex gap-2">
+                      {o.status !== "RECEIVED" && <RowAction endpoint="/api/x/purchase" method="PATCH" payload={{ id: o.id, status: "RECEIVED" }} label="Marcar recibida" icon="inventory" tone="secondary" />}
+                      <RowAction endpoint="/api/x/purchase" method="DELETE" payload={{ id: o.id }} label="" icon="delete" tone="error" confirm={`¿Eliminar orden #${o.number}?`} />
+                    </div>
+                  </td>
                 </tr>
               ))}
               {orders.length === 0 && <tr><td colSpan={6} className="py-10 text-center text-on-surface-variant">Sin órdenes de compra.</td></tr>}
@@ -70,6 +75,7 @@ export default async function Compras() {
               <p className="font-medium text-on-surface">{s.name}</p>
               <p className="text-xs text-on-surface-variant">{s.category || "General"}</p>
               <p className="mt-2 text-sm text-on-surface-variant">{s.contact || "—"} · {s.phone || "—"}</p>
+              <div className="mt-2"><RowAction endpoint="/api/x/supplier" method="DELETE" payload={{ id: s.id }} label="Eliminar" icon="delete" tone="error" confirm={`¿Eliminar proveedor ${s.name}?`} /></div>
             </Card>
           ))}
           {suppliers.length === 0 && <Card className="p-8 text-center text-on-surface-variant lg:col-span-3">Sin proveedores.</Card>}

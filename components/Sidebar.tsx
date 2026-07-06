@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { NAV } from "@/lib/nav";
 
-export default function Sidebar() {
+export default function Sidebar({ brandName = "BarOps", logoUrl = null }: { brandName?: string; logoUrl?: string | null }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   return (
@@ -25,11 +25,15 @@ export default function Sidebar() {
         }`}
       >
         <div className="flex items-center gap-2.5 px-5 py-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-container">
-            <span className="material-symbols-outlined text-white">nightlife</span>
-          </div>
+          {logoUrl ? (
+            <img src={logoUrl} alt="logo" className="h-9 w-9 rounded-lg object-cover" />
+          ) : (
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-container">
+              <span className="material-symbols-outlined text-white">nightlife</span>
+            </div>
+          )}
           <div>
-            <p className="font-display text-lg font-bold leading-none text-on-surface">BarOps</p>
+            <p className="font-display text-lg font-bold leading-none text-on-surface">{brandName}</p>
             <p className="text-[10px] uppercase tracking-widest text-on-surface-variant">Pro · Nocturne</p>
           </div>
         </div>
