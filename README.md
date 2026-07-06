@@ -28,10 +28,15 @@ Plataforma full‑stack de gestión de bares y restaurantes. Construida con **Ne
 ## 🚀 Despliegue en Vercel (paso a paso)
 
 ### 1. Subir el código a GitHub
+El repositorio ya está inicializado (commits hechos y remote configurado a `Gdeleon11/barops`). En tu Mac ejecuta:
 ```bash
-git remote add origin https://github.com/Gdeleon11/barops.git   # ya viene configurado
+cd BarOps
+rm -f .git/*.lock .git/objects/maintenance.lock   # limpia locks temporales del entorno
+git add -A
+git commit -m "BarOps Pro" || true                # incluye cualquier cambio pendiente
 git push -u origin main
 ```
+> Git te pedirá tus credenciales de GitHub (usa un Personal Access Token como contraseña).
 
 ### 2. Crear una base de datos PostgreSQL (gratis)
 Usa cualquiera de estas opciones y copia la **connection string**:
