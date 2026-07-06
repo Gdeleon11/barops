@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NOCTURNE OPS | Centro de Alertas Críticas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "background": "#10131a",
+                "on-error-container": "#ffdad6",
+                "primary-fixed": "#d8e2ff",
+                "primary-fixed-dim": "#adc6ff",
+                "tertiary": "#ffb95f",
+                "secondary-fixed-dim": "#4edea3",
+                "inverse-primary": "#005ac2",
+                "on-tertiary-fixed": "#2a1700",
+                "tertiary-fixed": "#ffddb8",
+                "tertiary-container": "#ca8100",
+                "on-secondary-fixed-variant": "#005236",
+                "secondary": "#4edea3",
+                "primary": "#adc6ff",
+                "on-error": "#690005",
+                "surface-dim": "#10131a",
+                "on-primary-container": "#00285d",
+                "outline-variant": "#424754",
+                "primary-container": "#4d8eff",
+                "on-secondary": "#003824",
+                "on-surface": "#e1e2ec",
+                "surface-container-highest": "#32353c",
+                "on-background": "#e1e2ec",
+                "on-secondary-container": "#00311f",
+                "surface-container-low": "#191b23",
+                "surface-container-high": "#272a31",
+                "inverse-on-surface": "#2e3038",
+                "on-surface-variant": "#c2c6d6",
+                "error-container": "#93000a",
+                "on-secondary-fixed": "#002113",
+                "outline": "#8c909f",
+                "on-tertiary-fixed-variant": "#653e00",
+                "surface-container": "#1d2027",
+                "secondary-container": "#00a572",
+                "on-primary-fixed-variant": "#004395",
+                "error": "#ffb4ab",
+                "surface": "#10131a",
+                "on-tertiary": "#472a00",
+                "surface-bright": "#363941",
+                "on-primary": "#002e6a",
+                "tertiary-fixed-dim": "#ffb95f",
+                "on-tertiary-container": "#3e2400",
+                "surface-variant": "#32353c",
+                "surface-tint": "#adc6ff",
+                "surface-container-lowest": "#0b0e15",
+                "on-primary-fixed": "#001a42",
+                "secondary-fixed": "#6ffbbe",
+                "inverse-surface": "#e1e2ec"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "touch-target-min": "44px",
+                "stack-sm": "8px",
+                "gutter": "16px",
+                "unit": "4px",
+                "stack-md": "16px",
+                "table-row-height": "56px",
+                "stack-lg": "32px",
+                "container-margin": "24px"
+            },
+            "fontFamily": {
+                "display-lg": ["Outfit"],
+                "body-md": ["Inter"],
+                "title-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "label-md": ["Inter"],
+                "headline-md": ["Outfit"],
+                "headline-lg": ["Outfit"],
+                "numeric-data": ["Inter"],
+                "headline-lg-mobile": ["Outfit"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #10131a;
+            color: #e1e2ec;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+        .alert-pulse-critical {
+            animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant shadow-sm flex justify-between items-center h-16 px-gutter">
+<div class="flex items-center gap-4">
+<span class="text-primary material-symbols-outlined text-3xl">emergency_home</span>
+<h1 class="text-title-lg font-display-lg font-bold tracking-tight text-primary">NOCTURNE OPS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<input class="bg-surface-container-high border-none rounded-lg px-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary outline-none" placeholder="Buscar alertas..." type="text"/>
+<span class="absolute right-3 top-2 text-outline material-symbols-outlined text-xl">search</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low/90 backdrop-blur-md border-r border-outline-variant flex flex-col py-stack-md">
+<div class="px-6 mb-8">
+<h2 class="font-title-lg text-title-lg text-on-surface">Admin Console</h2>
+<p class="text-label-md font-label-md text-secondary">V6.4 Active</p>
+</div>
+<nav class="flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-md text-label-md">Comandos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary border-l-4 border-secondary bg-secondary-container/10" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-md text-label-md">Alertas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-md text-label-md">Operaciones</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-md text-label-md">Red</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventario</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant/30 py-4">
+<a class="flex items-center gap-3 px-4 py-3 text-outline hover:text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Configuración</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-outline hover:text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">help_center</span>
+<span class="font-label-md text-label-md">Soporte</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-container-margin h-[calc(100vh-104px)] overflow-y-auto scroll-hide">
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Centro de Alertas Críticas</h3>
+<p class="text-on-surface-variant font-body-md mt-1">Monitoreo en tiempo real de incidentes operativos y protocolos de comunicación.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-secondary-container/20 text-secondary border border-secondary/30 px-4 py-2 rounded-lg font-label-md flex items-center gap-2 hover:bg-secondary-container/30 transition-all">
+<span class="material-symbols-outlined text-sm">history</span>
+                    Exportar Log
+                </button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md font-bold flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+                    Nueva Regla
+                </button>
+</div>
+</div>
+<div class="bento-grid">
+<!-- ALERT HUB (Main Section) -->
+<section class="col-span-12 lg:col-span-8 glass-panel rounded-xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">warning</span>
+<h4 class="font-title-lg text-title-lg">Alert Hub</h4>
+<div class="flex gap-2 ml-4">
+<span class="bg-error-container text-on-error-container text-[10px] px-2 py-0.5 rounded-full font-bold">3 CRÍTICAS</span>
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] px-2 py-0.5 rounded-full font-bold">12 ADVERTENCIAS</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-lg">filter_alt</span></button>
+<button class="p-1.5 hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-lg">more_vert</span></button>
+</div>
+</div>
+<div class="divide-y divide-outline-variant/30">
+<!-- Critical Alert -->
+<div class="p-6 flex items-start gap-6 bg-error-container/5 border-l-4 border-error">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-error/20 flex items-center justify-center text-error alert-pulse-critical">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h5 class="text-on-surface font-semibold text-lg">POS-04: Pérdida de Conexión Crítica</h5>
+<p class="text-on-surface-variant text-sm mt-1">Terminal de cobro principal en Barra A dejó de responder al servidor central.</p>
+</div>
+<span class="text-error text-xs font-mono bg-error/10 px-2 py-1 rounded">HACE 02:45 MIN</span>
+</div>
+<div class="mt-4 flex items-center gap-6">
+<div class="flex items-center gap-2 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">router</span>
+                                    Segmento: RED_CORE_A
+                                </div>
+<div class="flex items-center gap-2 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">database</span>
+                                    Módulo: Transacciones
+                                </div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="bg-error text-on-error px-4 py-2 rounded text-xs font-bold hover:brightness-110">REBOTAR POS</button>
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 rounded text-xs font-bold hover:bg-surface-bright">ESCALAR</button>
+</div>
+</div>
+<!-- Warning Alert -->
+<div class="p-6 flex items-start gap-6 bg-tertiary-container/5 border-l-4 border-tertiary">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h5 class="text-on-surface font-semibold text-lg">Stock Crítico: CO2 Refill</h5>
+<p class="text-on-surface-variant text-sm mt-1">Nivel de presión de tanques de CO2 por debajo del 15%. Riesgo de interrupción en 2h.</p>
+</div>
+<span class="text-tertiary text-xs font-mono bg-tertiary/10 px-2 py-1 rounded">HACE 14:20 MIN</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="bg-tertiary text-on-tertiary px-4 py-2 rounded text-xs font-bold hover:brightness-110">SOLICITAR RECARGA</button>
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 rounded text-xs font-bold hover:bg-surface-bright">IGNORAR</button>
+</div>
+</div>
+<!-- Info Alert -->
+<div class="p-6 flex items-start gap-6 border-l-4 border-primary">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">update</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h5 class="text-on-surface font-semibold text-lg">Actualización de Firmware Completada</h5>
+<p class="text-on-surface-variant text-sm mt-1">6 nodos de iluminación inteligente se han actualizado a v4.2.1 exitosamente.</p>
+</div>
+<span class="text-primary text-xs font-mono bg-primary/10 px-2 py-1 rounded">HACE 45:00 MIN</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">check_circle</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Rules & Escalation -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+<!-- NOTIFICATION RULES -->
+<section class="glass-panel rounded-xl p-6 h-fit">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">rule</span>
+                            Reglas de Notificación
+                        </h4>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-on-surface">settings</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container rounded-lg p-4 border border-outline-variant/30">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-secondary">POS CONEXIÓN</span>
+<input checked="" class="rounded bg-background border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Si <span class="text-primary font-mono">POS</span> pierde conexión por <span class="text-primary font-mono">&gt; 2 min</span>, notificar a <span class="text-on-surface font-semibold">Gerente de Turno</span> vía <span class="text-secondary">Push</span>.</p>
+</div>
+<div class="bg-surface-container rounded-lg p-4 border border-outline-variant/30">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-tertiary">TEMPERATURA CÁMARA</span>
+<input checked="" class="rounded bg-background border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Si <span class="text-tertiary font-mono">Temp &gt; 5°C</span> por <span class="text-tertiary font-mono">&gt; 10 min</span>, enviar <span class="text-tertiary font-semibold">SMS Crítico</span> a Mantenimiento.</p>
+</div>
+<div class="bg-surface-container rounded-lg p-4 border border-outline-variant/30 opacity-60">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-outline">REPORTES DIARIOS</span>
+<input class="rounded bg-background border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Enviar resumen de ventas PDF al correo de <span class="text-on-surface font-semibold">Administración</span> a las 06:00 AM.</p>
+</div>
+</div>
+<button class="w-full mt-6 border border-dashed border-outline text-outline py-2 rounded-lg text-sm hover:border-primary hover:text-primary transition-all">
+                        + Añadir Lógica de Disparo
+                    </button>
+</section>
+<!-- ESCALATION MANAGER -->
+<section class="glass-panel rounded-xl p-6">
+<h4 class="font-title-lg text-title-lg text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">group</span>
+                        Canales de Escalabilidad
+                    </h4>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border-2 border-secondary p-0.5">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Close up professional portrait of a tech operations manager with a serious and focused expression, cinematic dark office lighting, wearing a minimalist black tactical jacket. High definition digital photography with deep shadows and sharp focus on eyes." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDs3LIUl-Vp158rk48UO5bHWCzPIGRs5hJIDtOQi42cK6GP8iHLShpP2QRF_RQ1IY56vz36F3LMutqD4MbDselJxfDXo3PPF2AsPTIYZ1Qod2gUOs3fN37dXzKSsOaUucG891iQjgE_-FF57fsYF_aF7Df_HHiN266ltz4rXpQ-tt1_g6YkFxbpgn3Z_nZQwCfgkkApleFrctwW9qACdqU7sfMjLr5J7e5Fi7BCj_sak5bbE6rPn5YprA')"></div>
+</div>
+<div class="flex-grow">
+<p class="text-sm font-bold text-on-surface">Alex V. (Lead Ops)</p>
+<p class="text-[10px] text-outline">TURNO NOCHE (22:00 - 06:00)</p>
+</div>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings: 'FILL' 1;">smartphone</span>
+<span class="material-symbols-outlined text-sm text-outline">mail</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border-2 border-outline-variant p-0.5">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Professional headshot of a female system administrator in her late 30s, natural makeup, neutral background, soft professional lighting. The image captures a sense of reliability and technical expertise for a high-end corporate dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDmjhBs3GwnsW9iosOoGj6lGFx1snH-SxbqnjuLxTE2_WP_w1xBHc6tjDb1oHGfRRX4MGtolxLhFRyph3D-RjeprYpDrEBe7zHPJGeRrrxLCxt1E9pUVuhc5mmNoHiwCQw6ECLOMYn7udRyft1nherQ0AUfgexoMNd5QgJI-cE5FsdriFIZ47HUfXXEiQrDjTP9yRu-1KG2yi_IplTGeIkTwaJJV2HDHlnsmtYKbtar3IXYY1Ilf0_yhw')"></div>
+</div>
+<div class="flex-grow">
+<p class="text-sm font-bold text-on-surface">Maria K. (Shift Mgr)</p>
+<p class="text-[10px] text-outline">SOPORTE STANDBY</p>
+</div>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-sm text-outline">smartphone</span>
+<span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings: 'FILL' 1;">mail</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- LOG RECIENTES (Bottom Section) -->
+<section class="col-span-12 glass-panel rounded-xl overflow-hidden mb-12">
+<div class="px-6 py-4 bg-surface-container-high flex justify-between items-center">
+<h4 class="font-title-lg text-title-lg flex items-center gap-2">
+<span class="material-symbols-outlined">history</span>
+                        Historial de Notificaciones Recientes
+                    </h4>
+<div class="text-xs text-outline">Mostrando últimos 50 eventos</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant">
+<th class="px-6 py-3 font-label-md text-label-md text-outline">TIMESTAMP</th>
+<th class="px-6 py-3 font-label-md text-label-md text-outline">CANAL</th>
+<th class="px-6 py-3 font-label-md text-label-md text-outline">DESTINATARIO</th>
+<th class="px-6 py-3 font-label-md text-label-md text-outline">MENSAJE</th>
+<th class="px-6 py-3 font-label-md text-label-md text-outline">ESTADO</th>
+<th class="px-6 py-3 font-label-md text-label-md text-outline">LATENCIA</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 font-numeric-data text-numeric-data">
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4">02:46:12</td>
+<td class="px-6 py-4"><span class="bg-primary/10 text-primary px-2 py-1 rounded text-[10px]">PUSH</span></td>
+<td class="px-6 py-4">Alex V.</td>
+<td class="px-6 py-4 max-w-xs truncate">ALERTA CRÍTICA: POS-04 Desconectado</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                        Leído
+                                    </div>
+</td>
+<td class="px-6 py-4 text-outline">142ms</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4">02:46:10</td>
+<td class="px-6 py-4"><span class="bg-secondary/10 text-secondary px-2 py-1 rounded text-[10px]">SMS</span></td>
+<td class="px-6 py-4">+34 600 XXX 012</td>
+<td class="px-6 py-4 max-w-xs truncate">CRITICAL RED_CORE_A FAIL</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm">done_all</span>
+                                        Entregado
+                                    </div>
+</td>
+<td class="px-6 py-4 text-outline">1.2s</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4">02:30:45</td>
+<td class="px-6 py-4"><span class="bg-tertiary/10 text-tertiary px-2 py-1 rounded text-[10px]">EMAIL</span></td>
+<td class="px-6 py-4">maria.k@nocturne.ops</td>
+<td class="px-6 py-4 max-w-xs truncate">Reporte de Stock Semanal - Tanques CO2</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm">error</span>
+                                        Fallido (SMTP 550)
+                                    </div>
+</td>
+<td class="px-6 py-4 text-outline">--</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Status Bar -->
+<footer class="fixed bottom-0 right-0 left-64 bg-surface-container-lowest border-t border-outline-variant flex justify-between items-center px-gutter h-10 w-full z-50">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(78,222,163,0.8)]"></span>
+<span class="text-label-md font-label-md text-outline">SISTEMA CRÍTICO ACTIVO</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md text-outline uppercase">© 2024 NOCTURNE OPS.</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-label-md font-label-md text-outline hover:text-on-surface-variant hover:underline transition-opacity" href="#">Documentación</a>
+<a class="text-label-md font-label-md text-on-surface font-bold hover:underline transition-opacity" href="#">API Status</a>
+<a class="text-label-md font-label-md text-outline hover:text-on-surface-variant hover:underline transition-opacity" href="#">Seguridad</a>
+</div>
+</footer>
+<!-- Floating Action Background Element -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1] opacity-20">
+
+</div>
+<script>
+        // Simple Micro-interaction for alerts
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add visual pulse effect randomly to some status indicators
+        setInterval(() => {
+            const glow = document.querySelector('.bg-secondary.shadow-\\[0_0_8px_rgba\\(78\\,222\\,163\\,0\\.8\\)\\]');
+            if(glow) {
+                glow.style.boxShadow = glow.style.boxShadow === 'none' ? '0 0 12px rgba(78,222,163,1)' : 'none';
+            }
+        }, 1000);
+    </script>
+</body></html>

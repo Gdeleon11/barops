@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guest Analytics | Nocturne Operational</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .inner-glow {
+            box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0e15; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-slow { animation: pulse-subtle 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#10131a",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "on-background": "#e1e2ec",
+                        "on-primary-fixed": "#001a42",
+                        "on-secondary-container": "#00311f",
+                        "tertiary": "#ffb95f",
+                        "primary-container": "#4d8eff",
+                        "primary": "#adc6ff",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-primary-container": "#00285d",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "inverse-primary": "#005ac2",
+                        "secondary": "#4edea3",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary": "#472a00",
+                        "surface-container-highest": "#32353c",
+                        "on-tertiary-container": "#3e2400",
+                        "tertiary-fixed": "#ffddb8",
+                        "outline": "#8c909f",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-variant": "#32353c",
+                        "on-surface": "#e1e2ec",
+                        "secondary-container": "#00a572",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary": "#003824",
+                        "surface": "#10131a",
+                        "surface-container": "#1d2027",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#0b0e15",
+                        "surface-container-high": "#272a31",
+                        "on-secondary-fixed": "#002113",
+                        "surface-dim": "#10131a",
+                        "secondary-fixed-dim": "#4edea3",
+                        "outline-variant": "#424754",
+                        "surface-container-low": "#191b23",
+                        "surface-bright": "#363941",
+                        "surface-tint": "#adc6ff",
+                        "inverse-on-surface": "#2e3038",
+                        "inverse-surface": "#e1e2ec",
+                        "tertiary-container": "#ca8100",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-surface-variant": "#c2c6d6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "container-margin": "24px",
+                        "touch-target-min": "44px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "table-row-height": "56px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "title-lg": ["Inter"],
+                        "numeric-data": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm z-50 flex justify-between items-center h-14 px-container-margin w-full">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Nocturne Operational</span>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors" href="#">Dashboard</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors" href="#">Shifts</a>
+<a class="font-body-lg text-body-lg text-primary border-b-2 border-primary pb-1" href="#">Reports</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors" href="#">Payouts</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface-container px-3 py-1.5 rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md text-on-surface p-0 w-48" placeholder="Search guests..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest/50 p-2 rounded-full transition-all active:scale-95">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest/50 p-2 rounded-full transition-all active:scale-95">settings</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a premium hospitality manager in a low-light bar setting, wearing a tailored dark suit. The lighting is dramatic and cinematic, with soft blue and amber highlights reflecting the sophisticated 'Night Bar' aesthetic. The background is a blurred high-end lounge with glass shelving and spirits." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCq5_3c9F6x5LKJ9YP4SjOMxGJlu7xopeg7P2DIaYNZBfrlcfX_XNuu8OIqeUP0yeDcaabHJk6hE-CvmpeinxVEKKCIdQvDHC-cjgTJfBsJFoQMQOjUNesrZYdaGdY9v3xOlennOxoSywR5-Zi2thwT9HKyZrruLRhjtUKz0mvykv6CFWcPWfAvQ863y7HrYOptllozXJ-cULyYPdp8v2TK6jlQx_2Pi8GhGcgxWlHNbT3KwGrjhfEt4Q"/>
+</div>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded-lg font-label-md text-label-md active:scale-95 transition-transform">Close Register</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 pt-16 h-full w-64 hidden md:flex flex-col bg-surface-container-low border-r border-outline-variant/20 z-40">
+<div class="px-6 py-4 mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container/20 rounded-lg flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary" data-weight="fill">nightlife</span>
+</div>
+<div>
+<h2 class="font-headline-md text-[16px] leading-tight text-on-surface">Main Bar Terminal</h2>
+<p class="text-[12px] text-on-surface-variant">Station #04</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Cash Drawers</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">timer</span>
+<span class="font-label-md text-label-md">Active Shifts</span>
+</a>
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 border-l-4 border-secondary shadow-sm" href="#">
+<span class="material-symbols-outlined" data-weight="fill">balance</span>
+<span class="font-label-md text-label-md">Reconciliation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-md text-label-md">Vault</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/10">
+<button class="w-full bg-secondary text-on-secondary font-label-md text-label-md py-3 rounded-lg active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Cash Drop
+            </button>
+<div class="mt-4 space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-2 rounded-lg text-label-md" href="#">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+                    Support
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-2 rounded-lg text-label-md" href="#">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+                    Lock Station
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:pl-64 pt-14 pb-20 md:pb-0 min-h-screen">
+<div class="max-w-[1600px] mx-auto p-container-margin">
+<!-- Header Section with Animation Background -->
+<section class="relative overflow-hidden rounded-xl mb-stack-lg p-stack-lg border border-outline-variant/20 h-48 flex flex-col justify-end">
+
+<div class="relative z-10">
+<div class="flex items-end justify-between">
+<div>
+<p class="text-secondary font-label-md text-label-md uppercase tracking-widest mb-2">Insights Engine</p>
+<h1 class="font-display-lg text-display-lg text-on-surface leading-none">Guest Analytics</h1>
+</div>
+<div class="flex gap-4">
+<div class="glass-card inner-glow px-4 py-2 rounded-lg flex flex-col items-end">
+<span class="text-on-surface-variant text-[12px]">Net Promoter Score</span>
+<span class="text-secondary font-headline-md text-headline-md">84 <span class="text-[14px] font-normal text-on-surface-variant">/ 100</span></span>
+</div>
+<div class="glass-card inner-glow px-4 py-2 rounded-lg flex flex-col items-end">
+<span class="text-on-surface-variant text-[12px]">Guest Retention</span>
+<span class="text-primary font-headline-md text-headline-md">62% <span class="text-[14px] font-normal text-on-surface-variant">↑ 4%</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Bento Card: Guest Trends -->
+<div class="col-span-12 lg:col-span-8 glass-card rounded-xl p-6 inner-glow min-h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Volume &amp; Loyalty Trends</h3>
+<p class="text-body-md text-on-surface-variant">Daily volume: New vs. Returning guests</p>
+</div>
+<div class="flex gap-2">
+<span class="flex items-center gap-1.5 text-label-md text-primary bg-primary/10 px-3 py-1 rounded-full"><div class="w-2 h-2 rounded-full bg-primary"></div> New</span>
+<span class="flex items-center gap-1.5 text-label-md text-secondary bg-secondary/10 px-3 py-1 rounded-full"><div class="w-2 h-2 rounded-full bg-secondary"></div> Returning</span>
+</div>
+</div>
+<div class="flex-1 w-full flex items-end gap-2 pb-4 pt-8">
+<!-- Bar chart visualization -->
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 40%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 30%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Mon</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 55%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 25%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Tue</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 45%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 40%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Wed</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 60%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 30%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Thu</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 80%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 15%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Fri</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 90%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 10%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Sat</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="flex flex-col-reverse gap-0.5 h-full">
+<div class="bg-secondary/80 w-full rounded-t-sm transition-all group-hover:bg-secondary" style="height: 70%"></div>
+<div class="bg-primary/80 w-full rounded-b-sm transition-all group-hover:bg-primary" style="height: 20%"></div>
+</div>
+<span class="text-center text-[10px] text-on-surface-variant font-label-md uppercase">Sun</span>
+</div>
+</div>
+</div>
+<!-- Bento Card: Booking Heatmap -->
+<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-6 inner-glow min-h-[400px]">
+<div class="mb-6">
+<h3 class="font-title-lg text-title-lg text-on-surface">Peak Arrival Times</h3>
+<p class="text-body-md text-on-surface-variant">Heatmap of booking density by hour</p>
+</div>
+<div class="grid grid-cols-6 grid-rows-7 gap-1">
+<!-- Heatmap cells -->
+<script>
+                            const heatmap = document.currentScript.parentElement;
+                            const hours = ["18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+                            const days = ["M", "T", "W", "T", "F", "S", "S"];
+                            for (let i = 0; i < 42; i++) {
+                                const opacity = Math.random() * 0.9 + 0.1;
+                                const cell = document.createElement('div');
+                                cell.className = "aspect-square rounded-sm transition-all hover:ring-2 hover:ring-primary cursor-pointer";
+                                cell.style.backgroundColor = `rgba(78, 222, 163, ${opacity})`;
+                                heatmap.appendChild(cell);
+                            }
+                        </script>
+</div>
+<div class="flex justify-between mt-4 text-[10px] text-on-surface-variant font-label-md px-1">
+<span>18:00</span>
+<span>00:00</span>
+</div>
+<div class="mt-6 flex flex-col gap-3">
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">Busiest Window</span>
+<span class="text-on-surface font-semibold">21:00 — 23:00</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 88%"></div>
+</div>
+</div>
+</div>
+<!-- Bento Card: Top Customers -->
+<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-0 overflow-hidden inner-glow">
+<div class="p-6 border-b border-outline-variant/10">
+<h3 class="font-title-lg text-title-lg text-on-surface">Elite Members</h3>
+<p class="text-body-md text-on-surface-variant">Top spenders &amp; frequent visitors</p>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<div class="p-4 flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-secondary" data-alt="A portrait of a wealthy-looking tech entrepreneur in his 40s, high-end casual attire, sitting in a dark, atmospheric cocktail bar with warm backlighting. Minimalist, premium aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN4ApufJGsQGXjzet1R0awXF4AgaqlVkWaGzSEDqk9nEVdKWowP45OM6DC50YboW4zb0DAyp-GhzSFqQsR1CH5U4AAHANMKfiFBWWx5odg_L-6IZc-tAfzgMxVAEAsKOSiNFbHvDUcagE-P6Eia63cHj_Z2VQRwCuNuzMOXSoIj_JXB30BSXmd7Taay7zz-UjBrunxpCjNe69buPTRa61NiGIo6I4gklM7HKVHdTXjTnBPWepwc-i0Xw"/>
+<span class="absolute -bottom-1 -right-1 bg-secondary text-on-secondary text-[10px] font-bold px-1.5 rounded-full">VIP</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg font-bold text-on-surface">Julian Vance</h4>
+<p class="text-[12px] text-on-surface-variant">12 visits / mo</p>
+</div>
+<div class="text-right">
+<p class="text-secondary font-numeric-data">$4,820</p>
+<p class="text-[10px] text-on-surface-variant">Lifetime Spend</p>
+</div>
+</div>
+<div class="p-4 flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-primary" data-alt="A sophisticated woman in her 30s with a sharp fashion sense, holding a clear cocktail glass. The background is a moody, high-end venue with neon-blue accents and reflective surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDECV94HpTIORv2hii0jesSGBStHd17hOvug6s28N1JVCwHgHbnQgRSJnPJIlDNa2cGX0YtSSzIgoDP9j17B0rtWgTm5VgDAaF2dRmxsK3YOKxi238iK2qCS4E2-YSmoLAq76IEwn3vEkkuvIsRC-LhP5tPgrh6-ihy_zSOTXsavQI9wsVZwGJCmXj4mEhviFFTAmYC_5g4NQqsTbipHiJcCQatjNJg1MxzJEBIG7ToLeWAYV24lETQhg"/>
+<span class="absolute -bottom-1 -right-1 bg-primary text-on-primary text-[10px] font-bold px-1.5 rounded-full">GOLD</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg font-bold text-on-surface">Elena Rossi</h4>
+<p class="text-[12px] text-on-surface-variant">8 visits / mo</p>
+</div>
+<div class="text-right">
+<p class="text-primary font-numeric-data">$2,150</p>
+<p class="text-[10px] text-on-surface-variant">Lifetime Spend</p>
+</div>
+</div>
+<div class="p-4 flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant/30" data-alt="A stylish young man with glasses and a minimalist watch, looking at a digital tablet. Dark studio-like lighting with vibrant green ambient glow in a luxury hospitality setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEZI9eqnkaEHKjqgWr1gJ-1hkWBryMTw0OMxljDlH5uhs2KmIi02VZvsNp_cAPMGqUHmeBzR4-ytnDAAI674tr7bfonXEXJzWkSGNo7NZtkdMzTIieS6tiizn-Zs6O5LPH1dudJQ_8i8yYTB7U00qF8ZL_FVa0nlHnooNsJCKWrUgdScd-Lz6oGFo4lSjmy1zJcd8kExOnFYAuUhRJ61pAux1u0vtfyV65ifVZLvyv41-k7Wn7x0Lrsw"/>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg font-bold text-on-surface">Marcus Thorne</h4>
+<p class="text-[12px] text-on-surface-variant">5 visits / mo</p>
+</div>
+<div class="text-right">
+<p class="text-on-surface font-numeric-data">$1,840</p>
+<p class="text-[10px] text-on-surface-variant">Lifetime Spend</p>
+</div>
+</div>
+</div>
+<button class="w-full py-4 text-center text-label-md text-primary hover:bg-primary/10 transition-colors uppercase tracking-widest font-bold">View Full Leaderboard</button>
+</div>
+<!-- Bento Card: Marketing Effectiveness -->
+<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-6 inner-glow">
+<h3 class="font-title-lg text-title-lg text-on-surface mb-6">Marketing Conversion</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-body-md text-on-surface">"Late Night" Promo</span>
+<span class="text-secondary font-numeric-data">420 Redemptions</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 72%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-body-md text-on-surface">Referral Reward</span>
+<span class="text-primary font-numeric-data">184 Redemptions</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 38%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-body-md text-on-surface">Birthday Suite</span>
+<span class="text-tertiary font-numeric-data">92 Redemptions</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 21%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-surface-container rounded-lg border border-outline-variant/10 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[32px]">campaign</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-[12px]">Top Channel</p>
+<p class="text-on-surface font-bold">Instagram Direct Ads</p>
+</div>
+</div>
+</div>
+<!-- Bento Card: Segment Analysis -->
+<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-6 inner-glow relative overflow-hidden group">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 blur-[60px] rounded-full group-hover:bg-primary/20 transition-all"></div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-6">Guest Segments</h3>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-lg flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-label-md font-bold text-on-surface">Solo Professionals</span>
+<span class="text-on-surface-variant font-numeric-data">18%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 18%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-lg flex items-center justify-center text-secondary border border-secondary/20">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-label-md font-bold text-on-surface">Couples</span>
+<span class="text-on-surface-variant font-numeric-data">45%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-lg flex items-center justify-center text-tertiary border border-tertiary/20">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-label-md font-bold text-on-surface">Large Groups</span>
+<span class="text-on-surface-variant font-numeric-data">37%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 37%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<p class="text-on-surface-variant text-body-md italic border-l-2 border-secondary pl-3">"Large group bookings are trending +12% this month, mostly driven by Thursday corporate events."</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full h-16 bg-surface-container dark:bg-surface-container-highest border-t border-outline-variant/30 shadow-lg flex justify-around items-center px-4 z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 rounded-lg p-1 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 rounded-lg p-1 transition-all" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-label-md text-label-md">Shifts</span>
+</a>
+<div class="relative -top-4">
+<button class="w-12 h-12 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center justify-center text-secondary font-bold active:bg-surface-bright/20 rounded-lg p-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 rounded-lg p-1 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-md text-label-md">Vault</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for hovering over data points
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarOps Pro - Elite Management Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#d8e2ff",
+                    "primary-container": "#4d8eff",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#3e2400",
+                    "surface-bright": "#363941",
+                    "surface-container": "#1d2027",
+                    "on-secondary": "#003824",
+                    "secondary": "#4edea3",
+                    "on-primary-fixed": "#001a42",
+                    "primary-fixed-dim": "#adc6ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-background": "#e1e2ec",
+                    "error": "#ffb4ab",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#00311f",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-primary": "#002e6a",
+                    "surface-variant": "#32353c",
+                    "tertiary": "#ffb95f",
+                    "surface-container-high": "#272a31",
+                    "surface": "#10131a",
+                    "background": "#10131a",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-tint": "#adc6ff",
+                    "outline": "#8c909f",
+                    "surface-dim": "#10131a",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-container": "#ca8100",
+                    "inverse-primary": "#005ac2",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "outline-variant": "#424754",
+                    "on-surface": "#e1e2ec",
+                    "primary": "#adc6ff",
+                    "surface-container-highest": "#32353c",
+                    "on-primary-container": "#00285d",
+                    "on-primary-fixed-variant": "#004395",
+                    "surface-container-lowest": "#0b0e15",
+                    "secondary-container": "#00a572",
+                    "on-surface-variant": "#c2c6d6",
+                    "inverse-surface": "#e1e2ec",
+                    "surface-container-low": "#191b23",
+                    "inverse-on-surface": "#2e3038",
+                    "on-tertiary-fixed": "#2a1700",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-tertiary": "#472a00",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "touch-target-min": "44px",
+                    "stack-sm": "8px",
+                    "table-row-height": "56px",
+                    "container-margin": "24px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "title-lg": ["Inter"],
+                    "numeric-data": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .luminous-border {
+            position: relative;
+        }
+        
+        .luminous-border::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(173, 198, 255, 0.3), transparent);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .branch-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .branch-card:hover {
+            background: rgba(77, 142, 255, 0.1);
+            border-color: #4d8eff;
+        }
+
+        .branch-card.active {
+            background: #4d8eff;
+            border-color: #4d8eff;
+            color: #00285d;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex items-center justify-center p-gutter selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- Background Atmospheric Elements -->
+<div class="fixed inset-0 z-0 pointer-events-none">
+<div class="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[30%] h-[30%] bg-secondary/5 rounded-full blur-[100px]"></div>
+</div>
+<!-- Main Container -->
+<main class="relative z-10 w-full max-w-[480px]">
+<!-- Login Section -->
+<section class="fade-in space-y-stack-lg" id="login-section">
+<!-- Brand Identity -->
+<div class="text-center space-y-unit">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-surface-container-high border border-outline-variant mb-stack-md">
+<span class="material-symbols-outlined text-[40px] text-primary" style="font-variation-settings: 'FILL' 1;">liquor</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary tracking-tight">BarOps Pro</h1>
+<p class="font-title-lg text-title-lg text-on-surface-variant">Elite Management Console</p>
+</div>
+<!-- Login Card -->
+<div class="glass-panel rounded-xl p-stack-lg luminous-border">
+<form class="space-y-stack-md" id="login-form" onsubmit="handleLogin(event)">
+<div class="space-y-unit">
+<label class="font-label-md text-label-md text-on-surface-variant" for="email">OPERATOR EMAIL</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">alternate_email</span>
+<input class="w-full h-touch-target-min bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" id="email" placeholder="name@baropspro.com" required="" type="email"/>
+</div>
+</div>
+<div class="space-y-unit">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant" for="password">SECURE ACCESS KEY</label>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full h-touch-target-min bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" id="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-unit">
+<input class="w-5 h-5 rounded border-outline-variant bg-surface-container-lowest text-primary focus:ring-offset-background focus:ring-primary" id="remember" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface-variant cursor-pointer" for="remember">Stay authorized on this terminal</label>
+</div>
+<button class="w-full h-table-row-height bg-primary-container text-on-primary-container font-title-lg rounded-xl flex items-center justify-center gap-2 hover:bg-primary-container/90 active:scale-95 transition-all shadow-lg shadow-primary-container/20 mt-stack-md" type="submit">
+<span>Initialize Session</span>
+<span class="material-symbols-outlined">login</span>
+</button>
+</form>
+<div class="mt-stack-lg pt-stack-md border-t border-outline-variant/30 text-center">
+<p class="font-label-md text-label-md text-on-surface-variant">ENCRYPTED TERMINAL ACCESS ONLY</p>
+</div>
+</div>
+</section>
+<!-- Branch/Shift Selection Section (Hidden Initially) -->
+<section class="hidden space-y-stack-lg" id="selection-section">
+<div class="text-center">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Mission Parameters</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Select operational branch and current shift</p>
+</div>
+<div class="glass-panel rounded-xl p-stack-lg luminous-border space-y-stack-lg">
+<!-- Branch Selection -->
+<div class="space-y-stack-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant">SELECT BRANCH</h3>
+<div class="grid grid-cols-1 gap-2">
+<button class="branch-card flex items-center justify-between p-4 rounded-lg border border-outline-variant bg-surface-container-low text-left" onclick="selectBranch(this, 'Polanco')" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="font-title-lg text-title-lg">Sucursal Polanco</p>
+<p class="font-label-md text-label-md opacity-70">Main Hub • Premium</p>
+</div>
+</div>
+<span class="material-symbols-outlined check-icon opacity-0">check_circle</span>
+</button>
+<button class="branch-card flex items-center justify-between p-4 rounded-lg border border-outline-variant bg-surface-container-low text-left" onclick="selectBranch(this, 'Condesa')" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="font-title-lg text-title-lg">Sucursal Condesa</p>
+<p class="font-label-md text-label-md opacity-70">Bistro Layout • High Traffic</p>
+</div>
+</div>
+<span class="material-symbols-outlined check-icon opacity-0">check_circle</span>
+</button>
+<button class="branch-card flex items-center justify-between p-4 rounded-lg border border-outline-variant bg-surface-container-low text-left" onclick="selectBranch(this, 'Santa Fe')" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="font-title-lg text-title-lg">Sucursal Santa Fe</p>
+<p class="font-label-md text-label-md opacity-70">Skyline Tower • Corporate</p>
+</div>
+</div>
+<span class="material-symbols-outlined check-icon opacity-0">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Shift Selection -->
+<div class="space-y-stack-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant">QUICK SHIFT SELECTION</h3>
+<div class="grid grid-cols-2 gap-3">
+<button class="shift-card group flex flex-col items-center justify-center gap-2 p-stack-md rounded-xl border border-outline-variant bg-surface-container-low hover:border-primary transition-all" onclick="selectShift(this, 'Matutino')" type="button">
+<span class="material-symbols-outlined text-primary text-3xl group-focus:scale-110 transition-transform">light_mode</span>
+<span class="font-title-lg text-title-lg">Turno Matutino</span>
+</button>
+<button class="shift-card group flex flex-col items-center justify-center gap-2 p-stack-md rounded-xl border border-outline-variant bg-surface-container-low hover:border-primary transition-all" onclick="selectShift(this, 'Nocturno')" type="button">
+<span class="material-symbols-outlined text-tertiary text-3xl group-focus:scale-110 transition-transform">dark_mode</span>
+<span class="font-title-lg text-title-lg">Turno Nocturno</span>
+</button>
+</div>
+</div>
+<button class="w-full h-table-row-height bg-primary-container text-on-primary-container font-title-lg rounded-xl flex items-center justify-center gap-2 opacity-50 cursor-not-allowed transition-all mt-stack-md" disabled="" id="confirm-btn">
+<span>Synchronize &amp; Start</span>
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="w-full text-center font-label-md text-label-md text-on-surface-variant hover:text-primary pt-2" onclick="revertToLogin()" type="button">
+                    Switch User Account
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer Security Notice -->
+<footer class="fixed bottom-gutter left-0 w-full flex justify-center z-10 pointer-events-none">
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-high border border-outline-variant rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-md text-[10px] tracking-widest uppercase">AES-256 Encrypted Connection Active</span>
+</div>
+</footer>
+<script>
+        let currentBranch = null;
+        let currentShift = null;
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            // Loading state
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Authenticating...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('selection-section').classList.remove('hidden');
+                document.getElementById('selection-section').classList.add('fade-in');
+            }, 800);
+        }
+
+        function selectBranch(element, name) {
+            document.querySelectorAll('.branch-card').forEach(card => {
+                card.classList.remove('active', 'bg-primary', 'text-on-primary-container');
+                card.querySelector('.check-icon').classList.add('opacity-0');
+            });
+            
+            element.classList.add('active');
+            element.querySelector('.check-icon').classList.remove('opacity-0');
+            currentBranch = name;
+            validateSelection();
+        }
+
+        function selectShift(element, name) {
+            document.querySelectorAll('.shift-card').forEach(card => {
+                card.classList.remove('bg-primary-container/20', 'border-primary');
+            });
+            
+            element.classList.add('bg-primary-container/20', 'border-primary');
+            currentShift = name;
+            validateSelection();
+        }
+
+        function validateSelection() {
+            const btn = document.getElementById('confirm-btn');
+            if (currentBranch && currentShift) {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.classList.add('shadow-lg', 'shadow-primary-container/20');
+            }
+        }
+
+        function revertToLogin() {
+            document.getElementById('selection-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('login-section').classList.add('fade-in');
+            
+            // Reset selection states
+            currentBranch = null;
+            currentShift = null;
+            document.querySelectorAll('.branch-card').forEach(card => {
+                card.classList.remove('active');
+                card.querySelector('.check-icon').classList.add('opacity-0');
+            });
+            document.querySelectorAll('.shift-card').forEach(card => {
+                card.classList.remove('bg-primary-container/20', 'border-primary');
+            });
+            const btn = document.getElementById('confirm-btn');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        // Visual flare micro-interaction for the card
+        document.addEventListener('mousemove', (e) => {
+            const card = document.querySelector('.glass-panel:not(.hidden)');
+            if (!card) return;
+            
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            }
+        });
+    </script>
+</body></html>

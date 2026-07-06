@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .inner-glow {
+            box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        body {
+            background-color: #0F172A;
+            color: #e1e2ec;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#adc6ff",
+                        "tertiary": "#ffb95f",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-low": "#191b23",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#272a31",
+                        "surface-container": "#1d2027",
+                        "primary-container": "#4d8eff",
+                        "inverse-primary": "#005ac2",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#32353c",
+                        "surface-container-lowest": "#0b0e15",
+                        "secondary-container": "#00a572",
+                        "background": "#10131a",
+                        "surface-variant": "#32353c",
+                        "primary": "#adc6ff",
+                        "on-tertiary-container": "#3e2400",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary": "#002e6a",
+                        "surface-bright": "#363941",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary": "#003824",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary-fixed": "#002113",
+                        "on-tertiary": "#472a00",
+                        "surface-dim": "#10131a",
+                        "on-surface": "#e1e2ec",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-container": "#00311f",
+                        "inverse-on-surface": "#2e3038",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#adc6ff",
+                        "on-primary-container": "#00285d",
+                        "surface": "#10131a",
+                        "outline-variant": "#424754",
+                        "on-primary-fixed-variant": "#004395",
+                        "tertiary-container": "#ca8100",
+                        "secondary": "#4edea3",
+                        "outline": "#8c909f",
+                        "inverse-surface": "#e1e2ec",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-secondary-fixed-variant": "#005236",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-primary-fixed": "#001a42",
+                        "on-background": "#e1e2ec",
+                        "error": "#ffb4ab"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Inter"],
+                        "numeric-data": ["Inter"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-hidden">
+<!-- Background Layer (Gestión de Usuarios y Permisos) -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-40 grayscale">
+<img alt="Gestión de Usuarios y Permisos Context" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY15bvoU3I2OAe6tyNbTlxJTRAV88taFmbiCwvHEGB6OgC0geebUYlD8UR-oAMAGYaCm7__6yJMJ-jJ6BHrGJi05N8KAE6-NarmbhzsNbDMHB3oaFxSNuQTUq96hEmpn570qLGK8P2EJAgj22m6tGD2kTL5NI5ZzzKlzYN7IOlfYop8BjVBOkHeKqWw1nGFJyCZYGNjE2lrEWJZ2MXgXjSn_0Bo3GsV2yspfAjyO-Uurf7-4wTJcX9Tg"/>
+</div>
+<!-- Navigation Shell (Desktop) -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container border-r border-outline-variant/10 shadow-xl flex flex-col h-full py-6 z-10 opacity-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container">nightlife</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-black text-primary">BarOps Pro</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Management</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Operations</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 bg-primary-container/10 text-primary border-l-4 border-primary">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Users</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Inventory</span>
+</div>
+</nav>
+</aside>
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/60 backdrop-blur-sm">
+<!-- Invite User Modal -->
+<div class="w-full max-w-xl glass-panel rounded-xl shadow-2xl overflow-hidden inner-glow transform transition-all duration-300 scale-100 border border-outline/20">
+<!-- Modal Header -->
+<div class="px-8 pt-8 pb-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary-container/20 rounded-lg">
+<span class="material-symbols-outlined text-primary">person_add</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">Invitar Nuevo Colaborador</h1>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Content -->
+<div class="px-8 py-6 space-y-6 max-h-[716px] overflow-y-auto custom-scrollbar">
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Correo Electrónico</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">mail</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg py-3 pl-10 pr-4 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline-variant" placeholder="ejemplo@barops.pro" type="email"/>
+</div>
+</div>
+<!-- Dual Column: Role and Branches -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Role Dropdown -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Asignar Rol</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg py-3 px-4 text-on-surface appearance-none focus:ring-2 focus:ring-primary outline-none transition-all">
+<option>Seleccionar Rol</option>
+<option>Propietario</option>
+<option>Administrador</option>
+<option>Gerente</option>
+<option>Staff</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Branches Dropdown -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Acceso a Sucursales</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg py-3 px-4 text-on-surface appearance-none focus:ring-2 focus:ring-primary outline-none transition-all">
+<option>Main Flagship - Downtown</option>
+<option>Uptown Lounge</option>
+<option>Southside Terrace</option>
+<option>Todas las sucursales</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">location_on</span>
+</div>
+</div>
+</div>
+<!-- Quick Permissions -->
+<div class="space-y-4 pt-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Permisos Rápidos</label>
+<div class="grid grid-cols-1 gap-3">
+<!-- Permission Item 1 -->
+<label class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-outline-variant/10 cursor-pointer hover:bg-surface-container-highest transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-on-surface">Acceso Financiero</p>
+<p class="text-xs text-on-surface-variant">Visualizar reportes de ingresos y egresos</p>
+</div>
+</div>
+<input class="w-6 h-6 rounded border-outline-variant text-primary focus:ring-primary bg-surface-container-lowest" type="checkbox"/>
+</label>
+<!-- Permission Item 2 -->
+<label class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-outline-variant/10 cursor-pointer hover:bg-surface-container-highest transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-on-surface">Gestión de Inventario</p>
+<p class="text-xs text-on-surface-variant">Modificar stock y realizar pedidos a proveedores</p>
+</div>
+</div>
+<input class="w-6 h-6 rounded border-outline-variant text-primary focus:ring-primary bg-surface-container-lowest" type="checkbox"/>
+</label>
+<!-- Permission Item 3 -->
+<label class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-outline-variant/10 cursor-pointer hover:bg-surface-container-highest transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">settings_input_component</span>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-on-surface">Configuración de POS</p>
+<p class="text-xs text-on-surface-variant">Ajustar precios de menú y perfiles de terminal</p>
+</div>
+</div>
+<input class="w-6 h-6 rounded border-outline-variant text-primary focus:ring-primary bg-surface-container-lowest" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Modal Footer Actions -->
+<div class="px-8 py-6 bg-surface-container-highest/30 flex flex-col-reverse sm:flex-row justify-end gap-3 items-center">
+<button class="w-full sm:w-auto px-6 h-[44px] flex items-center justify-center font-title-lg text-title-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-all">
+                    Cancelar
+                </button>
+<button class="w-full sm:w-auto px-8 h-[44px] flex items-center justify-center gap-2 font-title-lg text-title-lg bg-primary-container text-on-primary-container rounded-lg shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                    Enviar Invitación
+                </button>
+</div>
+</div>
+</div>
+<!-- UI Interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Subtle entrance animation for the modal
+            const modal = document.querySelector('.glass-panel');
+            modal.style.opacity = '0';
+            modal.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                modal.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                modal.style.opacity = '1';
+                modal.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Simulation of dropdown focus effects
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(el => {
+                el.addEventListener('focus', () => {
+                    el.closest('.space-y-2')?.querySelector('label')?.classList.add('text-primary');
+                });
+                el.addEventListener('blur', () => {
+                    el.closest('.space-y-2')?.querySelector('label')?.classList.remove('text-primary');
+                });
+            });
+        });
+    </script>
+</body></html>

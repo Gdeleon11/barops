@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarOps Pro | Commissions &amp; Tips Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .inner-glow {
+            box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #10131a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334154;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#93000a",
+                      "on-surface": "#e1e2ec",
+                      "tertiary-container": "#ca8100",
+                      "inverse-primary": "#005ac2",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-primary-fixed": "#001a42",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-tertiary-fixed": "#2a1700",
+                      "inverse-on-surface": "#2e3038",
+                      "secondary": "#4edea3",
+                      "on-secondary-container": "#00311f",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-fixed": "#d8e2ff",
+                      "primary-container": "#4d8eff",
+                      "on-tertiary": "#472a00",
+                      "surface-tint": "#adc6ff",
+                      "on-primary-container": "#00285d",
+                      "outline-variant": "#424754",
+                      "surface-container": "#1d2027",
+                      "surface-container-highest": "#32353c",
+                      "surface-bright": "#363941",
+                      "on-secondary-fixed": "#002113",
+                      "on-surface-variant": "#c2c6d6",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "secondary-container": "#00a572",
+                      "on-secondary-fixed-variant": "#005236",
+                      "error": "#ffb4ab",
+                      "primary": "#adc6ff",
+                      "on-background": "#e1e2ec",
+                      "on-error": "#690005",
+                      "tertiary-fixed": "#ffddb8",
+                      "surface-variant": "#32353c",
+                      "surface-container-high": "#272a31",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-error-container": "#ffdad6",
+                      "background": "#10131a",
+                      "outline": "#8c909f",
+                      "tertiary": "#ffb95f",
+                      "surface-container-lowest": "#0b0e15",
+                      "on-tertiary-container": "#3e2400",
+                      "on-secondary": "#003824",
+                      "on-primary": "#002e6a",
+                      "inverse-surface": "#e1e2ec",
+                      "surface-dim": "#10131a",
+                      "surface": "#10131a",
+                      "surface-container-low": "#191b23"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "table-row-height": "56px",
+                      "unit": "4px",
+                      "touch-target-min": "44px",
+                      "stack-lg": "32px",
+                      "container-margin": "24px",
+                      "stack-md": "16px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "headline-md": ["Outfit"],
+                      "headline-lg-mobile": ["Outfit"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Outfit"],
+                      "display-lg": ["Outfit"],
+                      "numeric-data": ["Inter"],
+                      "title-lg": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Sidebar (Desktop) -->
+<aside class="hidden lg:flex flex-col h-full h-screen w-64 fixed left-0 top-0 bg-surface-container border-r border-outline-variant z-50">
+<div class="px-6 py-8">
+<h1 class="font-display-lg text-display-lg text-primary">BarOps Pro</h1>
+<p class="text-on-surface-variant font-label-md mt-1">Elite Management</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-md">POS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-6">
+<button class="w-full py-3 px-4 bg-primary text-on-primary font-label-md rounded-xl active:scale-95 transition-transform">
+                New Entry
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 min-h-screen flex flex-col">
+<!-- Top Navbar -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant shadow-sm h-table-row-height flex justify-between items-center w-full px-container-margin">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined lg:hidden text-primary" data-icon="menu">menu</span>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Commissions &amp; Tips</h2>
+</div>
+<div class="flex items-center gap-stack-lg">
+<div class="hidden md:flex bg-surface-container-high rounded-full px-4 py-1 border border-outline-variant items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-md text-on-surface-variant">Aug 1 - Aug 15, 2023</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="store">store</span>
+<div class="flex items-center gap-2 pl-2 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a premium hospitality manager in a dark suit, illuminated by dramatic blue and amber accent lighting reflecting a modern bar atmosphere. The image is crisp, high-fidelity, and corporate yet stylish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPDcd6NFRUQIUCCCZYlp_OQCO0hk-4x-RN890KZ3TFWAkDwbfPyKv5Y2042Aepcr855hUleZB5IgwJptzzWLtRGXNoFyXVw2bbToivizaLZw0jBbqrl9A-BQra91JbiOljaN76IqtKnMbNI1KW-pJW0E9u87lp07M3pI7u16ph7dl-5PayiDTm_mfu0mYEcF3W-Z4HNsCjeCaPJ5SNE4VRh67RAoiGgBOoIPGorjztQ7UWbDyXoIkvmA"/>
+</div>
+<span class="hidden md:block font-label-md">Shift Open</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-container-margin space-y-stack-lg">
+<!-- Summary Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter">
+<!-- Total Volume -->
+<div class="glass-panel p-stack-md rounded-xl inner-glow flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Total Sales Volume</span>
+<div class="p-2 bg-primary-container/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+</div>
+<div>
+<p class="font-headline-lg text-headline-lg mt-stack-sm text-on-surface">$142,850.00</p>
+<div class="flex items-center gap-1 mt-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span class="text-label-md">+12.4% from last period</span>
+</div>
+</div>
+</div>
+<!-- Tips Pool -->
+<div class="glass-panel p-stack-md rounded-xl inner-glow flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Shared Tips Pool</span>
+<div class="p-2 bg-secondary-container/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined" data-icon="diversity_3">diversity_3</span>
+</div>
+</div>
+<div>
+<p class="font-headline-lg text-headline-lg mt-stack-sm text-on-surface">$18,420.50</p>
+<div class="flex items-center gap-1 mt-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="group">group</span>
+<span class="text-label-md">24 Active Staff Members</span>
+</div>
+</div>
+</div>
+<!-- Total Commissions -->
+<div class="glass-panel p-stack-md rounded-xl inner-glow flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Total Commissions</span>
+<div class="p-2 bg-tertiary-container/10 rounded-lg text-tertiary">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+</div>
+<div>
+<p class="font-headline-lg text-headline-lg mt-stack-sm text-on-surface">$9,285.25</p>
+<div class="flex items-center gap-1 mt-1 text-tertiary">
+<span class="text-label-md">6.5% Avg. Rate</span>
+</div>
+</div>
+</div>
+<!-- Total Payout -->
+<div class="glass-panel p-stack-md rounded-xl inner-glow flex flex-col justify-between bg-primary-container/5">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Estimated Payout</span>
+<div class="p-2 bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+</div>
+</div>
+<div>
+<p class="font-headline-lg text-headline-lg mt-stack-sm text-primary">$27,705.75</p>
+<div class="flex items-center gap-1 mt-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span class="text-label-md">Calculated: Aug 15 23:59</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-gutter">
+<!-- Commission vs Sales Trend (Large Chart) -->
+<div class="xl:col-span-2 glass-panel p-stack-md rounded-xl inner-glow h-80 flex flex-col">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-title-lg text-title-lg">Commission vs Sales Trend</h3>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-label-md text-primary"><span class="w-2 h-2 rounded-full bg-primary"></span> Sales</span>
+<span class="flex items-center gap-1 text-label-md text-secondary"><span class="w-2 h-2 rounded-full bg-secondary"></span> Commission</span>
+</div>
+</div>
+<div class="flex-1 relative overflow-hidden group">
+
+<!-- Simulated Chart Axes -->
+<div class="absolute inset-0 flex items-end justify-between px-4 pb-2">
+<div class="h-full w-px bg-outline-variant/30"></div>
+<div class="flex-1 flex items-end justify-around h-full">
+<div class="w-8 bg-primary/40 rounded-t-sm h-[40%]"></div>
+<div class="w-8 bg-primary/40 rounded-t-sm h-[60%]"></div>
+<div class="w-8 bg-primary/40 rounded-t-sm h-[55%]"></div>
+<div class="w-8 bg-primary/40 rounded-t-sm h-[80%]"></div>
+<div class="w-8 bg-primary/40 rounded-t-sm h-[90%]"></div>
+<div class="w-8 bg-primary/40 rounded-t-sm h-[75%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Earners (Bento Style) -->
+<div class="glass-panel p-stack-md rounded-xl inner-glow h-80 flex flex-col">
+<h3 class="font-title-lg text-title-lg mb-stack-md">Top Earners</h3>
+<div class="space-y-4 flex-1 overflow-y-auto pr-2">
+<!-- Top Earner 1 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold">1</div>
+<div class="flex-1">
+<p class="font-label-md text-on-surface">Elena Rodriguez</p>
+<p class="text-[10px] text-on-surface-variant">Lead Mixologist</p>
+</div>
+<div class="text-right">
+<p class="font-numeric-data text-secondary">$3,420.00</p>
+<div class="w-16 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-full"></div>
+</div>
+</div>
+</div>
+<!-- Top Earner 2 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold">2</div>
+<div class="flex-1">
+<p class="font-label-md text-on-surface">Marcus Chen</p>
+<p class="text-[10px] text-on-surface-variant">Floor Manager</p>
+</div>
+<div class="text-right">
+<p class="font-numeric-data text-on-surface">$2,980.50</p>
+<div class="w-16 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+</div>
+<!-- Top Earner 3 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold">3</div>
+<div class="flex-1">
+<p class="font-label-md text-on-surface">Sarah Jenkins</p>
+<p class="text-[10px] text-on-surface-variant">Senior Server</p>
+</div>
+<div class="text-right">
+<p class="font-numeric-data text-on-surface">$2,750.00</p>
+<div class="w-16 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Payout Table -->
+<div class="glass-panel rounded-xl inner-glow overflow-hidden">
+<div class="p-stack-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h3 class="font-title-lg text-title-lg">Staff Payout Breakdown</h3>
+<p class="text-label-md text-on-surface-variant">Full calculation for current pay cycle</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span> Export CSV
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md shadow-lg active:scale-98 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="publish">publish</span> Approve All
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low">
+<th class="px-6 py-4 font-label-md text-on-surface-variant">Staff Member</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-right">Sales Volume</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-right">Comm. %</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-right">Comm. Amt</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-right">Direct Tips</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-right">Pool Share</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-right bg-primary-container/10">Total Payout</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Table Row 1 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of a female mixologist with a confident expression, wearing a leather apron in a moody, low-light high-end bar setting. The lighting is sophisticated with neon blue and warm copper highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1RNNDFQWKLaZD85qKMm-sfo_6xs16_CySq7vm5kdbhM6QIIQAoNt1vRjhyeZj9ZZISut_odstEHCkTdSBN9xVXo1dDzkR0I9OGC7NHrMLxlkvllVF_OhysnbAupwMaYrSOwAx4ztjKM9DcCfX5RD1m77hNPbI0f-8VzuPfUx2ha6VXMkPMaoncX0y-5owlUx9z_0blLL07x69y4DbRW8-MnyubokqJ97bLsZG1PXYJIRUmJHcYyTA7Q"/>
+</div>
+<div>
+<p class="font-label-md">Elena Rodriguez</p>
+<p class="text-[10px] text-on-surface-variant">ID: #SRV-102</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data">$42,850.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">5.0%</td>
+<td class="px-6 py-4 text-right font-numeric-data">$2,142.50</td>
+<td class="px-6 py-4 text-right font-numeric-data">$850.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">$427.50</td>
+<td class="px-6 py-4 text-right font-numeric-data font-bold text-primary bg-primary-container/5">$3,420.00</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-secondary/20 text-secondary text-[10px] font-bold rounded-full uppercase tracking-wider">Pending</span>
+</td>
+</tr>
+<!-- Table Row 2 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A portrait of a male floor manager in a sharp professional vest, standing in a blurred background of an elegant urban bar at night. Cinematic lighting features high contrast and deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8itZW5PMU0t8OPKwDt_P4eMcnSw-Th9Q0Pw47e_9CTxtrk8FfpGaVFm1Kc63Zr74H5O0DaYn6G5fCNyOQzoOw5Ec0qGpKI0CPBGQTaeGlMZRnm6bcZ3ZThztENDLC4z-EHkiDs1FZtXT1LAq6cIx3YI-uwx-plXK89CpgX7EOfpgw9nNHeI6ulTaYBjVCvL8vnWOaMEB1R6BbOXgb51-q16uMGBS-9kBuh78n9InYKUaqiY205GQLWA"/>
+</div>
+<div>
+<p class="font-label-md">Marcus Chen</p>
+<p class="text-[10px] text-on-surface-variant">ID: #MGR-405</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data">$35,210.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">4.5%</td>
+<td class="px-6 py-4 text-right font-numeric-data">$1,584.45</td>
+<td class="px-6 py-4 text-right font-numeric-data">$968.55</td>
+<td class="px-6 py-4 text-right font-numeric-data">$427.50</td>
+<td class="px-6 py-4 text-right font-numeric-data font-bold text-primary bg-primary-container/5">$2,980.50</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-secondary/20 text-secondary text-[10px] font-bold rounded-full uppercase tracking-wider">Pending</span>
+</td>
+</tr>
+<!-- Table Row 3 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A friendly senior server in a clean white shirt and suspenders, smiling in a warm-lit upscale bistro setting. The image is professional, sharp, and focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzdkZ6x8gMTDDcElyIWmUotu6MIZ6hYTj999daLDo7S64TuRJiBneC6GE_Ni9NiCWroY1qJ1cjcFLszk_mOvs23oP9N4kbGYViG1KQU2i6A-pO5u33-8M-VlfNr6_mKrYO2K7BiyPWujEZIO_9dq8IxHpGGRXLtRFQa99UqBLcS8y3svtfcam5RKyiLC5rjoxVFtTPjOmvxKygmLwo2Tm7zYIh7tJy-2eHCU8ycQ3Du-82LOLX-7-NpA"/>
+</div>
+<div>
+<p class="font-label-md">Sarah Jenkins</p>
+<p class="text-[10px] text-on-surface-variant">ID: #SRV-201</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data">$28,450.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">5.0%</td>
+<td class="px-6 py-4 text-right font-numeric-data">$1,422.50</td>
+<td class="px-6 py-4 text-right font-numeric-data">$900.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">$427.50</td>
+<td class="px-6 py-4 text-right font-numeric-data font-bold text-primary bg-primary-container/5">$2,750.00</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-tertiary/20 text-tertiary text-[10px] font-bold rounded-full uppercase tracking-wider">On Hold</span>
+</td>
+</tr>
+<!-- Table Row 4 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young male bartender focused on crafting a cocktail, surrounded by high-end liquor bottles in a dimly lit bar. Dynamic lighting captures motion blur and liquid sparkles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh6jl7Mi1aA-LwJ5wBPP1hFW4boz2fDFrJ6-DSlR1xZQuBa7Y8XbQKWaHRDfc0J96KHMJCEW1RB6q0d7AXYwFyBY3vZqKnrqF5-ZBcgAnm1wp82wPbmvDmWhZZdysR4btGd10ytX3rIjzETrsiieWwy0Qy6E6WkBgCyU0sCP9X9JNuifDcRKA-sbUWKpDHHOSfvzdkk_eVPi9lu9G-OCWQT3e-vRd1Zim5teNsQ838xDYm_7RMACHzuw"/>
+</div>
+<div>
+<p class="font-label-md">Liam Foster</p>
+<p class="text-[10px] text-on-surface-variant">ID: #BRT-332</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data">$22,100.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">4.0%</td>
+<td class="px-6 py-4 text-right font-numeric-data">$884.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">$650.00</td>
+<td class="px-6 py-4 text-right font-numeric-data">$427.50</td>
+<td class="px-6 py-4 text-right font-numeric-data font-bold text-primary bg-primary-container/5">$1,961.50</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-secondary/20 text-secondary text-[10px] font-bold rounded-full uppercase tracking-wider">Pending</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination/Table Footer -->
+<div class="px-6 py-4 border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="text-label-md text-on-surface-variant">Showing 1 to 4 of 24 staff</span>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant rounded hover:bg-surface-variant transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="p-2 border border-outline-variant rounded hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Spacer for Mobile Nav -->
+<div class="h-20 lg:hidden"></div>
+</main>
+<!-- Bottom Navbar (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 bg-surface-container-high border-t border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="text-label-md">POS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="table_restaurant">table_restaurant</span>
+<span class="text-label-md">Tables</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-label-md">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for staff rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.classList.add('bg-primary-container/5');
+            });
+            row.addEventListener('mouseleave', () => {
+                row.classList.remove('bg-primary-container/5');
+            });
+        });
+
+        // Search bar animation logic or placeholder handling
+        const topSearch = document.querySelector('header .material-symbols-outlined[data-icon="store"]');
+        if (topSearch) {
+            topSearch.addEventListener('click', () => {
+                console.log('Switching store view...');
+                // Trigger transition effect
+                document.body.style.opacity = '0.7';
+                setTimeout(() => document.body.style.opacity = '1', 150);
+            });
+        }
+    </script>
+</body></html>

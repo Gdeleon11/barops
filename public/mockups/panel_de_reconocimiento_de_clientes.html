@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nocturne Elite - Customer Recognition</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#00285d",
+                    "inverse-surface": "#e1e2ec",
+                    "tertiary": "#ffb95f",
+                    "on-surface": "#e1e2ec",
+                    "secondary": "#4edea3",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-dim": "#10131a",
+                    "on-secondary-container": "#00311f",
+                    "tertiary-container": "#ca8100",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#272a31",
+                    "primary": "#adc6ff",
+                    "surface-container-low": "#191b23",
+                    "secondary-container": "#00a572",
+                    "on-tertiary": "#472a00",
+                    "inverse-primary": "#005ac2",
+                    "surface-variant": "#32353c",
+                    "surface": "#10131a",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-secondary-fixed-variant": "#005236",
+                    "primary-container": "#4d8eff",
+                    "on-tertiary-container": "#3e2400",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-primary-fixed": "#001a42",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-highest": "#32353c",
+                    "inverse-on-surface": "#2e3038",
+                    "error-container": "#93000a",
+                    "surface-container": "#1d2027",
+                    "primary-fixed": "#d8e2ff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-secondary-fixed": "#002113",
+                    "surface-bright": "#363941",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-error": "#690005",
+                    "surface-tint": "#adc6ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-primary": "#002e6a",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e1e2ec",
+                    "on-secondary": "#003824",
+                    "background": "#10131a",
+                    "outline": "#8c909f",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#424754",
+                    "surface-container-lowest": "#0b0e15"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "24px",
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "touch-target-min": "44px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "table-row-height": "56px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Outfit"],
+                    "display-lg": ["Outfit"],
+                    "title-lg": ["Inter"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "numeric-data": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #10131a;
+            color: #e1e2ec;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .neon-border-active {
+            box-shadow: 0 0 10px rgba(173, 198, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col h-full bg-surface-container-low border-r border-outline-variant z-[60]">
+<div class="px-6 py-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary mb-1">Nocturne Elite</h1>
+<p class="text-on-surface-variant font-label-md text-label-md">Evening Shift</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">floor_lamp</span>
+<span>Floor Plan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span>Service</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Briefing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span>Shift Log</span>
+</a>
+<!-- Active State: Guests (CRM) -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10 active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_search</span>
+<span class="font-bold">Guests</span>
+</a>
+</nav>
+<div class="p-4 mt-auto space-y-2 border-t border-outline-variant">
+<button class="w-full py-3 bg-primary text-on-primary font-bold rounded-lg hover:brightness-110 active:scale-95 transition-all">
+                New Reservation
+            </button>
+<div class="flex flex-col pt-4">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help_outline</span>
+<span class="text-sm">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 z-50 flex justify-between items-center h-14 w-[calc(100%-256px)] ml-64 px-6 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary font-bold">Command Center</span>
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-outline">
+<span class="material-symbols-outlined text-lg">search</span>
+</span>
+<input class="bg-surface-container-highest border-none rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-primary placeholder:text-outline-variant" placeholder="Search guests or tables..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-opacity relative active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-opacity active:opacity-80">
+<span class="material-symbols-outlined">emergency_home</span>
+</button>
+<div class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant">
+<span class="text-right hidden xl:block">
+<p class="text-sm font-bold text-on-surface leading-none">Julian V.</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Bar Manager</p>
+</span>
+<span class="material-symbols-outlined text-primary text-3xl">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-14 p-container-margin h-[calc(100vh-56px)] overflow-y-auto">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Header Identity Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-md text-label-md uppercase tracking-wider">Diamond Tier Member</span>
+<span class="text-secondary flex items-center gap-1 font-label-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+                            VVIP
+                        </span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Alexander Von Heist</h2>
+<p class="text-on-surface-variant font-body-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+                        Sitting at <span class="text-primary font-bold">Bar Lounge, Stool 04</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-6 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">history</span>
+                        View Full History
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Guest Profile Summary -->
+<div class="md:col-span-4 space-y-6">
+<!-- Guest Photo Card -->
+<div class="glass-card rounded-xl p-6 overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-surface-container-highest/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold border border-outline-variant">VISIT #42</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-32 h-32 rounded-full border-4 border-primary/20 p-1 mb-4 relative">
+<img class="w-full h-full object-cover rounded-full" data-alt="A sophisticated close-up portrait of an elegant man in his 40s with sharp features and a tailored dark suit. He is captured in dramatic, low-key bar lighting with warm amber highlights reflecting off his glass. The style is cinematic and high-contrast, perfectly matching a luxury dark-mode hospitality CRM aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLh6SsLyuTqbOVspFqwl8mAoW03aeoMcz5gU_Fp4Srwowai08-9Uuu7bqJOWFx7lLItVAi7mdOi6y74Dp7jYdEnrtnbVBmYgtNaXmyh8UBVXLXrKk8Q2Uvx4Ym4MN9zaS8hwHys5QaqqdncTyYaP-B8csm-wjxUaELd3tl0cafugDMQyvP-UtBu49rDi6FhSi1Cnl_xmXGVuS5hEWt5DRv-zKDro8FOOOewB85jRRGu0WhEY7rlqjpDg"/>
+<div class="absolute bottom-1 right-1 bg-secondary w-6 h-6 rounded-full flex items-center justify-center border-2 border-surface">
+<span class="material-symbols-outlined text-on-secondary text-xs font-bold">check</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1">Alexander Von Heist</h3>
+<p class="text-on-surface-variant text-sm mb-4 italic">"Prefers quiet corners, high-end bourbons."</p>
+<div class="w-full grid grid-cols-2 gap-2 text-left">
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/30">
+<p class="text-[10px] text-outline uppercase tracking-widest mb-1">Last Visit</p>
+<p class="font-numeric-data text-on-surface">Oct 12, 2023</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/30">
+<p class="text-[10px] text-outline uppercase tracking-widest mb-1">Avg Spend</p>
+<p class="font-numeric-data text-secondary">$340.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Critical Alerts: Allergies & Preferences -->
+<div class="glass-card rounded-xl p-6 border-l-4 border-error">
+<div class="flex items-center gap-2 mb-4 text-error">
+<span class="material-symbols-outlined">warning</span>
+<h3 class="font-title-lg text-title-lg">Critical Care</h3>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-error-container/10 rounded-lg border border-error/20">
+<span class="text-sm font-bold text-error">ALLERGY: SHELLFISH</span>
+<span class="material-symbols-outlined text-sm text-error">info</span>
+</div>
+<div class="p-3 bg-surface-container-highest rounded-lg border border-outline-variant/30">
+<p class="text-xs text-outline mb-1">Dietary Restriction</p>
+<p class="text-sm">Gluten-free spirits only. No beer.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Operational Controls -->
+<div class="md:col-span-8 space-y-6">
+<!-- The Usual & Quick Actions -->
+<div class="glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-title-lg text-title-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">local_bar</span>
+                                The Usual
+                            </h3>
+<span class="text-xs text-outline italic">Updated 2 days ago</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Drink Card -->
+<div class="bg-surface-container-high hover:bg-surface-container-highest transition-all p-4 rounded-xl border border-outline-variant group cursor-pointer active:scale-95">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">wine_bar</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Vesper Martini</p>
+<p class="text-xs text-on-surface-variant">Extra Dry, Blue Cheese Olives</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Drink Card 2 -->
+<div class="bg-surface-container-high hover:bg-surface-container-highest transition-all p-4 rounded-xl border border-outline-variant group cursor-pointer active:scale-95">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-tertiary/10 rounded-lg flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-3xl">liquor</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Macallan 18</p>
+<p class="text-xs text-on-surface-variant">Neat, Crystal Glassware</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 py-4 bg-surface-container-lowest border border-dashed border-outline-variant rounded-xl flex items-center justify-center gap-2 text-outline hover:text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined">edit_note</span>
+                                Add Special Preference
+                            </button>
+<button class="flex-1 py-4 bg-primary text-on-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">send</span>
+                                Order 'The Usual' Now
+                            </button>
+</div>
+</div>
+<!-- Visit Summary & Trends -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<div class="glass-card rounded-xl p-6">
+<h4 class="font-label-md text-label-md text-outline uppercase tracking-widest mb-4">Sentiment &amp; Mood</h4>
+<div class="flex items-center justify-between">
+<div class="space-y-1">
+<p class="text-body-lg font-bold">Frequent Guest</p>
+<p class="text-xs text-on-surface-variant">Last 3 visits: Highly Satisfied</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sentiment_very_satisfied</span>
+</div>
+</div>
+<div class="mt-4 w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 85%"></div>
+</div>
+<p class="mt-2 text-[10px] text-outline text-right">Loyalty Growth: +12%</p>
+</div>
+<div class="glass-card rounded-xl p-6">
+<h4 class="font-label-md text-label-md text-outline uppercase tracking-widest mb-4">Notes for Staff</h4>
+<div class="space-y-2">
+<p class="text-xs bg-surface-container-lowest p-2 rounded border-l-2 border-primary">"Likes to be addressed as 'Mr. Von Heist' until the second drink."</p>
+<p class="text-xs bg-surface-container-lowest p-2 rounded border-l-2 border-primary">"Will usually buy a round for Table 12 if regulars are present."</p>
+</div>
+</div>
+</div>
+<!-- Recent Orders Table -->
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-title-lg text-title-lg">Recent Transactions</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-lowest text-outline text-[10px] uppercase tracking-widest font-bold">
+<tr>
+<th class="px-6 py-3">Date</th>
+<th class="px-6 py-3">Items</th>
+<th class="px-6 py-3">Amount</th>
+<th class="px-6 py-3">Status</th>
+<th class="px-6 py-3 text-right">Server</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-high transition-colors h-[56px]">
+<td class="px-6 py-3 font-numeric-data">Oct 12</td>
+<td class="px-6 py-3">2x Vesper Martini, 1x Caviar Tartare</td>
+<td class="px-6 py-3 font-numeric-data">$184.00</td>
+<td class="px-6 py-3">
+<span class="px-2 py-0.5 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold">PAID</span>
+</td>
+<td class="px-6 py-3 text-right text-on-surface-variant">Julian V.</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors h-[56px]">
+<td class="px-6 py-3 font-numeric-data">Oct 05</td>
+<td class="px-6 py-3">1x Macallan 18, 1x Wagyu Sliders</td>
+<td class="px-6 py-3 font-numeric-data">$112.50</td>
+<td class="px-6 py-3">
+<span class="px-2 py-0.5 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold">PAID</span>
+</td>
+<td class="px-6 py-3 text-right text-on-surface-variant">Sarah K.</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors h-[56px]">
+<td class="px-6 py-3 font-numeric-data">Sep 28</td>
+<td class="px-6 py-3">3x Old Fashioned, 1x Ribeye</td>
+<td class="px-6 py-3 font-numeric-data">$215.00</td>
+<td class="px-6 py-3">
+<span class="px-2 py-0.5 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold">PAID</span>
+</td>
+<td class="px-6 py-3 text-right text-on-surface-variant">Julian V.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Only for active dashboard flow) -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-[70] neon-border-active">
+<span class="material-symbols-outlined text-4xl">add</span>
+</button>
+<script>
+        // Micro-interactions for button feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'rotate(15deg)';
+                    setTimeout(() => {
+                        icon.style.transform = 'rotate(0deg)';
+                    }, 150);
+                }
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/50');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/50');
+        });
+    </script>
+</body></html>

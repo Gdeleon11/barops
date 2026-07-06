@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#00285d",
+                    "inverse-surface": "#e1e2ec",
+                    "tertiary": "#ffb95f",
+                    "on-surface": "#e1e2ec",
+                    "secondary": "#4edea3",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-dim": "#10131a",
+                    "on-secondary-container": "#00311f",
+                    "tertiary-container": "#ca8100",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#272a31",
+                    "primary": "#adc6ff",
+                    "surface-container-low": "#191b23",
+                    "secondary-container": "#00a572",
+                    "on-tertiary": "#472a00",
+                    "inverse-primary": "#005ac2",
+                    "surface-variant": "#32353c",
+                    "surface": "#10131a",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-secondary-fixed-variant": "#005236",
+                    "primary-container": "#4d8eff",
+                    "on-tertiary-container": "#3e2400",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-primary-fixed": "#001a42",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-highest": "#32353c",
+                    "inverse-on-surface": "#2e3038",
+                    "error-container": "#93000a",
+                    "surface-container": "#1d2027",
+                    "primary-fixed": "#d8e2ff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-secondary-fixed": "#002113",
+                    "surface-bright": "#363941",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-error": "#690005",
+                    "surface-tint": "#adc6ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-primary": "#002e6a",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e1e2ec",
+                    "on-secondary": "#003824",
+                    "background": "#10131a",
+                    "outline": "#8c909f",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#424754",
+                    "surface-container-lowest": "#0b0e15"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "24px",
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "touch-target-min": "44px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "table-row-height": "56px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Outfit"],
+                    "display-lg": ["Outfit"],
+                    "title-lg": ["Inter"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "numeric-data": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0f172a; /* Base Level 0 */
+            color: #e1e2ec;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card-elevation-1 {
+            background-color: #1e293b;
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.1);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- SIDE NAV BAR -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col h-full z-40">
+<div class="px-6 py-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary mb-1">Nocturne Elite</h1>
+<p class="font-body-md text-on-surface-variant opacity-70">Evening Shift</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">floor_lamp</span>
+<span>Floor Plan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span>Service</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10 active:scale-95 duration-150 rounded-r-lg" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Briefing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span>Shift Log</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span>Guests</span>
+</a>
+</nav>
+<div class="px-6 py-6">
+<button class="w-full py-3 px-4 bg-primary text-on-primary font-bold rounded-lg active:scale-95 transition-transform">
+                New Reservation
+            </button>
+</div>
+<div class="px-3 pb-6 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 right-0 z-30 flex justify-between items-center h-14 w-[calc(100%-256px)] ml-64 px-6 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary font-bold">Command Center</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-high border-none rounded-full pl-10 pr-4 py-1 text-sm w-64 focus:ring-1 focus:ring-primary" placeholder="Search orders, staff, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-opacity cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-opacity cursor-pointer">emergency_home</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-opacity cursor-pointer">account_circle</span>
+</div>
+</div>
+</header>
+<!-- DASHBOARD CANVAS -->
+<div class="mt-14 p-6 overflow-y-auto h-[calc(100vh-56px)]">
+<!-- HEADER INFO -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Operational Briefing</h2>
+<p class="text-on-surface-variant font-body-md">Friday, October 27th • Evening Shift • Service Status: <span class="text-secondary font-bold">PRE-SHIFT</span></p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-container-high border border-outline-variant rounded-lg flex items-center gap-2 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-sm">print</span>
+<span class="font-label-md text-label-md">PRINT BRIEFING</span>
+</button>
+<button class="px-4 py-2 bg-primary-container text-on-primary-container rounded-lg font-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+<span class="font-label-md text-label-md uppercase">Start Shift</span>
+</button>
+</div>
+</div>
+<!-- BENTO GRID LAYOUT -->
+<div class="grid grid-cols-12 gap-6">
+<!-- SALES TARGETS vs CURRENT (4 COL) -->
+<div class="col-span-12 lg:col-span-4 card-elevation-1 rounded-xl p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-title-lg text-title-lg text-primary">Sales Targets</h3>
+<span class="material-symbols-outlined text-on-surface-variant">monitoring</span>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-md text-on-surface-variant">Food &amp; Beverage</span>
+<span class="font-numeric-data text-numeric-data text-on-surface">$12,450 / $18,000</span>
+</div>
+<div class="h-2 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 69%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-md text-on-surface-variant">Bar &amp; Wine</span>
+<span class="font-numeric-data text-numeric-data text-on-surface">$8,120 / $10,000</span>
+</div>
+<div class="h-2 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 81%"></div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant flex justify-between items-center">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Projected Covers</p>
+<p class="font-headline-md text-headline-md text-on-surface">142</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Labor Cost %</p>
+<p class="font-headline-md text-headline-md text-tertiary">14.2%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- SPECIALS OF THE DAY (4 COL) -->
+<div class="col-span-12 lg:col-span-4 card-elevation-1 rounded-xl overflow-hidden flex flex-col">
+<div class="p-6 pb-2">
+<h3 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">auto_awesome</span>
+                            Specials of the Day
+                        </h3>
+</div>
+<div class="flex-1 overflow-y-auto px-6 pb-6">
+<div class="mt-4 space-y-4">
+<div class="group">
+<p class="text-[10px] font-bold text-secondary uppercase mb-1">Kitchen</p>
+<div class="flex justify-between items-start">
+<p class="font-body-lg text-body-lg text-on-surface">Pan-Seared Sea Bass</p>
+<span class="font-numeric-data text-numeric-data text-on-surface-variant">$42</span>
+</div>
+<p class="text-sm text-on-surface-variant mt-1 italic">Saffron risotto, charred asparagus, lemon foam.</p>
+</div>
+<div class="group">
+<p class="text-[10px] font-bold text-tertiary uppercase mb-1">Bar</p>
+<div class="flex justify-between items-start">
+<p class="font-body-lg text-body-lg text-on-surface">The Obsidian Sour</p>
+<span class="font-numeric-data text-numeric-data text-on-surface-variant">$18</span>
+</div>
+<p class="text-sm text-on-surface-variant mt-1 italic">Blackberry infused gin, activated charcoal, egg white.</p>
+</div>
+<div class="group border-t border-outline-variant pt-4">
+<p class="text-[10px] font-bold text-error uppercase mb-1">Sold Out / Low Stock</p>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-error">warning</span>
+<span class="font-body-md">Wagyu Ribeye (Only 3 left)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TEAM ASSIGNMENTS (4 COL) -->
+<div class="col-span-12 lg:col-span-4 card-elevation-1 rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-title-lg text-title-lg text-primary">Team Assignments</h3>
+<span class="material-symbols-outlined text-on-surface-variant">groups</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-surface-container-highest/30 rounded-lg border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xs">MA</div>
+<div>
+<p class="text-sm font-bold">Marco Andre</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Floor Manager</p>
+</div>
+</div>
+<span class="text-[10px] px-2 py-1 bg-surface-container-highest rounded text-on-surface-variant">ALL AREAS</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-highest/30 rounded-lg border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A professional headshot of a female hospitality worker in her late 20s with a warm but focused expression, wearing a minimalist black uniform. The background is a sophisticated, softly blurred dark wood restaurant interior with warm ambient lighting. Professional studio photography style, cinematic lighting, ultra-sharp detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByTJqYt3Nvf7WT_Z8Wz09rhkujUn_a9fOIxRmMTgif3XPN05AAiH9tfdOLEIDR6KMIbFLfG702Kor2QwVaTUCFxG75HHX9qccfwTbXxelYbGkVG8DachXlHspgAs6I8N9IkICdh5gCtSPshi-Kq6GCcsp3g-aYMKix6kKmxcoXa6kpGfYJitCwwTWXkBRUM9nUjNHKQjohJjPe7Xn1wObvB--VcgTMYOxDGTl_oXgFeGQLKhOVp6c1vg"/>
+<div>
+<p class="text-sm font-bold">Sarah Chen</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Lead Server</p>
+</div>
+</div>
+<span class="text-[10px] px-2 py-1 bg-primary/20 text-primary rounded font-bold">SECTION A</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-highest/30 rounded-lg border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs">JP</div>
+<div>
+<p class="text-sm font-bold">Julian Price</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Mixologist</p>
+</div>
+</div>
+<span class="text-[10px] px-2 py-1 bg-secondary/20 text-secondary rounded font-bold">MAIN BAR</span>
+</div>
+<button class="w-full py-2 border border-dashed border-outline-variant rounded-lg text-on-surface-variant text-xs hover:text-primary hover:border-primary transition-all mt-4">
+                            + Edit Roster
+                        </button>
+</div>
+</div>
+<!-- DIGITAL SHIFT LOG (8 COL) -->
+<div class="col-span-12 lg:col-span-8 card-elevation-1 rounded-xl flex flex-col h-[400px]">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">history_edu</span>
+                            Digital Shift Log
+                        </h3>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-xs text-on-surface-variant border border-outline-variant">Incidents (2)</span>
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-xs text-on-surface-variant border border-outline-variant">Feedback (4)</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-0">
+<table class="w-full text-left">
+<thead class="sticky top-0 bg-surface-container-high/90 backdrop-blur-md">
+<tr class="text-[10px] text-on-surface-variant uppercase tracking-widest border-b border-outline-variant">
+<th class="px-6 py-3 font-semibold">Time</th>
+<th class="px-6 py-3 font-semibold">Category</th>
+<th class="px-6 py-3 font-semibold">Description</th>
+<th class="px-6 py-3 font-semibold">Author</th>
+<th class="px-6 py-3 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-6 py-4 font-numeric-data text-xs text-on-surface-variant">17:45</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-bold text-tertiary">MAINTENANCE</span>
+</td>
+<td class="px-6 py-4 text-sm">Main walk-in cooler seal leaking. Temporary fix applied.</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">L. Gomez</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">pending</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-6 py-4 font-numeric-data text-xs text-on-surface-variant">18:12</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-bold text-secondary">FEEDBACK</span>
+</td>
+<td class="px-6 py-4 text-sm">Table 12 noted exceptional service from Sarah. Anniversary toast sent.</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">M. Andre</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-6 py-4 font-numeric-data text-xs text-on-surface-variant">19:05</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-bold text-error">INCIDENT</span>
+</td>
+<td class="px-6 py-4 text-sm">Minor glass breakage in POS station 2. Area cleared immediately.</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">S. Chen</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-low">
+<div class="flex gap-4">
+<input class="flex-1 bg-surface border-outline-variant rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-primary" placeholder="Add a quick note to the log..." type="text"/>
+<button class="bg-surface-container-highest hover:bg-surface-bright px-4 py-2 rounded-lg text-primary flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">add_comment</span>
+<span class="font-label-md text-label-md">POST</span>
+</button>
+</div>
+</div>
+</div>
+<!-- GUEST INSIGHTS / HEATMAP (4 COL) -->
+<div class="col-span-12 lg:col-span-4 card-elevation-1 rounded-xl overflow-hidden relative">
+<div class="p-6 absolute top-0 left-0 w-full z-10 bg-gradient-to-b from-surface-container-low to-transparent">
+<h3 class="font-title-lg text-title-lg text-primary">Floor Heatmap</h3>
+<p class="text-[10px] text-on-surface-variant uppercase">Live Capacity: 68%</p>
+</div>
+<div class="w-full h-full min-h-[300px] flex items-center justify-center bg-surface-container-lowest">
+<!-- Abstract representation of a floor plan with glowing zones -->
+<div class="relative w-48 h-48 border-2 border-outline-variant/30 rounded-lg opacity-40">
+<div class="absolute top-4 left-4 w-12 h-12 bg-secondary/20 rounded border border-secondary shadow-[0_0_10px_rgba(78,222,163,0.3)]"></div>
+<div class="absolute top-4 right-4 w-12 h-12 bg-primary/20 rounded border border-primary"></div>
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-24 h-12 bg-tertiary/20 rounded border border-tertiary shadow-[0_0_10px_rgba(255,185,95,0.3)]"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center bg-surface/40 backdrop-blur-sm">
+<div class="text-center p-6">
+<span class="material-symbols-outlined text-4xl text-primary mb-2">map</span>
+<p class="text-sm font-bold text-on-surface">Interactive Map</p>
+<p class="text-xs text-on-surface-variant mt-1">Full floor view available on tablet</p>
+<button class="mt-4 px-4 py-2 border border-primary text-primary text-xs rounded-full hover:bg-primary hover:text-on-primary transition-all">Launch Floor View</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FLOATING ACTION BUTTON (HIDDEN PER RULES ON SUB-PAGES, BUT DASHBOARD IS TOP-LEVEL) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg shadow-primary/20 flex items-center justify-center active:scale-90 transition-transform hover:rotate-90">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<script>
+        // Micro-interactions for live status
+        setInterval(() => {
+            const timeElements = document.querySelectorAll('.font-numeric-data');
+            // This would normally sync with a real clock or backend
+        }, 60000);
+
+        // Simple tab highlight simulation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // In a real SPA this would handle routing
+                console.log('Navigation to:', link.textContent.trim());
+            });
+        });
+    </script>
+</body></html>

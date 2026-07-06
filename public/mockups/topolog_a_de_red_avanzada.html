@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Network Topology | Nocturne Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #10131a; }
+        ::-webkit-scrollbar-thumb { background: #32353c; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #424754; }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 2px var(--glow-color)); opacity: 1; }
+            50% { filter: drop-shadow(0 0 8px var(--glow-color)); opacity: 0.8; }
+        }
+        .node-pulse-success { --glow-color: #4edea3; animation: pulse-glow 2s infinite ease-in-out; }
+        .node-pulse-warning { --glow-color: #ffb95f; animation: pulse-glow 1.5s infinite ease-in-out; }
+        .node-pulse-error { --glow-color: #ffb4ab; animation: pulse-glow 1s infinite ease-in-out; }
+
+        .data-flow-line {
+            stroke-dasharray: 10;
+            animation: flow 20s linear infinite;
+        }
+        @keyframes flow {
+            from { stroke-dashoffset: 200; }
+            to { stroke-dashoffset: 0; }
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(29, 32, 39, 0.8);
+            border: 1px solid rgba(66, 71, 84, 0.3);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#00285d",
+                        "surface": "#10131a",
+                        "secondary": "#4edea3",
+                        "primary": "#adc6ff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary": "#003824",
+                        "tertiary": "#ffb95f",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-secondary-container": "#00311f",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-tint": "#adc6ff",
+                        "on-tertiary-container": "#3e2400",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#363941",
+                        "primary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#c2c6d6",
+                        "surface-dim": "#10131a",
+                        "surface-container-low": "#191b23",
+                        "on-primary-fixed": "#001a42",
+                        "surface-container": "#1d2027",
+                        "tertiary-container": "#ca8100",
+                        "surface-variant": "#32353c",
+                        "on-background": "#e1e2ec",
+                        "inverse-primary": "#005ac2",
+                        "on-primary": "#002e6a",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-surface": "#e1e2ec",
+                        "outline-variant": "#424754",
+                        "on-tertiary": "#472a00",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-error": "#690005",
+                        "background": "#10131a",
+                        "secondary-container": "#00a572",
+                        "primary-container": "#4d8eff",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#2e3038",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-container-highest": "#32353c",
+                        "surface-container-high": "#272a31",
+                        "outline": "#8c909f",
+                        "surface-container-lowest": "#0b0e15",
+                        "inverse-surface": "#e1e2ec"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "table-row-height": "56px",
+                        "stack-lg": "32px",
+                        "gutter": "16px",
+                        "touch-target-min": "44px",
+                        "stack-md": "16px",
+                        "container-margin": "24px",
+                        "unit": "4px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "numeric-data": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary/30">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-container-margin h-table-row-height bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 z-50">
+<div class="flex items-center gap-stack-md">
+<span class="text-title-lg font-headline-lg tracking-tight text-primary dark:text-primary-fixed-dim">Nocturne Ops</span>
+<div class="h-4 w-[1px] bg-outline-variant/50 mx-2"></div>
+<nav class="flex gap-stack-md items-center h-full">
+<span class="text-label-md font-label-md text-on-surface-variant">Network Management</span>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<span class="text-label-md font-label-md text-primary font-bold border-b-2 border-primary py-4">Topology</span>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="flex items-center gap-stack-sm px-gutter py-2 bg-surface-variant/50 hover:bg-surface-variant transition-colors rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary">refresh</span>
+<span class="text-label-md font-label-md">Rescan Network</span>
+</button>
+<button class="flex items-center gap-stack-sm px-gutter py-2 bg-primary/10 text-primary hover:bg-primary/20 transition-colors rounded-lg border border-primary/20">
+<span class="material-symbols-outlined">auto_fix_high</span>
+<span class="text-label-md font-label-md">Optimize Routing</span>
+</button>
+<div class="flex gap-2">
+<span class="material-symbols-outlined p-2 hover:bg-surface-variant/50 rounded-full cursor-pointer text-on-surface-variant">notifications</span>
+<span class="material-symbols-outlined p-2 hover:bg-surface-variant/50 rounded-full cursor-pointer text-on-surface-variant">help</span>
+<span class="material-symbols-outlined p-2 hover:bg-surface-variant/50 rounded-full cursor-pointer text-on-surface-variant">account_circle</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-table-row-height bg-surface-container dark:bg-surface-container border-r border-outline-variant/20 w-64 z-40">
+<div class="p-gutter">
+<h2 class="text-headline-md font-headline-md text-primary">System Hub</h2>
+<p class="text-label-md font-label-md text-on-surface-variant opacity-70">Terminal #042</p>
+</div>
+<nav class="flex-1 mt-stack-md">
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Command</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-label-md font-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-stack-md text-primary dark:text-primary-fixed-dim border-l-4 border-primary bg-primary-container/10 px-gutter py-stack-md" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-label-md font-label-md">Network</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-label-md font-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-label-md font-label-md">Analytics</span>
+</a>
+</nav>
+<div class="p-gutter border-t border-outline-variant/20">
+<a class="flex items-center gap-stack-md text-on-surface-variant px-gutter py-stack-sm hover:bg-surface-variant/30 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-gutter py-stack-sm hover:bg-surface-variant/30 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span class="text-label-md font-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pl-64 pt-table-row-height h-screen flex flex-col overflow-hidden">
+<!-- Legend / Controls Header -->
+<div class="flex items-center justify-between px-container-margin py-stack-sm bg-surface-container-low border-b border-outline-variant/10">
+<div class="flex items-center gap-stack-lg">
+<div class="flex items-center gap-stack-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+<span class="text-label-md font-label-md text-on-surface-variant">Data Flow</span>
+</div>
+<div class="flex items-center gap-stack-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+<span class="text-label-md font-label-md text-on-surface-variant">Signal Strength</span>
+</div>
+<div class="flex items-center gap-stack-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+<span class="text-label-md font-label-md text-on-surface-variant">Heatmap Mode</span>
+</div>
+</div>
+<div class="flex items-center gap-stack-md text-label-md font-label-md text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> High Performance</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span> Latency Warning</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-error"></span> Connection Lost</span>
+</div>
+</div>
+<div class="flex-1 flex overflow-hidden relative">
+<!-- Topology Canvas Container -->
+<div class="flex-1 bg-surface-dim relative overflow-hidden cursor-grab active:cursor-grabbing" id="canvas-container">
+<!-- Background Grid -->
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#424754 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- SVG Network Connections -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none">
+<defs>
+<filter id="glow">
+<fegaussianblur result="coloredBlur" stddeviation="2.5"></fegaussianblur>
+<femerge>
+<femergenode in="coloredBlur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Core to Router Connections -->
+<path class="data-flow-line" d="M600,400 L400,250" fill="none" filter="url(#glow)" stroke="#4edea3" stroke-width="2"></path>
+<path class="data-flow-line" d="M600,400 L800,250" fill="none" filter="url(#glow)" stroke="#4edea3" stroke-width="2"></path>
+<path class="data-flow-line opacity-50" d="M600,400 L600,650" fill="none" filter="url(#glow)" stroke="#ffb95f" stroke-width="2"></path>
+<!-- Router to Nodes -->
+<path class="opacity-40" d="M400,250 L250,150" fill="none" stroke="#4edea3" stroke-width="1.5"></path>
+<path class="opacity-40" d="M400,250 L300,100" fill="none" stroke="#4edea3" stroke-width="1.5"></path>
+<path class="opacity-40" d="M800,250 L950,150" fill="none" stroke="#4edea3" stroke-width="1.5"></path>
+<path class="opacity-40" d="M600,650 L500,750" fill="none" stroke="#ffb4ab" stroke-width="1.5"></path>
+</svg>
+<!-- Interactive Nodes -->
+<!-- Core Gateway -->
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group" style="left: 600px; top: 400px;">
+<div class="relative flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center border-4 border-primary node-pulse-success ring-4 ring-primary/10 transition-transform group-hover:scale-110 cursor-pointer">
+<span class="material-symbols-outlined text-on-primary-container text-[32px]">router</span>
+</div>
+<div class="mt-stack-sm text-center">
+<span class="text-label-md font-label-md block text-primary">Core Gateway</span>
+<span class="text-[10px] font-numeric-data text-on-surface-variant opacity-60">192.168.1.1</span>
+</div>
+</div>
+</div>
+<!-- Router 01 -->
+<div class="absolute z-10 group" style="left: 400px; top: 250px;">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center border-2 border-secondary node-pulse-success transition-transform group-hover:scale-110 cursor-pointer">
+<span class="material-symbols-outlined text-secondary text-[24px]">settings_input_antenna</span>
+</div>
+<div class="mt-stack-sm text-center">
+<span class="text-label-md font-label-md block">Main Bar AP</span>
+<span class="text-[10px] font-numeric-data text-on-surface-variant">192.168.1.10</span>
+</div>
+</div>
+</div>
+<!-- POS Terminal 01 -->
+<div class="absolute z-10 group" style="left: 250px; top: 150px;">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant hover:border-secondary transition-all group-hover:scale-110 cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">point_of_sale</span>
+</div>
+<div class="mt-stack-sm text-center">
+<span class="text-label-md font-label-md block">POS-01</span>
+<div class="flex gap-1 mt-1 justify-center">
+<div class="w-3 h-1 bg-secondary rounded-full"></div>
+<div class="w-2 h-1 bg-surface-variant rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Kitchen Screen -->
+<div class="absolute z-10 group" style="left: 300px; top: 100px;">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant hover:border-secondary transition-all group-hover:scale-110 cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">tv</span>
+</div>
+<div class="mt-stack-sm text-center">
+<span class="text-label-md font-label-md block text-tertiary">KDS-Main</span>
+<span class="text-[9px] font-numeric-data text-tertiary">Lat: 42ms</span>
+</div>
+</div>
+</div>
+<!-- Broken Link Node -->
+<div class="absolute z-10 group" style="left: 500px; top: 750px;">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center border-2 border-error node-pulse-error transition-all group-hover:scale-110 cursor-pointer">
+<span class="material-symbols-outlined text-error text-[20px]">print_disabled</span>
+</div>
+<div class="mt-stack-sm text-center">
+<span class="text-label-md font-label-md block text-error">Patio-PRN</span>
+<span class="text-[10px] font-numeric-data text-error opacity-70">OFFLINE</span>
+</div>
+</div>
+</div>
+<!-- Floating Tooltip Simulation -->
+<div class="absolute glass-panel p-stack-sm rounded-lg shadow-2xl z-30 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100" style="left: 450px; top: 300px;">
+<div class="flex items-center gap-stack-sm mb-1">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-label-md font-label-md">Main Bar AP</span>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between gap-4">
+<span class="text-[10px] text-on-surface-variant">Uptime</span>
+<span class="text-[10px] font-numeric-data">14d 02h 11m</span>
+</div>
+<div class="flex justify-between gap-4">
+<span class="text-[10px] text-on-surface-variant">Traffic</span>
+<span class="text-[10px] font-numeric-data">452 MB/s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Control Sidebar -->
+<aside class="w-80 bg-surface-container border-l border-outline-variant/30 flex flex-col z-30">
+<div class="p-gutter border-b border-outline-variant/20">
+<h3 class="text-title-lg font-headline-md text-primary mb-1">Device Details</h3>
+<div class="flex items-center gap-stack-sm p-stack-sm bg-surface-variant/30 rounded-lg">
+<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">router</span>
+</div>
+<div>
+<p class="text-body-md font-bold">Core Gateway v2</p>
+<p class="text-[10px] text-on-surface-variant font-numeric-data uppercase tracking-wider">Cisco Meraki MX67</p>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-gutter space-y-stack-lg">
+<!-- Specs List -->
+<section>
+<h4 class="text-label-md font-label-md text-on-surface-variant uppercase mb-stack-sm">Technical Specs</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center py-1 border-b border-outline-variant/10">
+<span class="text-body-md text-on-surface-variant">IP Address</span>
+<span class="text-body-md font-numeric-data">192.168.1.1</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-outline-variant/10">
+<span class="text-body-md text-on-surface-variant">MAC Address</span>
+<span class="text-body-md font-numeric-data">00:1A:2B:3C:4D:5E</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-outline-variant/10">
+<span class="text-body-md text-on-surface-variant">Firmware</span>
+<span class="text-body-md font-numeric-data">v4.2.1-stable</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-outline-variant/10">
+<span class="text-body-md text-on-surface-variant">CPU Load</span>
+<div class="flex items-center gap-2">
+<div class="w-20 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[24%]"></div>
+</div>
+<span class="text-[10px] font-numeric-data">24%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Port Map -->
+<section>
+<div class="flex justify-between items-center mb-stack-sm">
+<h4 class="text-label-md font-label-md text-on-surface-variant uppercase">Physical Ports</h4>
+<span class="text-[10px] text-secondary">8/12 Active</span>
+</div>
+<div class="grid grid-cols-6 gap-2">
+<!-- Port Row -->
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center group relative cursor-help">
+<span class="text-[8px] font-bold text-on-secondary">01</span>
+<div class="w-1 h-1 bg-white rounded-full absolute bottom-1"></div>
+</div>
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-secondary">02</span>
+</div>
+<div class="w-full aspect-square bg-tertiary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-tertiary">03</span>
+</div>
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-secondary">04</span>
+</div>
+<div class="w-full aspect-square bg-surface-variant/50 rounded border border-outline-variant/30 flex items-center justify-center">
+<span class="text-[8px] text-on-surface-variant">05</span>
+</div>
+<div class="w-full aspect-square bg-surface-variant/50 rounded border border-outline-variant/30 flex items-center justify-center">
+<span class="text-[8px] text-on-surface-variant">06</span>
+</div>
+<!-- Second Row -->
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-secondary">07</span>
+</div>
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-secondary">08</span>
+</div>
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-secondary">09</span>
+</div>
+<div class="w-full aspect-square bg-secondary rounded flex flex-col items-center justify-center">
+<span class="text-[8px] font-bold text-on-secondary">10</span>
+</div>
+<div class="w-full aspect-square bg-surface-variant/50 rounded border border-outline-variant/30 flex items-center justify-center">
+<span class="text-[8px] text-on-surface-variant">11</span>
+</div>
+<div class="w-full aspect-square bg-surface-variant/50 rounded border border-outline-variant/30 flex items-center justify-center">
+<span class="text-[8px] text-on-surface-variant">12</span>
+</div>
+</div>
+</section>
+<!-- Bandwidth Graph -->
+<section>
+<div class="flex justify-between items-center mb-stack-sm">
+<h4 class="text-label-md font-label-md text-on-surface-variant uppercase">Real-time Traffic</h4>
+<span class="text-[10px] text-secondary font-numeric-data">↑ 124 MB/s ↓ 340 MB/s</span>
+</div>
+<div class="h-24 bg-surface-container-highest rounded-lg relative overflow-hidden border border-outline-variant/20 flex items-end">
+<!-- Simple SVG Area Chart Simulation -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4edea3" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#4edea3" stop-opacity="0"></stop>
+</lineargradient>
+<path d="M0,80 Q10,75 20,85 T40,60 T60,70 T80,40 T100,65 L100,100 L0,100 Z" fill="url(#chartGradient)"></path>
+<path d="M0,80 Q10,75 20,85 T40,60 T60,70 T80,40 T100,65" fill="none" stroke="#4edea3" stroke-width="2"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col justify-between p-2 pointer-events-none">
+<div class="border-t border-white/5 w-full"></div>
+<div class="border-t border-white/5 w-full"></div>
+<div class="border-t border-white/5 w-full"></div>
+</div>
+</div>
+</section>
+</div>
+<div class="p-gutter border-t border-outline-variant/20">
+<button class="w-full py-stack-md bg-error/10 text-error rounded-lg font-bold text-label-md hover:bg-error/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">power_settings_new</span>
+                        REBOOT DEVICE
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom FAB (Only for major actions as per context) -->
+<!-- Suppressed on detailed screens based on mandate -->
+<script>
+        // Simple Interaction logic for dragging the canvas
+        const container = document.getElementById('canvas-container');
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - container.offsetLeft;
+            startY = e.pageY - container.offsetTop;
+            scrollLeft = container.scrollLeft;
+            scrollTop = container.scrollTop;
+        });
+
+        container.addEventListener('mouseleave', () => { isDragging = false; });
+        container.addEventListener('mouseup', () => { isDragging = false; });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const y = e.pageY - container.offsetTop;
+            const walkX = (x - startX); 
+            const walkY = (y - startY);
+            // In a real canvas, we would transform the internal svg group. 
+            // For this mockup, we just visualize the intent.
+        });
+
+        // Toggle Switch Interactions
+        document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const label = e.target.nextElementSibling.textContent;
+                if(label === 'Data Flow') {
+                    document.querySelectorAll('.data-flow-line').forEach(line => {
+                        line.style.opacity = e.target.checked ? '1' : '0';
+                    });
+                }
+            });
+        });
+
+        // Device Selection Mock
+        document.querySelectorAll('.cursor-pointer').forEach(node => {
+            node.addEventListener('click', () => {
+                // Remove active ring from others
+                document.querySelectorAll('.cursor-pointer').forEach(n => n.classList.remove('ring-4', 'ring-primary'));
+                // Add to current
+                node.classList.add('ring-4', 'ring-primary');
+            });
+        });
+    </script>
+</body></html>

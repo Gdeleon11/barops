@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Staff Directory | BarOps Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .glow-top {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #10131a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334154;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "on-surface": "#e1e2ec",
+                        "tertiary-container": "#ca8100",
+                        "inverse-primary": "#005ac2",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#2e3038",
+                        "secondary": "#4edea3",
+                        "on-secondary-container": "#00311f",
+                        "secondary-fixed": "#6ffbbe",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#4d8eff",
+                        "on-tertiary": "#472a00",
+                        "surface-tint": "#adc6ff",
+                        "on-primary-container": "#00285d",
+                        "outline-variant": "#424754",
+                        "surface-container": "#1d2027",
+                        "surface-container-highest": "#32353c",
+                        "surface-bright": "#363941",
+                        "on-secondary-fixed": "#002113",
+                        "on-surface-variant": "#c2c6d6",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-container": "#00a572",
+                        "on-secondary-fixed-variant": "#005236",
+                        "error": "#ffb4ab",
+                        "primary": "#adc6ff",
+                        "on-background": "#e1e2ec",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-variant": "#32353c",
+                        "surface-container-high": "#272a31",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-error-container": "#ffdad6",
+                        "background": "#10131a",
+                        "outline": "#8c909f",
+                        "tertiary": "#ffb95f",
+                        "surface-container-lowest": "#0b0e15",
+                        "on-tertiary-container": "#3e2400",
+                        "on-secondary": "#003824",
+                        "on-primary": "#002e6a",
+                        "inverse-surface": "#e1e2ec",
+                        "surface-dim": "#10131a",
+                        "surface": "#10131a",
+                        "surface-container-low": "#191b23"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "table-row-height": "56px",
+                        "unit": "4px",
+                        "touch-target-min": "44px",
+                        "stack-lg": "32px",
+                        "container-margin": "24px",
+                        "stack-md": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "numeric-data": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-hidden">
+<!-- SIDE NAV BAR (Desktop) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container border-r border-outline-variant z-50">
+<div class="px-6 py-8 flex flex-col gap-1">
+<h1 class="font-display-lg text-display-lg text-primary">BarOps Pro</h1>
+<p class="text-on-surface-variant text-label-md font-label-md uppercase tracking-widest">Elite Management</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10 active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-4">
+<button class="w-full py-4 bg-primary text-on-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add_circle</span>
+                New Entry
+            </button>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="flex-1 lg:ml-64 flex flex-col h-screen overflow-y-auto">
+<!-- TOP NAV BAR -->
+<header class="flex justify-between items-center w-full px-container-margin h-table-row-height z-40 bg-surface/80 backdrop-blur-md sticky top-0 border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Staff Directory</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex bg-surface-container-high rounded-full px-4 py-1 border border-outline-variant items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-48 text-on-surface placeholder:text-on-surface-variant" placeholder="Search team members..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:opacity-80">
+<span class="material-symbols-outlined">store</span>
+</button>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-3">
+<span class="text-label-md font-label-md text-secondary">Shift Open</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/30">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a hospitality manager in a modern, darkly lit bar setting. He is wearing a crisp black shirt, with soft neon blue ambient light hitting his profile. The background is slightly blurred showing glass racks and sophisticated bar equipment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7nOZhet7Dgb3FxD1NHQopM0wym-ZrsenDJWf6Q65K5DGGjovjxIU1mNpAm-ro-A1CSSU43wr1-0d60kh3f16aWCybTJwr3biwVfLLLO946wcamBpWmgvpU3dVprAw9Dppk8o-p-320fLiAfjTR4LpsL0tpPRI2-ps0ogyVyGsdDLj7tf-c-f_Xm-3e8cBEUfYodOysxLJPppgPHj7_4JHyyaAvd3kJm50Cz09Mbr1aZl4hUx3ZcIUcg"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- DASHBOARD CONTENT -->
+<div class="p-container-margin space-y-stack-lg">
+<!-- KEY STATS (Glass Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="glass-card glow-top rounded-2xl p-6 flex flex-col gap-2">
+<span class="text-on-surface-variant text-label-md">Total Active Staff</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">24</span>
+<span class="text-secondary text-label-md">+2 from last week</span>
+</div>
+</div>
+<div class="glass-card glow-top rounded-2xl p-6 flex flex-col gap-2">
+<span class="text-on-surface-variant text-label-md">On-Shift Now</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-secondary">12</span>
+<span class="text-on-surface-variant text-label-md">of 24 total</span>
+</div>
+</div>
+<div class="glass-card glow-top rounded-2xl p-6 flex flex-col gap-2">
+<span class="text-on-surface-variant text-label-md">Avg. Service Score</span>
+<div class="flex items-baseline gap-2 text-tertiary">
+<span class="font-headline-lg text-headline-lg">4.8</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="glass-card glow-top rounded-2xl p-6 flex flex-col gap-2">
+<span class="text-on-surface-variant text-label-md">Monthly Commissions</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">$3,240</span>
+<span class="text-secondary text-label-md">Payout: 1st</span>
+</div>
+</div>
+</section>
+<!-- FILTERS & ACTION BAR -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap">All Roles</button>
+<button class="bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-outline-variant transition-colors">Bartenders</button>
+<button class="bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-outline-variant transition-colors">Waiters</button>
+<button class="bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-outline-variant transition-colors">Kitchen</button>
+<button class="bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-outline-variant transition-colors">Security</button>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 border border-outline-variant rounded-xl text-label-md font-label-md hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Sort By: Score
+                    </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-primary-container text-on-primary-container rounded-xl text-label-md font-label-md hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                        Add New Staff
+                    </button>
+</div>
+</section>
+<!-- STAFF GRID -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Staff Card 1 -->
+<div class="glass-card glow-top rounded-2xl p-5 hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-inner border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A focused female bartender with dark hair tied back, wearing a professional uniform in a high-end cocktail bar environment. Dim, warm atmospheric lighting creates a sophisticated vibe. The background shows blurred bottles of premium spirits reflecting blue and amber light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2lXhrDdOenw9bZNKSNNIxztWj_TR6qF9UXINVT6wer9r2PnB4HZDaXBvXgl5Ce0hviDM8hRmXkR3qGJUeogfWrQTzyMzmtjU1X-g8aY9XlXyUoJFAd2BqYxFG94D_WYRyLUXWaC9OLfQmqGf3wdp8l59t-TkDAm_zq5vBHkSh5a0sHJyUccVVaxddw_NfnQmNSzBGF2DQK4_cmr65wM0XVZsgFCzEyJBTaPp43C5CN_83CUboia5YUQ"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-secondary border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface group-hover:text-primary transition-colors">Elena Rossi</h3>
+<p class="text-on-surface-variant text-label-md">Lead Bartender</p>
+</div>
+</div>
+<div class="bg-secondary/10 text-secondary px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            On Shift
+                        </div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-outline-variant/30 mb-4">
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Monthly Sales</span>
+<p class="font-numeric-data text-on-surface font-bold">$12,450</p>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Commission</span>
+<p class="font-numeric-data text-secondary font-bold">$872.50</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<button class="text-primary hover:underline text-label-md font-label-md flex items-center gap-1">
+                            View Profile
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Staff Card 2 -->
+<div class="glass-card glow-top rounded-2xl p-5 hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-inner border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional male waiter in his 30s with a sharp, clean-cut appearance. He is wearing a formal dark vest over a white shirt in a luxurious bar lounge. The lighting is moody with subtle golden highlights. He has a friendly but professional expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8-lhLdWxi8wBATGfv3oSe-Pn4y9yrPYREoQr3XHN-SCEjzTZZpBem9IE566e9qsJADp9Uqjrvq5BRa3-mluw-7wykvVOKncCYugipFsHUVNhpBdAd8ZAzMewUUoBITHlbySfVvfNivRY1FxIEqY39Ee49rPdfZVe8Wbr_CgYOlwhRxBAof07drfLYjelNx271XotRXSoL-SWpuLldGvYNB5eLSD1fr5Zw0FxI_8Wa1cRBcRe7r9UkbA"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-tertiary border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface group-hover:text-primary transition-colors">James Miller</h3>
+<p class="text-on-surface-variant text-label-md">Senior Waiter</p>
+</div>
+</div>
+<div class="bg-tertiary/10 text-tertiary px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            On Break
+                        </div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-outline-variant/30 mb-4">
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Monthly Sales</span>
+<p class="font-numeric-data text-on-surface font-bold">$9,120</p>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Commission</span>
+<p class="font-numeric-data text-secondary font-bold">$638.40</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<button class="text-primary hover:underline text-label-md font-label-md flex items-center gap-1">
+                            View Profile
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Staff Card 3 -->
+<div class="glass-card glow-top rounded-2xl p-5 hover:border-primary/50 transition-all group opacity-80">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-inner border border-outline-variant grayscale">
+<img class="w-full h-full object-cover" data-alt="A portrait of a male chef with a focused look, wearing white kitchen attire and a black apron. The setting is a modern industrial kitchen with stainless steel surfaces and professional cooking equipment in the background. Cinematic, low-key lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSGGu_yKG-gLsZYLF1j7TXvf-wFDhcgpxWhIWJamtmcFVXZ6RieSDgL5oIBhWRQIukFTHZa8hTQ90plGYeLvsliHyf9bE7aWHqwl3KqaCxyr59plOEg25k_GV4mXginJlQvXibwGK94O1zQO28Omyu7zJ6ac76lkrjQGRuglvCtIgnZKHGqX3Mz6EvdwPE3_08ab1RMgsoN7HbXqJv3HaZwjK8mtTerUy7JSAJLNTj_6_IrANGPC_0EA"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-outline border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface group-hover:text-primary transition-colors">Marco V.</h3>
+<p class="text-on-surface-variant text-label-md">Head Chef</p>
+</div>
+</div>
+<div class="bg-outline/10 text-on-surface-variant px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            Off Duty
+                        </div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-outline-variant/30 mb-4">
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Kitchen Ops</span>
+<p class="font-numeric-data text-on-surface font-bold">142 Orders</p>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Performance</span>
+<p class="font-numeric-data text-secondary font-bold">Top 5%</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<button class="text-primary hover:underline text-label-md font-label-md flex items-center gap-1">
+                            View Profile
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Staff Card 4 -->
+<div class="glass-card glow-top rounded-2xl p-5 hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-inner border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A portrait of a cheerful female server in her early 20s. She is standing in a brightly lit section of a modern bar, wearing a simple but elegant black uniform. Her smile is warm and inviting. High-fidelity photography style with deep contrast and vibrant colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGQfStmt_llOcwEqXK7_iPke9GOD8k3KQyA3v4jrT-LFXow82vbmGuhdFXZWd3A7E6QBuDG8nuSH5_IzPwAgmafIoPN350Ym6fij5Fq2qeZXx5nqD5QYeP5Hzb4eXFsn9ghQv8lRh9EzXDRXnDBiuDpFMy-KgGVGIav_7l0qaC2_nTqW8S1wEWc5yqG6d7ABTfiBLy0Pw24uIcHfhNSR6uUgRJTmH-axsE-E-mpQpR6dg9Fiu02R9BQQ"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-secondary border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface group-hover:text-primary transition-colors">Sarah Jenkins</h3>
+<p class="text-on-surface-variant text-label-md">Junior Waitress</p>
+</div>
+</div>
+<div class="bg-secondary/10 text-secondary px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            On Shift
+                        </div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-outline-variant/30 mb-4">
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Monthly Sales</span>
+<p class="font-numeric-data text-on-surface font-bold">$6,840</p>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Commission</span>
+<p class="font-numeric-data text-secondary font-bold">$478.80</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<button class="text-primary hover:underline text-label-md font-label-md flex items-center gap-1">
+                            View Profile
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Staff Card 5 -->
+<div class="glass-card glow-top rounded-2xl p-5 hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-inner border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A side-profile of a seasoned bartender with grey-flecked hair, expertly mixing a drink in a dark, high-end speakeasy. The lighting is very dramatic, with a single warm spotlight on his hands and the crystal glass. The overall tone is luxurious and precise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_H78XJtPtiejGMmW6FzWPsteK4hItl9EVX0X6vM0SK769peeUxfimrsRfV-4i_cE1WIcsEaZKYAx0oxwlWyH5Aw4qjj7_Jqfv6YrXL8ixZukx9rBHA01XraxTcr5Q2RHsTcmSYhcgKnwfL6900-Ly6ey910g-gh9-dja5z_tYp66nZ-3u6PgjaV8TM1DnGlbhqT2l2nOtviiZSSC2fqWHJacpnCn2z-YWeAO5ukniBV44wkecEXSpVQ"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-secondary border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface group-hover:text-primary transition-colors">David Chen</h3>
+<p class="text-on-surface-variant text-label-md">Mixologist</p>
+</div>
+</div>
+<div class="bg-secondary/10 text-secondary px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            On Shift
+                        </div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-outline-variant/30 mb-4">
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Monthly Sales</span>
+<p class="font-numeric-data text-on-surface font-bold">$15,200</p>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Commission</span>
+<p class="font-numeric-data text-secondary font-bold">$1,064.00</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<button class="text-primary hover:underline text-label-md font-label-md flex items-center gap-1">
+                            View Profile
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Staff Card 6 -->
+<div class="glass-card glow-top rounded-2xl p-5 hover:border-primary/50 transition-all group opacity-80">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-inner border border-outline-variant grayscale">
+<img class="w-full h-full object-cover" data-alt="A portrait of a male security professional in a black polo shirt with a discrete earpiece. He is standing at the entrance of a high-end club at night, with neon lights reflected in the glass doors behind him. The image is crisp, modern, and serious." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq20vlz3a7mqBxrMZAkM7u0Jrr-94Ta3D3bsWeoE5lhgxcct2-hRG_jSSrt2DfvSqYPnqm6HLUsEV6wY5QvIhYwX2QBoOmtV0ESbm7BGH2zkNL9zTETjBR8B6IRI80_eavII4E8NCjUfeCBkXhyk0MMXiw9IxAwNUMV2j6QtmK_p6pQZHo9AyNmdc54hJKjAQqZ74LWbT0ZkbCwH1TBib6iOUViSKm01EQTYon6-PwYxBsOsm6gKlgZw"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-outline border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface group-hover:text-primary transition-colors">Robert K.</h3>
+<p class="text-on-surface-variant text-label-md">Head Security</p>
+</div>
+</div>
+<div class="bg-outline/10 text-on-surface-variant px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            Off Duty
+                        </div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-outline-variant/30 mb-4">
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Shift Count</span>
+<p class="font-numeric-data text-on-surface font-bold">18/22</p>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] uppercase font-bold">Reliability</span>
+<p class="font-numeric-data text-secondary font-bold">98%</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<button class="text-primary hover:underline text-label-md font-label-md flex items-center gap-1">
+                            View Profile
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- PERFORMANCE TABLE (Alternate view) -->
+<section class="glass-card glow-top rounded-2xl overflow-hidden mt-8">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">Monthly Performance Leaderboard</h3>
+<button class="text-primary text-label-md font-label-md">Export CSV</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Staff Member</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Role</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Sales</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Commission</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Score</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-variant/30 transition-colors h-table-row-height">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-primary-container">
+<img class="w-full h-full object-cover" data-alt="A small thumbnail portrait of a female mixologist focusing intently on pouring a cocktail. Cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0DvTIi4F6Uj9oxJRiwKWhzzUGiIEfNkqq_6-kkVOQdGpT5n3nMGO0aiUPeKEgkxqXGu4CkNt4dMW8uRA-Yworp0rg4XCoRfaqnqu5B-7UMk1tWi61vU2ZDR6Ug6BFzjwiw1m-u_l517cV6NyrON8KP0Y2tn7yi-Xj9TFcZwTRBO18qXZsFx_1N6rzwvPMh1nDH2w8D5l8Y7gqSORlQE4-qEYBev28_zgQWV_EMLgclnslHRu3Zw25uQ"/>
+</div>
+<span class="font-numeric-data font-bold text-on-surface">Elena Rossi</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Bartender</td>
+<td class="px-6 py-4 font-numeric-data">$12,450.00</td>
+<td class="px-6 py-4 font-numeric-data text-secondary">$871.50</td>
+<td class="px-6 py-4">
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-[11px] font-bold">9.8/10</span>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-outline hover:text-primary">more_horiz</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors h-table-row-height">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-primary-container">
+<img class="w-full h-full object-cover" data-alt="A thumbnail of a male bartender with a beard and a crisp uniform. He is looking directly at the camera with a confident expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2ixV83TNyxVkF4NprA5mBf-rGsrF8I2Xe2xJAScR0lr46wObPvyQ_vljPvTAjjVlR37-NPxbIXl5AepyrWtvfQqQVg9HFpnfziMNLsRuhW6OOWjnbk2ErfUjdUj36-9Ghs47hEOnKkVZd3dJrnJE6BgUUcU39cuTQ6GBtlaeZOLDtmc1PisWC-q01mv0VLZmH1T_iOTdT-rMvlQ3492Q3653Hz4qI-9WPGhiB8L7aC0BoFP8teE6SbQ"/>
+</div>
+<span class="font-numeric-data font-bold text-on-surface">David Chen</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Mixologist</td>
+<td class="px-6 py-4 font-numeric-data">$15,200.00</td>
+<td class="px-6 py-4 font-numeric-data text-secondary">$1,064.00</td>
+<td class="px-6 py-4">
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-[11px] font-bold">9.5/10</span>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-outline hover:text-primary">more_horiz</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors h-table-row-height">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-primary-container">
+<img class="w-full h-full object-cover" data-alt="A portrait thumbnail of a waiter with short hair in a black vest. He is in a stylish lounge environment with soft bokeh lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnDSOSrP_53KaHntZd7eJI_RD0TPrVFnhNG45Vaj9pQrI_eb2Fh8A_w0mavnlYf39fnxDaONN6YM1Bv3zPo8MYdkNcHWFzADrd64ONZgYWOpllTvm9RydtdCpH2csWC2gtL-JRkBHhmZRfAYuP5Ngp1Y9ben5c-4HZnD8dgk_3Z2mu3NFGH8HTPh7x1Vmaz0ZrXYJdMw1CuWBEGiSFlR0VDS223Ifa1lq_McJoqO_A0ez1eMdyfMOnKg"/>
+</div>
+<span class="font-numeric-data font-bold text-on-surface">James Miller</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Waiter</td>
+<td class="px-6 py-4 font-numeric-data">$9,120.00</td>
+<td class="px-6 py-4 font-numeric-data text-secondary">$638.40</td>
+<td class="px-6 py-4">
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-[11px] font-bold">8.9/10</span>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-outline hover:text-primary">more_horiz</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- BOTTOM NAV BAR (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 bg-surface-container-high border-t border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">table_restaurant</span>
+<span class="font-label-md text-label-md">Tables</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Staff</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+</main>
+<!-- FLOATING ACTION BUTTON (Contextual) -->
+<button class="fixed bottom-20 right-6 lg:bottom-10 lg:right-10 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+<script>
+        // Micro-interactions for staff cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchContainer = searchInput.parentElement;
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('ring-2', 'ring-primary/50', 'border-primary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('ring-2', 'ring-primary/50', 'border-primary');
+        });
+    </script>
+</body></html>

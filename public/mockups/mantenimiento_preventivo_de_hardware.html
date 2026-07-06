@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nocturne Ops - Mantenimiento Preventivo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .inner-glow {
+            box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#001a42",
+                      "outline": "#8c909f",
+                      "on-tertiary": "#472a00",
+                      "error": "#ffb4ab",
+                      "on-surface": "#e1e2ec",
+                      "on-secondary-container": "#00311f",
+                      "on-surface-variant": "#c2c6d6",
+                      "tertiary": "#ffb95f",
+                      "inverse-surface": "#e1e2ec",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-primary": "#002e6a",
+                      "on-primary-container": "#00285d",
+                      "secondary": "#4edea3",
+                      "surface": "#10131a",
+                      "tertiary-fixed": "#ffddb8",
+                      "outline-variant": "#424754",
+                      "on-tertiary-container": "#3e2400",
+                      "surface-container-low": "#191b23",
+                      "primary-fixed": "#d8e2ff",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-secondary": "#003824",
+                      "error-container": "#93000a",
+                      "primary": "#adc6ff",
+                      "on-error": "#690005",
+                      "on-error-container": "#ffdad6",
+                      "inverse-on-surface": "#2e3038",
+                      "inverse-primary": "#005ac2",
+                      "surface-container-high": "#272a31",
+                      "background": "#10131a",
+                      "surface-container": "#1d2027",
+                      "secondary-fixed": "#6ffbbe",
+                      "secondary-fixed-dim": "#4edea3",
+                      "surface-container-highest": "#32353c",
+                      "surface-variant": "#32353c",
+                      "tertiary-container": "#ca8100",
+                      "on-tertiary-fixed": "#2a1700",
+                      "primary-container": "#4d8eff",
+                      "surface-dim": "#10131a",
+                      "surface-container-lowest": "#0b0e15",
+                      "on-background": "#e1e2ec",
+                      "secondary-container": "#00a572",
+                      "on-primary-fixed-variant": "#004395",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-secondary-fixed": "#002113",
+                      "surface-tint": "#adc6ff",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-bright": "#363941"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "gutter": "16px",
+                      "touch-target-min": "44px",
+                      "table-row-height": "56px",
+                      "stack-md": "16px",
+                      "unit": "4px",
+                      "container-margin": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Outfit"],
+                      "headline-md": ["Outfit"],
+                      "title-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg": ["Outfit"],
+                      "numeric-data": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-background/80 backdrop-blur-xl border-b border-outline-variant fixed top-0 w-full z-50 shadow-sm flex justify-between items-center h-16 px-gutter w-full">
+<div class="flex items-center gap-4">
+<span class="text-primary material-symbols-outlined text-[32px]">architecture</span>
+<span class="text-title-lg font-display-lg font-bold tracking-tight text-primary">NOCTURNE OPS</span>
+<div class="h-6 w-[1px] bg-outline-variant mx-2"></div>
+<span class="text-on-surface-variant font-label-md uppercase tracking-widest">Mantenimiento</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="relative group">
+<input class="bg-surface-container border-none rounded-lg h-10 px-10 text-body-md focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Buscar activo..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[20px]">search</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">settings_input_component</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low/90 backdrop-blur-md border-r border-outline-variant flex flex-col py-stack-md">
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-300" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-md text-label-md uppercase tracking-tight">Comandos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary border-l-4 border-secondary bg-secondary-container/10 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-title-lg text-title-lg">Operaciones</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-300" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-md text-label-md uppercase tracking-tight">Red</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-300" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md uppercase tracking-tight">Inventario</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-300" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md uppercase tracking-tight">Analítica</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-stack-md">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md uppercase tracking-tight">Configuración</span>
+</a>
+<div class="px-4 py-4 mt-2">
+<div class="bg-surface-container-highest p-3 rounded-xl border border-outline-variant">
+<p class="text-on-surface-variant text-[10px] uppercase font-bold tracking-widest mb-1">Status Sistema</p>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<p class="text-on-surface font-label-md">V6.4 Activo</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 mt-16 p-container-margin h-[calc(100vh-104px)] overflow-y-auto bg-background">
+<!-- Header & Global Actions -->
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Mantenimiento Preventivo</h1>
+<p class="text-on-surface-variant text-body-md mt-1">Gestión técnica y salud de activos de BarOps Pro.</p>
+</div>
+<div class="flex gap-stack-md">
+<button class="bg-surface-container-high text-on-surface px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-container-highest transition-colors font-label-md uppercase tracking-wide">
+<span class="material-symbols-outlined text-[18px]">inventory</span> Inventario Repuestos
+                </button>
+<button class="bg-surface-container-high text-on-surface px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-container-highest transition-colors font-label-md uppercase tracking-wide">
+<span class="material-symbols-outlined text-[18px]">file_export</span> Exportar Plan
+                </button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all font-label-md uppercase tracking-wide font-bold">
+<span class="material-symbols-outlined text-[20px]">add</span> Crear Nueva Tarea
+                </button>
+</div>
+</div>
+<!-- Dashboard KPIs (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-stack-md mb-stack-lg">
+<div class="glass-panel p-stack-md rounded-xl inner-glow col-span-1">
+<p class="text-outline text-label-md uppercase tracking-widest font-bold mb-2">Vida Útil Hardware</p>
+<div class="flex items-end justify-between">
+<p class="text-headline-md font-numeric-data">3.2 <span class="text-on-surface-variant text-body-md">años</span></p>
+<span class="text-secondary material-symbols-outlined text-[32px]">speed</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-4">
+<div class="bg-secondary h-1 rounded-full w-[78%]"></div>
+</div>
+</div>
+<div class="glass-panel p-stack-md rounded-xl inner-glow col-span-1">
+<p class="text-outline text-label-md uppercase tracking-widest font-bold mb-2">Tareas Pendientes</p>
+<div class="flex items-end justify-between">
+<p class="text-headline-md font-numeric-data">12 <span class="text-on-surface-variant text-body-md">tickets</span></p>
+<span class="text-tertiary material-symbols-outlined text-[32px]">pending_actions</span>
+</div>
+<p class="text-tertiary text-[12px] mt-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> 2 Críticas para hoy
+                </p>
+</div>
+<div class="glass-panel p-stack-md rounded-xl inner-glow col-span-1">
+<p class="text-outline text-label-md uppercase tracking-widest font-bold mb-2">Última Revisión</p>
+<div class="flex items-end justify-between">
+<p class="text-headline-md font-numeric-data">Hoy <span class="text-on-surface-variant text-body-md">08:00</span></p>
+<span class="text-primary material-symbols-outlined text-[32px]">verified</span>
+</div>
+<p class="text-on-surface-variant text-[12px] mt-3">Operador: Admin_Sys_04</p>
+</div>
+<div class="glass-panel p-stack-md rounded-xl inner-glow col-span-1 relative overflow-hidden group">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
+<div class="absolute inset-0 bg-gradient-to-br from-primary to-transparent"></div>
+</div>
+<p class="text-outline text-label-md uppercase tracking-widest font-bold mb-2">Uptime Sistema</p>
+<div class="flex items-end justify-between">
+<p class="text-headline-md font-numeric-data">99.98<span class="text-on-surface-variant text-body-md">%</span></p>
+<span class="text-primary material-symbols-outlined text-[32px]">cloud_done</span>
+</div>
+<div class="flex gap-1 mt-4">
+<div class="flex-1 h-1 bg-secondary rounded-full"></div>
+<div class="flex-1 h-1 bg-secondary rounded-full"></div>
+<div class="flex-1 h-1 bg-secondary rounded-full"></div>
+<div class="flex-1 h-1 bg-secondary rounded-full"></div>
+<div class="flex-1 h-1 bg-error rounded-full"></div>
+<div class="flex-1 h-1 bg-secondary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-12 gap-stack-md items-start">
+<!-- Left: Components Health & Calendar -->
+<div class="col-span-8 space-y-stack-md">
+<!-- Component Health Status -->
+<section class="glass-panel rounded-xl inner-glow overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container/30">
+<h3 class="text-title-lg font-title-lg">Estado de Componentes Críticos</h3>
+<span class="text-outline font-label-md">Filtrar por: Severidad</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-3 text-label-md uppercase text-outline">Dispositivo</th>
+<th class="px-6 py-3 text-label-md uppercase text-outline">Indicador Desgaste</th>
+<th class="px-6 py-3 text-label-md uppercase text-outline">Valor Actual</th>
+<th class="px-6 py-3 text-label-md uppercase text-outline">Estado</th>
+<th class="px-6 py-3 text-label-md uppercase text-outline">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">storage</span>
+<div>
+<p class="font-body-md text-on-surface">Servidor Central Core-01</p>
+<p class="text-[11px] text-outline">ID: NOCT-S-001</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-body-md">Salud SSD System</p>
+</td>
+<td class="px-6 py-4 font-numeric-data">85%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-secondary-container/10 text-secondary text-[11px] font-bold uppercase">Óptimo</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline text-label-md font-bold uppercase">Detalles</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">phone_android</span>
+<div>
+<p class="font-body-md text-on-surface">Handheld #04 (Mesas)</p>
+<p class="text-[11px] text-outline">ID: NOCT-H-004</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-body-md">Ciclos de Batería</p>
+</td>
+<td class="px-6 py-4 font-numeric-data">720 / 1000</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-tertiary-container/10 text-tertiary text-[11px] font-bold uppercase">Atención</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline text-label-md font-bold uppercase">Remplazar</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">print</span>
+<div>
+<p class="font-body-md text-on-surface">Impresora Cocina Hot-01</p>
+<p class="text-[11px] text-outline">ID: NOCT-P-001</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-body-md">Cabezal Térmico</p>
+</td>
+<td class="px-6 py-4 font-numeric-data">42.5 km imp.</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-error-container/10 text-error text-[11px] font-bold uppercase">Crítico</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline text-label-md font-bold uppercase">Limpiar</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Calendar List -->
+<section class="glass-panel rounded-xl inner-glow">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-title-lg font-title-lg">Mantenimiento Programado</h3>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-container rounded-md"><span class="material-symbols-outlined">chevron_left</span></button>
+<span class="text-body-md font-bold">Junio 2024</span>
+<button class="p-1 hover:bg-surface-container rounded-md"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="p-4 grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg border-l-4 border-primary flex gap-4 items-start">
+<div class="text-center w-12 shrink-0">
+<p class="text-[10px] text-outline uppercase font-bold">LUN</p>
+<p class="text-headline-md font-numeric-data">17</p>
+</div>
+<div class="flex-1">
+<p class="font-bold text-on-surface">Limpieza Impresoras Térmicas</p>
+<p class="text-on-surface-variant text-[12px]">Barra Principal &amp; Terraza</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px] text-outline">schedule</span>
+<span class="text-[11px] text-outline">06:00 AM (Pre-apertura)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border-l-4 border-secondary flex gap-4 items-start">
+<div class="text-center w-12 shrink-0">
+<p class="text-[10px] text-outline uppercase font-bold">MIE</p>
+<p class="text-headline-md font-numeric-data">19</p>
+</div>
+<div class="flex-1">
+<p class="font-bold text-on-surface">Revisión de UPS (Baterías)</p>
+<p class="text-on-surface-variant text-[12px]">Rack de Comunicaciones 2</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px] text-outline">schedule</span>
+<span class="text-[11px] text-outline">11:00 AM</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border-l-4 border-outline flex gap-4 items-start opacity-60">
+<div class="text-center w-12 shrink-0">
+<p class="text-[10px] text-outline uppercase font-bold">VIE</p>
+<p class="text-headline-md font-numeric-data">21</p>
+</div>
+<div class="flex-1">
+<p class="font-bold text-on-surface">Calibración Touch POS</p>
+<p class="text-on-surface-variant text-[12px]">Todas las estaciones (5)</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px] text-outline">schedule</span>
+<span class="text-[11px] text-outline">07:00 AM</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border-l-4 border-tertiary flex gap-4 items-start">
+<div class="text-center w-12 shrink-0">
+<p class="text-[10px] text-outline uppercase font-bold">SAB</p>
+<p class="text-headline-md font-numeric-data">22</p>
+</div>
+<div class="flex-1">
+<p class="font-bold text-on-surface">Actualización de Firmware</p>
+<p class="text-on-surface-variant text-[12px]">Gateways de Red Central</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px] text-outline">schedule</span>
+<span class="text-[11px] text-outline">04:00 AM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right: Recent Log & Support -->
+<div class="col-span-4 space-y-stack-md">
+<!-- Recent Interventions Log -->
+<section class="glass-panel rounded-xl inner-glow flex flex-col h-full max-h-[600px]">
+<div class="px-6 py-4 border-b border-outline-variant">
+<h3 class="text-title-lg font-title-lg">Log de Intervenciones</h3>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="relative pl-6 pb-4 border-l border-outline-variant last:border-0 last:pb-0">
+<div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-secondary"></div>
+<p class="text-label-md font-bold text-on-surface">Limpieza de Filtros Proyector</p>
+<p class="text-body-md text-on-surface-variant mt-1">Realizado por: <span class="text-primary font-bold">Tec_Juarez</span></p>
+<p class="text-[11px] text-outline mt-1">Hace 2 horas • Completado con éxito</p>
+</div>
+<div class="relative pl-6 pb-4 border-l border-outline-variant last:border-0 last:pb-0">
+<div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-primary"></div>
+<p class="text-label-md font-bold text-on-surface">Reinicio de Red Mesh</p>
+<p class="text-body-md text-on-surface-variant mt-1">Realizado por: <span class="text-primary font-bold">Sistema Automático</span></p>
+<p class="text-[11px] text-outline mt-1">Ayer 03:00 AM • Tarea Rutinaria</p>
+</div>
+<div class="relative pl-6 pb-4 border-l border-outline-variant last:border-0 last:pb-0">
+<div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-tertiary"></div>
+<p class="text-label-md font-bold text-on-surface">Cambio Rollo Térmico (Caja 2)</p>
+<p class="text-body-md text-on-surface-variant mt-1">Realizado por: <span class="text-primary font-bold">User_082</span></p>
+<p class="text-[11px] text-outline mt-1">14/06/2024 10:15 PM • Correctivo</p>
+</div>
+<div class="relative pl-6 pb-4 border-l border-outline-variant last:border-0 last:pb-0">
+<div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-error"></div>
+<p class="text-label-md font-bold text-on-surface">Fallo de Disco (Backup)</p>
+<p class="text-body-md text-on-surface-variant mt-1">Reportado por: <span class="text-primary font-bold">Admin_Master</span></p>
+<p class="text-[11px] text-outline mt-1">13/06/2024 11:20 AM • Acción Pendiente</p>
+</div>
+</div>
+<div class="p-4 bg-surface-container-highest/30">
+<button class="w-full py-2 bg-surface-container text-on-surface text-label-md font-bold uppercase rounded-lg hover:bg-surface-container-high transition-colors">
+                            Ver historial completo
+                        </button>
+</div>
+</section>
+<!-- Status Visualizer (Image Placeholder) -->
+<section class="glass-panel rounded-xl inner-glow overflow-hidden h-[300px]">
+<div class="w-full h-full bg-cover bg-center flex flex-col justify-end p-6 relative" data-alt="A high-fidelity digital interface visualization showing a 3D isometric blueprint of a modern night bar server rack. The rack is glowing with electric blue neon light against a deep obsidian background. Multiple monitoring screens on the server display cascading green data streams and heartbeat pulses. The style is ultra-modern, cinematic, and professional, mimicking a mission control center interface for high-end technology management." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAO-sZAs6lxBUWoQXhfZVND4LF_SM1LpohKPVsfxCIEYAZnTvpkTOxyt3JCjxB185_8rxTblkTe6UGoH4xISLGdG0eYKFS7yrGe79Na8N1_ZDIasgnFR9sDs6zn0XlTa9mRYeaIUoDWDqGPyXE_X3de7DixzVJ9kXGzbAFIomxAKMyEN6rDfQuRJro12y_V0nCW9g1VosZiDFF0A3Fi1xXnWyfNy_RCnFmfSAM-kRR6cuTtWz1PKDwo_w')">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="relative z-10">
+<h4 class="text-title-lg font-bold">Análisis Térmico Rack 01</h4>
+<p class="text-on-surface-variant text-body-md">Temp actual: 38.5°C • Estable</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 right-0 left-64 bg-surface-container-lowest border-t border-outline-variant flex justify-between items-center px-gutter h-10 w-full z-50">
+<div class="flex items-center gap-4">
+<p class="font-label-md text-outline">© 2024 NOCTURNE OPS. SISTEMA CRÍTICO ACTIVO.</p>
+</div>
+<div class="flex gap-stack-lg items-center">
+<a class="text-outline hover:text-on-surface-variant font-label-md transition-opacity" href="#">Documentación</a>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-outline font-label-md">API Status: OK</span>
+</div>
+<a class="text-outline hover:text-on-surface-variant font-label-md transition-opacity" href="#">Seguridad</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction for hover states and animations
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('mouseenter', () => {
+                panel.style.transform = 'translateY(-2px)';
+                panel.style.transition = 'transform 0.3s ease';
+            });
+            panel.addEventListener('mouseleave', () => {
+                panel.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

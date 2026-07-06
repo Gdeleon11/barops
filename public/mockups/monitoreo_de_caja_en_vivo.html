@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nocturne Operational - Monitoreo de Caja en Vivo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.3);
+        }
+        .neon-glow-secondary {
+            box-shadow: 0 0 15px rgba(78, 222, 163, 0.2);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#d8e2ff",
+                        "on-background": "#e1e2ec",
+                        "surface-container-high": "#272a31",
+                        "surface-container-lowest": "#0b0e15",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container": "#1d2027",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#3e2400",
+                        "inverse-surface": "#e1e2ec",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary": "#003824",
+                        "on-error": "#690005",
+                        "surface-dim": "#10131a",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "outline": "#8c909f",
+                        "on-secondary-container": "#00311f",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "inverse-primary": "#005ac2",
+                        "surface-container-low": "#191b23",
+                        "on-surface": "#e1e2ec",
+                        "surface-container-highest": "#32353c",
+                        "on-surface-variant": "#c2c6d6",
+                        "primary-fixed-dim": "#adc6ff",
+                        "secondary": "#4edea3",
+                        "primary": "#adc6ff",
+                        "primary-container": "#4d8eff",
+                        "secondary-container": "#00a572",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary": "#ffb95f",
+                        "on-tertiary": "#472a00",
+                        "inverse-on-surface": "#2e3038",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-variant": "#32353c",
+                        "surface-tint": "#adc6ff",
+                        "on-primary": "#002e6a",
+                        "tertiary-container": "#ca8100",
+                        "surface": "#10131a",
+                        "on-primary-fixed": "#001a42",
+                        "background": "#10131a",
+                        "on-primary-container": "#00285d",
+                        "outline-variant": "#424754",
+                        "surface-bright": "#363941",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "container-margin": "24px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "table-row-height": "56px",
+                        "touch-target-min": "44px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "numeric-data": ["Inter"],
+                        "headline-md": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm flex justify-between items-center h-14 px-container-margin w-full">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Nocturne Operational</span>
+<div class="hidden md:flex gap-6">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-lg text-body-lg" href="#">Dashboard</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-body-lg text-body-lg" href="#">Shifts</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-lg text-body-lg" href="#">Reports</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-lg text-body-lg" href="#">Payouts</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest/50 p-2 rounded-full transition-all active:scale-95">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest/50 p-2 rounded-full transition-all active:scale-95">settings</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a venue manager in a dimly lit, high-end cocktail bar environment with warm amber lighting reflecting off polished glassware. The manager wears a sharp navy vest and white shirt, looking focused yet approachable. The background shows soft bokeh effects of a premium liquor shelf, maintaining the sophisticated night-bar aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHzR2GE0xG0ryUD7FqFpjwXdJl7JYf_7nMAJfLiPOfCSrvJKyKh5qd-JmIGyxiVCy7U6ezZZYT0tNfWFqNO4EnfBuXLlAjk_W6bc6iMR66NEgYxN79G3-qbhDbf2etD-zan7mijz7QnCJQPGtK9OqudX1M9HHQwE3GxKA-GHDRaTZh2_me22bLPUppcSxl4tsRDxs50GejpyDjBz218us3BUgif7-_V0yysQKKkVSOZpK9g2uoUgyfXQ"/>
+</div>
+<button class="bg-error-container text-on-error-container px-4 py-1.5 rounded-lg font-label-md text-label-md active:scale-95 transition-all">Close Register</button>
+</div>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<aside class="fixed left-0 top-0 pt-16 h-full w-64 hidden md:flex flex-col bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant/20 z-40">
+<div class="px-6 py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary" style="font-variation-settings: 'FILL' 1;">nightlife</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md font-bold text-on-surface">Main Bar Terminal</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Station #04</p>
+</div>
+</div>
+<nav class="flex-1 px-3 py-4 space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md text-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span> Cash Drawers
+            </a>
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 border-l-4 border-secondary font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">timer</span> Active Shifts
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md text-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">balance</span> Reconciliation
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md text-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span> Audit Logs
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md text-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span> Vault
+            </a>
+</nav>
+<div class="p-4 space-y-4">
+<button class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-lg flex items-center justify-center gap-2 font-label-md text-label-md active:scale-98 transition-transform font-bold">
+<span class="material-symbols-outlined">add_card</span> New Cash Drop
+            </button>
+<div class="space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-2 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help_outline</span> Support
+                </a>
+<a class="flex items-center gap-3 text-error hover:bg-error/10 px-4 py-2 font-label-md text-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">lock</span> Lock Station
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-20 pb-24 px-container-margin min-h-screen relative">
+<!-- Background Atmospheric Element -->
+<div class="fixed inset-0 pointer-events-none opacity-10">
+
+</div>
+<header class="mb-stack-lg relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Monitoreo de Caja en Vivo</h1>
+<p class="text-on-surface-variant font-body-md mt-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                    Terminal activa: Estación Frontal #04 • Cajero: A. Valdes
+                </p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-high border border-outline-variant/30 text-on-surface px-6 py-3 rounded-xl font-label-md text-label-md flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-secondary">payments</span>
+                    Registrar Salida / Gasto
+                </button>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-md text-label-md flex items-center gap-2 active:scale-95 transition-all neon-glow-primary">
+<span class="material-symbols-outlined">arrow_downward</span>
+                    Efectuar Cash Drop
+                </button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter relative z-10">
+<!-- Hero Stat: Net Cash -->
+<div class="md:col-span-4 glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[180px]">
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Efectivo en Caja</p>
+<h2 class="font-display-lg text-display-lg text-secondary mt-2">$2,450.00</h2>
+</div>
+<div class="mt-4 flex items-center gap-2 text-on-surface-variant font-numeric-data text-numeric-data">
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-[10px]">+12% vs last hour</span>
+<span>Last drop: 2h ago</span>
+</div>
+</div>
+<!-- Sales Split Card -->
+<div class="md:col-span-5 glass-card rounded-2xl p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Ventas Totales</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">$8,214.50</h2>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">bar_chart</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="flex-1">
+<div class="flex justify-between font-label-md text-label-md mb-1">
+<span class="text-on-surface">Cash</span>
+<span class="text-on-surface-variant">$2,840.00</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[35%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex-1">
+<div class="flex justify-between font-label-md text-label-md mb-1">
+<span class="text-on-surface">Card/Digital</span>
+<span class="text-on-surface-variant">$5,374.50</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Pulse / Status -->
+<div class="md:col-span-3 glass-card rounded-2xl p-6 bg-surface-container-highest/20 border-primary/20">
+<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider mb-4">Estado de Auditoría</p>
+<div class="flex flex-col items-center justify-center h-full">
+<div class="relative mb-4">
+<svg class="w-24 h-24 transform -rotate-90">
+<circle class="text-surface-container-highest" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="25.12" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="font-headline-md text-headline-md text-primary">90%</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface text-center">Variance: <span class="text-error font-bold">-$12.40</span></p>
+<p class="text-label-md text-on-surface-variant text-center mt-1">Expected vs Actual</p>
+</div>
+</div>
+<!-- Transactions Feed -->
+<div class="md:col-span-8 glass-card rounded-2xl overflow-hidden flex flex-col">
+<div class="px-6 py-4 border-b border-outline-variant/20 flex justify-between items-center">
+<h3 class="font-title-lg text-title-lg text-on-surface">Movimientos de Efectivo Recientes</h3>
+<div class="flex gap-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-label-md text-on-surface-variant cursor-pointer hover:text-on-surface">All</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-label-md text-on-surface-variant cursor-pointer hover:text-on-surface">Payouts</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-label-md text-on-surface-variant cursor-pointer hover:text-on-surface">Drops</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low/50">
+<tr>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Hora</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tipo</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Concepto / Referencia</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Monto</th>
+<th class="px-6 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-high/50 transition-colors h-table-row-height">
+<td class="px-6 py-3 font-numeric-data text-numeric-data">22:45</td>
+<td class="px-6 py-3">
+<span class="bg-secondary/10 text-secondary px-2 py-1 rounded-full text-[10px] font-bold uppercase">Cash Drop</span>
+</td>
+<td class="px-6 py-3 text-on-surface-variant">Security Deposit #882</td>
+<td class="px-6 py-3 text-right font-numeric-data text-numeric-data text-on-surface">-$500.00</td>
+<td class="px-6 py-3 text-right">
+<button class="material-symbols-outlined text-on-surface-variant">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/50 transition-colors h-table-row-height">
+<td class="px-6 py-3 font-numeric-data text-numeric-data">22:12</td>
+<td class="px-6 py-3">
+<span class="bg-tertiary/10 text-tertiary px-2 py-1 rounded-full text-[10px] font-bold uppercase">Salidas de Efectivo</span>
+</td>
+<td class="px-6 py-3 text-on-surface-variant">Insumos Urgentes (Hielo)</td>
+<td class="px-6 py-3 text-right font-numeric-data text-numeric-data text-error">-$45.20</td>
+<td class="px-6 py-3 text-right">
+<button class="material-symbols-outlined text-on-surface-variant">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/50 transition-colors h-table-row-height">
+<td class="px-6 py-3 font-numeric-data text-numeric-data">21:55</td>
+<td class="px-6 py-3">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-[10px] font-bold uppercase">Tips Collected</span>
+</td>
+<td class="px-6 py-3 text-on-surface-variant">Pool Distribution - Bar</td>
+<td class="px-6 py-3 text-right font-numeric-data text-numeric-data text-secondary">+$124.00</td>
+<td class="px-6 py-3 text-right">
+<button class="material-symbols-outlined text-on-surface-variant">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/50 transition-colors h-table-row-height">
+<td class="px-6 py-3 font-numeric-data text-numeric-data">21:30</td>
+<td class="px-6 py-3">
+<span class="bg-tertiary/10 text-tertiary px-2 py-1 rounded-full text-[10px] font-bold uppercase">Salidas de Efectivo</span>
+</td>
+<td class="px-6 py-3 text-on-surface-variant">Caja Chica - Taxis Staff</td>
+<td class="px-6 py-3 text-right font-numeric-data text-numeric-data text-error">-$60.00</td>
+<td class="px-6 py-3 text-right">
+<button class="material-symbols-outlined text-on-surface-variant">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<button class="w-full py-4 text-primary font-label-md text-label-md hover:bg-surface-container-highest/50 transition-all border-t border-outline-variant/10">Ver Historial Completo</button>
+</div>
+<!-- Summary Cards / Action Tiles -->
+<div class="md:col-span-4 space-y-gutter">
+<div class="glass-card rounded-2xl p-6 border-l-4 border-error">
+<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider mb-2">Salidas de Efectivo (Acum.)</p>
+<div class="flex justify-between items-end">
+<h4 class="font-headline-md text-headline-md text-on-surface">$105.20</h4>
+<span class="text-error font-bold text-label-md">3 Registros</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 bg-primary-container/10">
+<h4 class="font-title-lg text-title-lg text-on-surface mb-4">Reporte Rápido</h4>
+<div class="space-y-4">
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Base Apertura</span>
+<span class="text-on-surface font-numeric-data">$400.00</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Efectivo Recolectado</span>
+<span class="text-on-surface font-numeric-data">$2,655.20</span>
+</div>
+<div class="flex justify-between text-body-md border-b border-outline-variant/20 pb-2">
+<span class="text-on-surface-variant">Egresos Registrados</span>
+<span class="text-on-surface font-numeric-data">-$105.20</span>
+</div>
+<div class="flex justify-between text-title-lg pt-2">
+<span class="text-on-surface">Esperado</span>
+<span class="text-secondary font-bold font-numeric-data">$2,950.00</span>
+</div>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Stylized artistic rendering of a modern high-security safe vault door in a dark, high-contrast environment. Glowing blue circular lighting surrounds the keypad and handle. The materials are brushed dark steel with hints of neon cyan light reflections, giving it a futuristic 'command center' feeling consistent with premium nightclub operations." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZbso0MeMYjRBCkQnhRChGdVOZJvUOK_mXjRs9rEVrveUGtRA8MYOP_CKKbLGun0-w0Cc-dw7GQcUi6S5_SgXqotBoN1JTYBIMlvmYPdJLVCVXv88wyDMNK_5euzi_obGcWhvo1hdinYKmsMeIYmsxZppANDL0zIEMZHeWnop5XTVnaRVoOqGmE74YfbOu17Mgmgw3Mcr2Dp0M-ovIihIBPohsWcC0nJ-Aw_ZmXur5z9i9LDXKGZsA5A"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+<div>
+<p class="font-bold text-on-surface font-title-lg">Vault Transfer</p>
+<p class="text-label-md text-on-surface-variant">Scheduled for 04:00 AM</p>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl">account_balance_wallet</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full h-16 flex justify-around items-center px-4 z-50 bg-surface-container dark:bg-surface-container-highest md:hidden rounded-t-xl border-t border-outline-variant/30 shadow-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 transition-all p-2 rounded-lg">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary font-bold active:bg-surface-bright/20 transition-all p-2 rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<span class="font-label-md text-label-md">Shifts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 transition-all p-2 rounded-lg">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-md text-label-md">Reconcile</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 transition-all p-2 rounded-lg">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</button>
+</nav>
+<!-- Floating Action Button Contextual (Visible for specific actions) -->
+<button class="fixed bottom-20 right-6 md:bottom-10 md:right-10 bg-secondary text-on-secondary w-14 h-14 rounded-full shadow-2xl flex items-center justify-center neon-glow-secondary z-50 active:scale-90 transition-transform md:hidden">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">add</span>
+</button>
+<script>
+        // Micro-interaction for table rows
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.add('bg-surface-container-highest/80');
+                setTimeout(() => {
+                    row.classList.remove('bg-surface-container-highest/80');
+                }, 300);
+            });
+        });
+
+        // Simulating live data update pulse
+        setInterval(() => {
+            const netCash = document.querySelector('h2');
+            if (netCash) {
+                netCash.classList.add('animate-pulse');
+                setTimeout(() => netCash.classList.remove('animate-pulse'), 1000);
+            }
+        }, 5000);
+    </script>
+</body></html>

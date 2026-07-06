@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Advanced Permissions | BarOps Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#adc6ff",
+                    "outline-variant": "#424754",
+                    "tertiary-fixed": "#ffddb8",
+                    "inverse-on-surface": "#2e3038",
+                    "surface-variant": "#32353c",
+                    "primary": "#adc6ff",
+                    "on-surface-variant": "#c2c6d6",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#e1e2ec",
+                    "inverse-primary": "#005ac2",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-error": "#690005",
+                    "surface-container-lowest": "#0b0e15",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#10131a",
+                    "primary-fixed": "#d8e2ff",
+                    "on-background": "#e1e2ec",
+                    "tertiary": "#ffb95f",
+                    "secondary-container": "#00a572",
+                    "on-tertiary": "#472a00",
+                    "on-secondary": "#003824",
+                    "surface-bright": "#363941",
+                    "on-primary": "#002e6a",
+                    "outline": "#8c909f",
+                    "background": "#10131a",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-low": "#191b23",
+                    "surface-tint": "#adc6ff",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-secondary-fixed": "#002113",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#00285d",
+                    "primary-container": "#4d8eff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary-container": "#ca8100",
+                    "on-tertiary-container": "#3e2400",
+                    "on-secondary-container": "#00311f",
+                    "surface-container": "#1d2027",
+                    "surface-container-high": "#272a31",
+                    "secondary": "#4edea3",
+                    "on-surface": "#e1e2ec",
+                    "surface-container-highest": "#32353c",
+                    "surface-dim": "#10131a",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-primary-fixed": "#001a42"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "touch-target-min": "44px",
+                    "stack-lg": "32px",
+                    "unit": "4px",
+                    "table-row-height": "56px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "gutter": "16px",
+                    "container-margin": "24px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "numeric-data": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Outfit"],
+                    "display-lg": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #10131a; color: #e1e2ec; overflow-x: hidden; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #32353c; border-radius: 10px; }
+        .glass-panel { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .toggle-switch:checked + .toggle-bg { background-color: #4d8eff; }
+        .toggle-switch:checked + .toggle-bg .toggle-dot { transform: translateX(100%); }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md dark:bg-background/80 shadow-sm border-b border-outline-variant/20 flex items-center justify-between px-6 h-16 w-full max-w-full">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">BarOps Pro</span>
+<div class="hidden md:flex items-center gap-6 ml-8">
+<nav class="flex gap-4">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Inventory</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Management</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container border-none rounded-full pl-10 pr-4 py-1.5 text-body-md w-64 focus:ring-1 focus:ring-primary" placeholder="Global search..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-primary text-on-primary font-bold px-4 py-2 rounded-lg text-label-md active:scale-95 transition-transform">
+                Invite User
+            </button>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a hospitality manager with a sharp beard and modern eyewear, wearing a sleek black polo shirt. The lighting is sophisticated, with blue ambient rim lighting suggesting a high-end bar environment at night. High contrast and cinematic depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK02kX2_pvxpTEMHJag3CIrvlSme5XyVfmu2rsPzQJyBs_9UyXaOG6-ib9wE6HhsGtNchVIL2OKXZp6eeuod8NiheWVcOG9m_0ByTJsiicZVon_itzZlM2W41_WGX8DVhNAEvQPx76MAlVHF2vv8mvP9tryhfocwAUfuGN0vngNs-LObAqQXwX5cMEO3UmZf-dNkm-J0rE3f8z5vZY428OnBTLFf3C13kS4AIbd9wIiu_MbpSf494CPQ"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container dark:bg-surface-container shadow-xl flex flex-col h-full py-6 border-r border-outline-variant/10 pt-20 hidden lg:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-black text-primary leading-tight">Management</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Elite Operations</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md">Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container/10 text-primary border-l-4 border-primary active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md">Subscriptions</span>
+</a>
+</nav>
+<div class="px-6 pt-6 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-error transition-colors mt-2" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="lg:pl-64 pt-16 min-h-screen pb-24">
+<div class="p-6 md:p-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<div class="flex items-center gap-2 text-primary mb-2">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+<span class="font-label-md uppercase tracking-widest cursor-pointer hover:underline">Back to User Management</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Advanced Permissions</h1>
+<p class="text-on-surface-variant mt-1">Configure granular access levels for organizational roles.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-high text-on-surface px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-surface-container-highest transition-all border border-outline-variant/10">
+<span class="material-symbols-outlined">history</span>
+                        Audit Log
+                    </button>
+<button class="bg-primary text-on-primary px-8 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">save</span>
+                        Save All Changes
+                    </button>
+</div>
+</div>
+<!-- Role Selector Strip -->
+<div class="bg-surface-container-low rounded-2xl p-2 mb-8 flex flex-wrap gap-2 border border-outline-variant/5 shadow-inner">
+<button class="px-6 py-2 rounded-xl text-on-primary-container bg-primary-container font-bold flex items-center gap-2 transition-all shadow-sm">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+                    Admin
+                </button>
+<button class="px-6 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-lg">manage_accounts</span>
+                    Manager
+                </button>
+<button class="px-6 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-lg">badge</span>
+                    Staff
+                </button>
+<button class="px-6 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-lg">local_bar</span>
+                    Bartender
+                </button>
+<button class="px-6 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-lg">restaurant</span>
+                    Waiter
+                </button>
+<div class="flex-1"></div>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<!-- Permission Matrix Layout (Asymmetric Bento Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<!-- Category Sidebar Navigation (Tablet/Desktop) -->
+<div class="md:col-span-3 sticky top-24 space-y-2">
+<div class="bg-surface-container-low rounded-2xl border border-outline-variant/10 p-4">
+<h4 class="text-xs font-bold text-outline uppercase tracking-widest mb-4 px-2">Operational Categories</h4>
+<a class="flex items-center justify-between p-3 rounded-xl bg-primary/10 text-primary font-bold group" href="#pos">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span>POS Operations</span>
+</div>
+<span class="text-xs bg-primary/20 px-2 py-0.5 rounded-full">12</span>
+</a>
+<a class="flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group mt-1" href="#inventory">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-0.5 rounded-full">8</span>
+</a>
+<a class="flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group mt-1" href="#financials">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">payments</span>
+<span>Financials</span>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-0.5 rounded-full">6</span>
+</a>
+<a class="flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group mt-1" href="#staff">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">groups</span>
+<span>Staff &amp; Attendance</span>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-0.5 rounded-full">5</span>
+</a>
+<a class="flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group mt-1" href="#crm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">campaign</span>
+<span>CRM &amp; Marketing</span>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-0.5 rounded-full">4</span>
+</a>
+</div>
+<div class="bg-surface-container/30 rounded-2xl border border-outline-variant/10 p-5 mt-4">
+<div class="flex items-center gap-2 text-tertiary mb-2">
+<span class="material-symbols-outlined text-sm">info</span>
+<span class="text-xs font-bold uppercase">Pro Tip</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                            Admins have immutable access to all core financial modules. Changes here affect all users currently assigned to the "Admin" role.
+                        </p>
+</div>
+</div>
+<!-- Matrix Content -->
+<div class="md:col-span-9 space-y-8">
+<!-- Section: POS Operations -->
+<section class="bg-surface-container rounded-3xl border border-outline-variant/10 shadow-xl overflow-hidden" id="pos">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-gradient-to-r from-primary-container/10 to-transparent">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">point_of_sale</span>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">POS Operations</h2>
+<p class="text-sm text-on-surface-variant">Manage floor orders, billing, and terminal interactions.</p>
+</div>
+</div>
+<button class="text-sm font-bold text-primary hover:underline">Toggle All</button>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<!-- Matrix Row -->
+<div class="p-6 flex items-center justify-between hover:bg-surface-container-high transition-colors group">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-bold text-on-surface">Create New Orders</h4>
+<span class="text-[10px] bg-secondary-container/20 text-secondary-fixed px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">High Frequency</span>
+</div>
+<p class="text-sm text-on-surface-variant max-w-md">Allows the user to open tables, add items to a cart, and send orders to the kitchen/bar.</p>
+</div>
+<div class="flex items-center gap-6">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Row with Warning/Conflict -->
+<div class="p-6 flex flex-col hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center justify-between">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-bold text-on-surface">Delete &amp; Void Orders</h4>
+</div>
+<p class="text-sm text-on-surface-variant max-w-md">Grants permission to remove items after they have been sent or void entire tickets.</p>
+</div>
+<div class="flex items-center gap-6">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Conflict Indicator -->
+<div class="mt-3 flex items-center gap-2 px-3 py-1.5 bg-error-container/10 border border-error/20 rounded-lg max-w-fit">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+<span class="text-xs font-medium text-error">Requires "Inventory Write Access" to reconcile stock correctly.</span>
+</div>
+</div>
+<div class="p-6 flex items-center justify-between hover:bg-surface-container-high transition-colors group">
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Issue Refunds</h4>
+<p class="text-sm text-on-surface-variant max-w-md">Process partial or full returns to the original payment method.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+<div class="p-6 flex items-center justify-between hover:bg-surface-container-high transition-colors group">
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Apply VIP Discounts</h4>
+<p class="text-sm text-on-surface-variant max-w-md">Override standard pricing for loyalty members and high-value clients.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Section: Inventory Management (Bento Style) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="inventory">
+<div class="sm:col-span-2 flex items-center gap-4 mb-2">
+<div class="w-10 h-10 rounded-xl bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Inventory Management</h2>
+</div>
+<!-- Mini Card -->
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-primary/40 transition-all flex flex-col justify-between group h-40">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Modify Recipe Costs</h4>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+<p class="text-xs text-on-surface-variant">Change ingredients and COGS data for cocktails and dishes.</p>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-primary/40 transition-all flex flex-col justify-between group h-40">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Stock Count Adjustment</h4>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+<p class="text-xs text-on-surface-variant">Manually override current inventory levels for audits.</p>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-primary/40 transition-all flex flex-col justify-between group h-40">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Vendor Purchase Orders</h4>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+<p class="text-xs text-on-surface-variant">Create and approve new stock orders from external suppliers.</p>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-primary/40 transition-all flex flex-col justify-between group h-40">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Wastage Logging</h4>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+<p class="text-xs text-on-surface-variant">Report broken bottles or expired stock without admin override.</p>
+</div>
+</section>
+<!-- Section: Financials -->
+<section class="bg-surface-container rounded-3xl border border-outline-variant/10 shadow-xl overflow-hidden" id="financials">
+<div class="p-6 border-b border-outline-variant/10 flex items-center gap-4 bg-gradient-to-r from-secondary/10 to-transparent">
+<div class="w-12 h-12 rounded-2xl bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Financial Reports</h2>
+<p class="text-sm text-on-surface-variant">Access to P&amp;L, sales, and sensitive tax information.</p>
+</div>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<div class="p-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="font-bold text-on-surface">Export Financial CSV/PDF</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+<div class="p-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">visibility</span>
+<span class="font-bold text-on-surface">View Real-time Revenue Dashboard</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full border border-outline-variant/20 transition-colors toggle-bg relative">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Actions (Bottom) -->
+<div class="fixed bottom-0 left-0 lg:left-64 right-0 p-6 glass-panel border-t border-outline-variant/20 z-40 bg-surface-container-lowest/80">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-primary/20 p-2 rounded-full hidden sm:block">
+<span class="material-symbols-outlined text-primary">published_with_changes</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">You have 7 unsaved permission changes</p>
+<p class="text-xs text-on-surface-variant">These changes will be applied instantly to 12 active Admin accounts.</p>
+</div>
+</div>
+<div class="flex gap-4 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-8 py-3 rounded-xl border border-outline-variant text-on-surface hover:bg-surface-container-high transition-colors font-bold active:scale-95">
+                    Discard
+                </button>
+<button class="flex-1 sm:flex-none px-12 py-3 rounded-xl bg-primary text-on-primary font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all">
+                    Update Role
+                </button>
+</div>
+</div>
+</div>
+<!-- Mobile NavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 flex justify-around items-center px-4 pb-safe bg-surface-container-highest shadow-[0_-4px_12px_rgba(0,0,0,0.4)] rounded-t-xl z-50 md:hidden border-t border-outline-variant/30">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:duration-75" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 min-w-[64px] active:duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-md text-[10px]">Users</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:duration-75" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-[10px]">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:duration-75" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-md text-[10px]">More</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const row = this.closest('div.p-6, div.bg-surface-container-low');
+                if(this.checked) {
+                    row.classList.add('ring-1', 'ring-primary/30');
+                    setTimeout(() => row.classList.remove('ring-1', 'ring-primary/30'), 400);
+                }
+            });
+        });
+
+        // Smooth scroll for category navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const offset = 100;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = targetElement.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // Update active state in sidebar
+                    document.querySelectorAll('aside nav a, .md\\:col-span-3 a').forEach(el => {
+                        el.classList.remove('bg-primary/10', 'text-primary', 'font-bold');
+                        el.classList.add('text-on-surface-variant');
+                    });
+                    this.classList.add('bg-primary/10', 'text-primary', 'font-bold');
+                    this.classList.remove('text-on-surface-variant');
+                }
+            });
+        });
+    </script>
+</body></html>

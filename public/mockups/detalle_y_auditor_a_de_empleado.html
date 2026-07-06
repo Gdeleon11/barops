@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Staff Audit - BarOps Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "on-surface": "#e1e2ec",
+                        "tertiary-container": "#ca8100",
+                        "inverse-primary": "#005ac2",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#2e3038",
+                        "secondary": "#4edea3",
+                        "on-secondary-container": "#00311f",
+                        "secondary-fixed": "#6ffbbe",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#4d8eff",
+                        "on-tertiary": "#472a00",
+                        "surface-tint": "#adc6ff",
+                        "on-primary-container": "#00285d",
+                        "outline-variant": "#424754",
+                        "surface-container": "#1d2027",
+                        "surface-container-highest": "#32353c",
+                        "surface-bright": "#363941",
+                        "on-secondary-fixed": "#002113",
+                        "on-surface-variant": "#c2c6d6",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-container": "#00a572",
+                        "on-secondary-fixed-variant": "#005236",
+                        "error": "#ffb4ab",
+                        "primary": "#adc6ff",
+                        "on-background": "#e1e2ec",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-variant": "#32353c",
+                        "surface-container-high": "#272a31",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-error-container": "#ffdad6",
+                        "background": "#10131a",
+                        "outline": "#8c909f",
+                        "tertiary": "#ffb95f",
+                        "surface-container-lowest": "#0b0e15",
+                        "on-tertiary-container": "#3e2400",
+                        "on-secondary": "#003824",
+                        "on-primary": "#002e6a",
+                        "inverse-surface": "#e1e2ec",
+                        "surface-dim": "#10131a",
+                        "surface": "#10131a",
+                        "surface-container-low": "#191b23"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "table-row-height": "56px",
+                        "unit": "4px",
+                        "touch-target-min": "44px",
+                        "stack-lg": "32px",
+                        "container-margin": "24px",
+                        "stack-md": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "numeric-data": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        .radar-grid {
+            stroke: #424754;
+            stroke-width: 1;
+            fill: none;
+        }
+        .radar-area {
+            fill: rgba(173, 198, 255, 0.2);
+            stroke: #adc6ff;
+            stroke-width: 2;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden lg:flex flex-col h-full h-screen w-64 fixed left-0 top-0 bg-surface-container border-r border-outline-variant z-50">
+<div class="px-6 py-8">
+<h1 class="font-display-lg text-display-lg text-primary">BarOps Pro</h1>
+<p class="font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Elite Management</p>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md">POS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-3 rounded-xl font-label-md active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+                New Entry
+            </button>
+</div>
+</aside>
+<!-- Top AppBar -->
+<header class="flex justify-between items-center w-full px-container-margin h-table-row-height z-40 sticky top-0 bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant lg:pl-72">
+<div class="flex items-center gap-4">
+<button class="lg:hidden material-symbols-outlined text-on-surface">menu</button>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Staff Profile</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface-container-high rounded-full px-4 py-1 gap-2 border border-outline-variant">
+<span class="material-symbols-outlined text-secondary text-[18px]">history</span>
+<span class="font-label-md text-on-surface-variant">Shift Open: 14:20</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant/50 rounded-full cursor-pointer">notifications</span>
+<div class="h-8 w-8 rounded-full bg-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a restaurant manager in a high-end dark-themed environment. The subject is wearing a sharp charcoal vest and white shirt. The background shows blurred warm amber lights of a premium bar, creating a sophisticated corporate command center atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXKt0ylvoPmetoMgwUgigPdBkmQPaQYmmXiZsQaTBxITrUWNAU0rYr_AYgn75RPQ1nwMzjLDUaMVPHMBj9ofUgtEAQ6I-rUdgA64g7u1cx089290vky2JhQgRR51DYyYr4Jymv5ttDynOXFRtEjdaTg_TU0VbTFevCrRRoqzKA7sQ6G4-tOFyJTs_KXvQqPT-fbO7TtytcvC5WaH4NehKoGWFmeQyCXpHa774yKys3y1pTSNY4MiA_Mw"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 p-container-margin space-y-stack-lg pb-32 lg:pb-8">
+<!-- Profile Header Bento -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Basic Info Card -->
+<div class="md:col-span-8 bg-surface-container rounded-2xl p-6 border border-outline-variant relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="relative">
+<div class="h-24 w-24 rounded-2xl overflow-hidden ring-4 ring-surface-container-high shadow-lg">
+<img class="w-full h-full object-cover" data-alt="Detailed professional headshot of Elena S., a senior waiter in her late 20s. She has a confident smile and is dressed in a minimalist, modern charcoal gray uniform. The background is a dimly lit, high-fidelity dark bar with bokeh lighting in deep blues and amber tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2AC76BcY2KslmOhZlI8uoBvOB77Pi2xq5aj4bxVFUHLBcQlCHnkv7sldLngrUTJPoKkCnj-ed5rpAJjEl7iWgoVQ9OSz-SJfBqq1zY6wUsTmLp1sem4_vHSIi6gXmEWgvrNEEo_idqCVstLu6kV3z8N8KsbKmLNfr_OXGDnZ2-mspun3bFoJwSddmtwIx2jtI6r4gzjrJgEOpLk84XW1TU5-vVWlDJbkpXyDDnEg-nUkZUl-LguAE_Q"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-secondary text-on-secondary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border-2 border-surface-container">Active</div>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center gap-3">
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Elena S.</h3>
+<span class="px-3 py-1 bg-primary/10 text-primary rounded-full font-label-md text-label-md">Senior Waiter</span>
+</div>
+<p class="text-on-surface-variant font-body-md">Employee ID: #7822 • Joined: Oct 2022</p>
+<div class="flex flex-wrap gap-4 pt-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span class="text-label-md">e.sanchez@barops.pro</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span class="text-label-md">+1 (555) 012-3456</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-3 rounded-xl border border-outline-variant text-on-surface hover:bg-surface-variant/50 active:scale-95 transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-3 rounded-xl bg-error-container/20 text-error border border-error/30 hover:bg-error-container/30 active:scale-95 transition-all">
+<span class="material-symbols-outlined">block</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Shift Status Card -->
+<div class="md:col-span-4 bg-surface-container rounded-2xl p-6 border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-on-surface-variant uppercase tracking-tighter">Current Shift</span>
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+</div>
+<div class="space-y-1">
+<p class="text-display-lg font-display-lg text-secondary">06:42<span class="text-headline-md ml-1 opacity-60">h</span></p>
+<p class="text-label-md text-on-surface-variant">Started at 15:30 • Zone A</p>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden mt-4">
+<div class="bg-secondary h-full w-[84%]"></div>
+</div>
+</div>
+</div>
+<!-- Metrics & Skills Row -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Skill Radar Chart -->
+<div class="md:col-span-5 bg-surface-container rounded-2xl p-6 border border-outline-variant flex flex-col items-center">
+<div class="w-full flex justify-between items-center mb-6">
+<h4 class="font-title-lg text-title-lg text-on-surface">Competency Audit</h4>
+<span class="material-symbols-outlined text-on-surface-variant cursor-help">info</span>
+</div>
+<div class="relative w-64 h-64 flex items-center justify-center">
+<!-- Simple Radar SVG -->
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="radar-grid" cx="50" cy="50" r="10"></circle>
+<circle class="radar-grid" cx="50" cy="50" r="20"></circle>
+<circle class="radar-grid" cx="50" cy="50" r="30"></circle>
+<circle class="radar-grid" cx="50" cy="50" r="40"></circle>
+<circle class="radar-grid" cx="50" cy="50" r="50"></circle>
+<line class="radar-grid" x1="50" x2="50" y1="0" y2="100"></line>
+<line class="radar-grid" x1="0" x2="100" y1="50" y2="50"></line>
+<!-- Skill Plot -->
+<polygon class="radar-area" points="50,15 85,50 50,90 20,50"></polygon>
+</svg>
+<!-- Labels -->
+<span class="absolute top-0 text-[10px] font-bold text-on-surface-variant uppercase">Speed</span>
+<span class="absolute right-0 text-[10px] font-bold text-on-surface-variant uppercase">Upselling</span>
+<span class="absolute bottom-0 text-[10px] font-bold text-on-surface-variant uppercase">Punctuality</span>
+<span class="absolute left-0 text-[10px] font-bold text-on-surface-variant uppercase">Accuracy</span>
+</div>
+<div class="grid grid-cols-2 gap-4 w-full mt-6">
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/30">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Accuracy</p>
+<p class="text-title-lg font-numeric-data text-primary">98%</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-outline-variant/30">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Sales Index</p>
+<p class="text-title-lg font-numeric-data text-secondary">1.4x</p>
+</div>
+</div>
+</div>
+<!-- Performance History Bento -->
+<div class="md:col-span-7 space-y-6">
+<!-- Sales High-level stats -->
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="bg-surface-container rounded-2xl p-4 border border-outline-variant">
+<p class="text-label-md text-on-surface-variant mb-1">Weekly Sales</p>
+<p class="text-headline-md font-numeric-data text-on-surface">$12,450</p>
+<span class="text-[10px] text-secondary flex items-center gap-1 font-bold">+12% vs last week</span>
+</div>
+<div class="bg-surface-container rounded-2xl p-4 border border-outline-variant">
+<p class="text-label-md text-on-surface-variant mb-1">Avg Ticket</p>
+<p class="text-headline-md font-numeric-data text-on-surface">$84.50</p>
+<span class="text-[10px] text-primary flex items-center gap-1 font-bold">Top 5% Tier</span>
+</div>
+<div class="bg-surface-container rounded-2xl p-4 border border-outline-variant col-span-2 lg:col-span-1">
+<p class="text-label-md text-on-surface-variant mb-1">Attendance</p>
+<p class="text-headline-md font-numeric-data text-on-surface">100%</p>
+<span class="text-[10px] text-on-surface-variant flex items-center gap-1 font-bold">Last 30 Days</span>
+</div>
+</div>
+<!-- Recent Audit Log Table -->
+<div class="bg-surface-container rounded-2xl border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high/50">
+<h4 class="font-title-lg text-title-lg text-on-surface">Recent Audit Log</h4>
+<button class="text-primary font-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto no-scrollbar">
+<table class="w-full text-left">
+<thead class="bg-surface-container-highest/20 text-on-surface-variant text-[11px] uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3 font-semibold">Action</th>
+<th class="px-6 py-3 font-semibold">Table</th>
+<th class="px-6 py-3 font-semibold">Value</th>
+<th class="px-6 py-3 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span>
+<span class="font-body-md">Void Authorization</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">T-14</td>
+<td class="px-6 py-4 font-numeric-data">$24.00</td>
+<td class="px-6 py-4">
+<span class="bg-secondary/10 text-secondary px-2 py-1 rounded text-[11px] font-bold uppercase">Approved</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[18px]">payments</span>
+<span class="font-body-md">Large Bill Settlement</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">V-02</td>
+<td class="px-6 py-4 font-numeric-data">$842.12</td>
+<td class="px-6 py-4">
+<span class="bg-secondary/10 text-secondary px-2 py-1 rounded text-[11px] font-bold uppercase">Closed</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-error text-[18px]">error</span>
+<span class="font-body-md">Comped Item</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">T-08</td>
+<td class="px-6 py-4 font-numeric-data">$12.50</td>
+<td class="px-6 py-4">
+<span class="bg-tertiary/10 text-tertiary px-2 py-1 rounded text-[11px] font-bold uppercase">Review</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Schedule & Roles Row -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Weekly Schedule -->
+<div class="lg:col-span-2 bg-surface-container rounded-2xl p-6 border border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-title-lg text-title-lg text-on-surface">Roster Status</h4>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Next 7 Days</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<!-- Day Items -->
+<div class="flex flex-col items-center gap-2 p-3 bg-primary-container/20 border border-primary/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Mon</span>
+<span class="text-title-lg font-bold">14</span>
+<div class="h-1.5 w-1.5 bg-secondary rounded-full"></div>
+</div>
+<div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Tue</span>
+<span class="text-title-lg font-bold">15</span>
+<div class="h-1.5 w-1.5 bg-transparent rounded-full"></div>
+</div>
+<div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Wed</span>
+<span class="text-title-lg font-bold">16</span>
+<div class="h-1.5 w-1.5 bg-secondary rounded-full"></div>
+</div>
+<div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Thu</span>
+<span class="text-title-lg font-bold">17</span>
+<div class="h-1.5 w-1.5 bg-secondary rounded-full"></div>
+</div>
+<div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Fri</span>
+<span class="text-title-lg font-bold">18</span>
+<div class="h-1.5 w-1.5 bg-secondary rounded-full"></div>
+</div>
+<div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Sat</span>
+<span class="text-title-lg font-bold">19</span>
+<div class="h-1.5 w-1.5 bg-error rounded-full"></div>
+</div>
+<div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Sun</span>
+<span class="text-title-lg font-bold">20</span>
+<div class="h-1.5 w-1.5 bg-secondary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Roles & Certifications -->
+<div class="bg-surface-container rounded-2xl p-6 border border-outline-variant">
+<h4 class="font-title-lg text-title-lg text-on-surface mb-6">Roles & Compliance</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">local_bar</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-on-surface">Wine Specialist</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Certified Level II</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">security</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-on-surface">Health & Safety</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Valid until Dec 2024</p>
+</div>
+</div>
+<div class="flex items-center gap-4 opacity-50">
+<div class="h-10 w-10 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">supervisor_account</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-on-surface">Team Lead</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Training Pending</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 bg-surface-container-high border-t border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md">POS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">table_restaurant</span>
+<span class="font-label-md">Tables</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-label-md">Profile</span>
+</a>
+</nav>
+<!-- Floating Action Button Contextual (Hidden for Detail View per instructions, but kept as placeholder template) -->
+<!-- Suppression logic applied to Detail screen -->
+<script>
+        // Micro-interaction for hover effects on table rows
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.add('scale-[0.99]');
+                setTimeout(() => row.classList.remove('scale-[0.99]'), 100);
+            });
+        });
+
+        // Simple Radar Chart Animation Logic
+        const radarArea = document.querySelector('.radar-area');
+        if (radarArea) {
+            radarArea.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            setTimeout(() => {
+                // Animate points to show "loading" effect
+                radarArea.setAttribute('points', "50,10 90,50 50,95 15,50");
+            }, 500);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarOps Pro | User Roles &amp; Permissions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffb95f",
+                    "outline": "#8c909f",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#0b0e15",
+                    "surface": "#10131a",
+                    "secondary-container": "#00a572",
+                    "on-surface": "#e1e2ec",
+                    "on-secondary-fixed": "#002113",
+                    "secondary-fixed": "#6ffbbe",
+                    "primary-container": "#4d8eff",
+                    "on-primary-container": "#00285d",
+                    "on-tertiary": "#472a00",
+                    "on-surface-variant": "#c2c6d6",
+                    "inverse-on-surface": "#2e3038",
+                    "tertiary-container": "#ca8100",
+                    "background": "#10131a",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#004395",
+                    "surface-bright": "#363941",
+                    "on-secondary": "#003824",
+                    "surface-container-low": "#191b23",
+                    "on-error": "#690005",
+                    "secondary": "#4edea3",
+                    "on-primary": "#002e6a",
+                    "primary": "#adc6ff",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-variant": "#32353c",
+                    "surface-tint": "#adc6ff",
+                    "primary-fixed": "#d8e2ff",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#adc6ff",
+                    "surface-container": "#1d2027",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-tertiary-container": "#3e2400",
+                    "on-primary-fixed": "#001a42",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e1e2ec",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-high": "#272a31",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "inverse-surface": "#e1e2ec",
+                    "inverse-primary": "#005ac2",
+                    "surface-dim": "#10131a",
+                    "on-secondary-container": "#00311f",
+                    "surface-container-highest": "#32353c",
+                    "outline-variant": "#424754"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "table-row-height": "56px",
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "gutter": "16px",
+                    "container-margin": "24px",
+                    "touch-target-min": "44px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "numeric-data": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "headline-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0f172a;
+            color: #e1e2ec;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background: #334155;
+            border-radius: 99px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .toggle-switch.active {
+            background: #4d8eff;
+        }
+        .toggle-knob {
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s ease;
+        }
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="flex overflow-hidden">
+<!-- Sidebar (Desktop) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container border-r border-outline-variant z-50">
+<div class="p-6">
+<h1 class="font-display-lg text-display-lg text-primary text-2xl">BarOps Pro</h1>
+<p class="text-on-surface-variant text-xs opacity-70">Elite Management</p>
+</div>
+<nav class="flex-1 mt-4 px-3 space-y-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10 rounded-r-lg group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-label-md flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">person_add</span>
+                New Entry
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 flex flex-col h-screen overflow-hidden">
+<!-- Top Nav Bar -->
+<header class="flex justify-between items-center w-full px-container-margin h-table-row-height z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant shadow-sm sticky top-0">
+<div class="flex items-center gap-4">
+<span class="lg:hidden material-symbols-outlined text-on-surface">menu</span>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Permissions</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-on-surface w-48" placeholder="Search team..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">store</span>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a diverse male manager in his late 30s wearing a dark navy hospitality vest. He is smiling warmly in a dimly lit, high-end cocktail bar setting with glowing amber back-bar bottles in a soft bokeh background. The lighting is crisp and moody, emphasizing a premium command-center aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoqbYnMkM00qkvbJaIm2sPpdkEW_aBigS8sRTzwSCBheAtg6ebnRZcEmXwqu2xbDYrfJGBup1smrrxnBY5X3Be4LuOUKAwddcsT12-9AeKJr-HcUXP2onxIRm2KzTyKYdL3aupB_Zyzq09dEBtmw1jC7vXLOEfGAYBosGOKmKkUk9NaSSrkO3d-GAbD50JILvEHrem11iesinCx0lBuzYFU0-jTZT_l94v2spnV0vadydZhwB4RU2jwg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
+<!-- User Management Table Section -->
+<section class="space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Active Team Members</h3>
+<p class="text-body-md text-on-surface-variant">Manage role assignments and remote access controls.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-lg">
+<span class="material-symbols-outlined">mail</span>
+                        Invite New User
+                    </button>
+</div>
+<div class="bg-surface-container rounded-xl overflow-hidden border border-outline-variant">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high text-outline font-label-md border-b border-outline-variant">
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">User</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">Role</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">Location</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider text-center">Mobile Access</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Table Row 1 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary font-bold">JD</div>
+<div>
+<div class="text-body-lg font-semibold">Julian Draxler</div>
+<div class="text-xs text-on-surface-variant">j.draxler@barops.pro</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary border border-primary/20 rounded-md text-xs font-bold uppercase tracking-tight">Owner</span>
+</td>
+<td class="px-6 py-4 text-body-md">Main Flagship - Downtown</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<div class="toggle-switch active" onclick="this.classList.toggle('active')">
+<div class="toggle-knob"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<!-- Table Row 2 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary font-bold">SM</div>
+<div>
+<div class="text-body-lg font-semibold">Sarah Miller</div>
+<div class="text-xs text-on-surface-variant">s.miller@barops.pro</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-secondary/10 text-secondary border border-secondary/20 rounded-md text-xs font-bold uppercase tracking-tight">Admin</span>
+</td>
+<td class="px-6 py-4 text-body-md">Uptown Lounge</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<div class="toggle-switch active" onclick="this.classList.toggle('active')">
+<div class="toggle-knob"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<!-- Table Row 3 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center text-tertiary font-bold">MK</div>
+<div>
+<div class="text-body-lg font-semibold">Marcus Kross</div>
+<div class="text-xs text-on-surface-variant">m.kross@barops.pro</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-tertiary/10 text-tertiary border border-tertiary/20 rounded-md text-xs font-bold uppercase tracking-tight">Manager</span>
+</td>
+<td class="px-6 py-4 text-body-md">Southside Terrace</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<div class="toggle-switch active" onclick="this.classList.toggle('active')">
+<div class="toggle-knob"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<!-- Table Row 4 -->
+<tr class="hover:bg-surface-variant/20 transition-colors h-table-row-height">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-outline-variant/20 flex items-center justify-center text-outline font-bold">AL</div>
+<div>
+<div class="text-body-lg font-semibold">Alex Lee</div>
+<div class="text-xs text-on-surface-variant">a.lee@barops.pro</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-surface-variant/50 text-on-surface-variant border border-outline-variant rounded-md text-xs font-bold uppercase tracking-tight">Staff</span>
+</td>
+<td class="px-6 py-4 text-body-md">Main Flagship - Downtown</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<div class="toggle-switch" onclick="this.classList.toggle('active')">
+<div class="toggle-knob"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Permission Matrix / Role Editing Section -->
+<section class="space-y-4 pb-20">
+<div class="flex items-center gap-4 border-b border-outline-variant pb-2">
+<h3 class="font-title-lg text-title-lg text-on-surface">Role Configuration Matrix</h3>
+<div class="flex gap-2">
+<button class="px-4 py-1 rounded-full bg-primary-container text-on-primary-container text-xs font-bold">ADMIN</button>
+<button class="px-4 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-bold">MANAGER</button>
+<button class="px-4 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-bold">STAFF</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Financial Access Accordion Card -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<div class="px-6 py-4 bg-surface-container-high flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">payments</span>
+<span class="font-title-lg text-title-lg text-on-surface">Financial Access</span>
+</div>
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between items-center">
+<label class="text-body-md">View Daily P&amp;L Reports</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Authorize Payroll</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center opacity-60">
+<label class="text-body-md">Modify Tax Settings</label>
+<input class="rounded bg-surface-container-low border-outline text-primary h-5 w-5" disabled="" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Void Transactions</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- Inventory Management Card -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<div class="px-6 py-4 bg-surface-container-high flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">inventory_2</span>
+<span class="font-title-lg text-title-lg text-on-surface">Inventory Controls</span>
+</div>
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between items-center">
+<label class="text-body-md">Adjust Stock Levels</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Approve Purchase Orders</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Modify Recipe Costs</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Vendor Management</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- POS Overrides Card -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<div class="px-6 py-4 bg-surface-container-high flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">point_of_sale</span>
+<span class="font-title-lg text-title-lg text-on-surface">POS Overrides</span>
+</div>
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between items-center">
+<label class="text-body-md">Apply Bulk Discounts</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Delete Open Tickets</label>
+<input class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Override Kitchen Times</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="text-body-md">Staff Shift Edits</label>
+<input checked="" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-end pt-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-xl font-label-md hover:brightness-110 active:scale-95 transition-all shadow-xl">
+                        Save Configuration Changes
+                    </button>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 bg-surface-container-high border-t border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-98 transition-transform" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-98 transition-transform" href="#">
+<span class="material-symbols-outlined">table_restaurant</span>
+<span class="font-label-md text-label-md">Tables</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-98 transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:scale-98 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<!-- Visual Background Element (Shader / Abstract) -->
+<div class="fixed inset-0 -z-10 pointer-events-none opacity-20">
+<div class="absolute inset-0 bg-gradient-to-tr from-surface via-background to-surface-container-lowest"></div>
+<div class="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-secondary/10 blur-[120px] rounded-full"></div>
+</div>
+<script>
+        // Simple micro-interactions for the matrix
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const parent = this.closest('.flex');
+                if (this.checked) {
+                    parent.classList.remove('opacity-60');
+                } else {
+                    parent.classList.add('opacity-60');
+                }
+            });
+        });
+    </script>
+</body></html>

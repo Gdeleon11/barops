@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dynamic Pricing &amp; Happy Hour | BarOps Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-container": "#ca8100",
+                "error-container": "#93000a",
+                "error": "#ffb4ab",
+                "on-secondary-container": "#00311f",
+                "primary-fixed": "#d8e2ff",
+                "surface-dim": "#10131a",
+                "on-tertiary-fixed-variant": "#653e00",
+                "on-secondary-fixed-variant": "#005236",
+                "secondary-container": "#00a572",
+                "on-background": "#e1e2ec",
+                "surface-variant": "#32353c",
+                "secondary-fixed": "#6ffbbe",
+                "tertiary-fixed-dim": "#ffb95f",
+                "primary-container": "#4d8eff",
+                "on-tertiary": "#472a00",
+                "on-primary-fixed": "#001a42",
+                "surface-container-lowest": "#0b0e15",
+                "on-surface": "#e1e2ec",
+                "background": "#10131a",
+                "on-secondary": "#003824",
+                "inverse-surface": "#e1e2ec",
+                "secondary": "#4edea3",
+                "tertiary": "#ffb95f",
+                "inverse-on-surface": "#2e3038",
+                "on-tertiary-container": "#3e2400",
+                "surface-bright": "#363941",
+                "primary": "#adc6ff",
+                "surface-tint": "#adc6ff",
+                "on-tertiary-fixed": "#2a1700",
+                "surface-container-highest": "#32353c",
+                "surface-container": "#1d2027",
+                "outline-variant": "#424754",
+                "surface-container-high": "#272a31",
+                "on-secondary-fixed": "#002113",
+                "surface-container-low": "#191b23",
+                "on-primary": "#002e6a",
+                "inverse-primary": "#005ac2",
+                "on-primary-container": "#00285d",
+                "surface": "#10131a",
+                "primary-fixed-dim": "#adc6ff",
+                "outline": "#8c909f",
+                "on-error": "#690005",
+                "on-surface-variant": "#c2c6d6",
+                "on-error-container": "#ffdad6",
+                "on-primary-fixed-variant": "#004395",
+                "tertiary-fixed": "#ffddb8",
+                "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-md": "16px",
+                "stack-lg": "32px",
+                "table-row-height": "56px",
+                "container-margin": "24px",
+                "stack-sm": "8px",
+                "unit": "4px",
+                "touch-target-min": "44px",
+                "gutter": "16px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "title-lg": ["Inter"],
+                "display-lg": ["Outfit"],
+                "headline-lg": ["Outfit"],
+                "headline-md": ["Outfit"],
+                "numeric-data": ["Inter"],
+                "label-md": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #10131a;
+            color: #e1e2ec;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .rule-card:hover {
+            border-color: rgba(173, 198, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #10131a; }
+        ::-webkit-scrollbar-thumb { background: #32353c; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #424754; }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center h-16 px-6">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary">BarOps Pro</span>
+<div class="h-6 w-[1px] bg-outline-variant/30 mx-2"></div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="bg-surface-container border-none rounded-full pl-10 pr-4 py-1.5 text-body-md w-64 focus:ring-1 focus:ring-primary" placeholder="Search rules or products..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-bright/10 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-bright/10 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img class="w-8 h-8 rounded-full border border-outline-variant shadow-sm" data-alt="A professional headshot of a hospitality manager in a modern, slightly dimmed bar environment. The manager has a confident, elite appearance, wearing a sharp dark vest over a crisp shirt. The background bokeh shows high-end glassware and blue ambient lighting typical of a premium cocktail lounge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwVsnyjzCFk4z45qUd3S4l9R5N_Wn25BpD8mxDj6Q5Ow2p6aMYqob08GS6rX0bBtJUnRMj_mSKpxUTfrIYg89yxjpu0-JiMRgXFXJNHywOaVRXOqcWx8sI_TsQun7xTmxnj1EpdqB3xS5JM4Q-CWmpGVfTWgyXKVvkqmot3ToCRIWIewOyHx_yuKePHrvy8v6Vz3ZXMstrbTxLQGabYQJrGqdqKxXWvaE9_G0xYJlqnPq8BaqpF1Pr-A"/>
+</div>
+</header>
+<!-- Side Navigation -->
+<nav class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container border-r border-outline-variant/10 flex flex-col py-6 pt-20">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<div class="font-headline-md text-label-md font-bold text-primary">Elite Management</div>
+<div class="text-on-surface-variant text-[10px] uppercase tracking-widest">Active Shift: Night</div>
+</div>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Command</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary bg-primary/10 border-l-4 border-primary rounded-r-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt</span>
+<span class="font-label-md text-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</div>
+<div class="px-4 py-6 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-16 h-screen overflow-y-auto bg-background">
+<div class="max-w-[1600px] mx-auto p-container-margin space-y-stack-lg">
+<!-- Header & Strategy Overview -->
+<section class="flex flex-col md:flex-row gap-gutter">
+<div class="flex-1 space-y-4">
+<h1 class="font-headline-lg text-headline-lg text-primary">Dynamic Pricing &amp; Configuration</h1>
+<p class="text-on-surface-variant max-w-2xl">Maximize margins during peak occupancy and drive volume during off-peak hours with automated, data-driven pricing rules.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<div class="glass-panel p-stack-md rounded-xl space-y-2">
+<div class="text-label-md text-on-surface-variant uppercase tracking-tighter">Active Rules</div>
+<div class="flex items-end justify-between">
+<span class="font-display-lg text-[32px] text-on-surface">12</span>
+<span class="text-secondary text-label-md flex items-center mb-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +2 Active
+                                </span>
+</div>
+</div>
+<div class="glass-panel p-stack-md rounded-xl space-y-2">
+<div class="text-label-md text-on-surface-variant uppercase tracking-tighter">Est. Revenue Lift</div>
+<div class="flex items-end justify-between">
+<span class="font-display-lg text-[32px] text-secondary">18.4%</span>
+<span class="text-on-surface-variant text-label-md mb-1">MTD Performance</span>
+</div>
+</div>
+<div class="glass-panel p-stack-md rounded-xl border-l-4 border-tertiary-container space-y-2">
+<div class="text-label-md text-on-surface-variant uppercase tracking-tighter">Upcoming Changes</div>
+<div class="flex items-end justify-between">
+<span class="font-display-lg text-[32px] text-tertiary">03</span>
+<span class="text-on-surface-variant text-label-md mb-1">Next 24h</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Impact Simulation Widget -->
+<div class="w-full md:w-80 glass-panel rounded-xl p-stack-md border border-primary/20 bg-primary/5">
+<div class="flex justify-between items-center mb-4">
+<span class="font-title-lg text-title-lg text-primary">Impact Simulator</span>
+<span class="material-symbols-outlined text-primary">query_stats</span>
+</div>
+<div class="space-y-4">
+<div class="p-stack-sm bg-surface-container rounded-lg">
+<div class="text-label-md text-on-surface-variant mb-1">Proposed Margin Change</div>
+<div class="h-2 w-full bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+<div class="flex justify-between mt-1 text-label-md">
+<span>+12.5% Margin</span>
+<span class="text-error">-4.2% Volume</span>
+</div>
+</div>
+<div class="p-stack-sm bg-surface-container rounded-lg">
+<div class="text-label-md text-on-surface-variant mb-1">Net Revenue Impact</div>
+<div class="font-display-lg text-[24px] text-on-surface">+$1,420<span class="text-on-surface-variant text-body-md font-normal ml-1">/week</span></div>
+</div>
+<button class="w-full py-2 bg-primary text-on-primary rounded-lg font-label-md hover:bg-primary-container transition-all active:scale-95">
+                            Apply Strategy
+                        </button>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout for Main Functionality -->
+<div class="grid grid-cols-12 gap-gutter items-start">
+<!-- Happy Hour Scheduler (Timeline View) -->
+<div class="col-span-12 lg:col-span-8 glass-panel rounded-xl p-6 h-fit">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-lg text-title-lg text-on-surface">Happy Hour Scheduler</h2>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-surface-container-high rounded-md text-label-md text-on-surface-variant hover:text-on-surface">Week View</button>
+<button class="px-3 py-1 bg-primary text-on-primary rounded-md text-label-md">Recurring Slots</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<div class="min-w-[600px] grid grid-cols-8 border border-outline-variant/20 rounded-lg overflow-hidden">
+<!-- Header -->
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20"></div>
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant">Mon</div>
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant">Tue</div>
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant">Wed</div>
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant">Thu</div>
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant text-primary font-bold">Fri</div>
+<div class="bg-surface-container-highest p-3 border-r border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant">Sat</div>
+<div class="bg-surface-container-highest p-3 border-b border-outline-variant/20 text-center font-label-md text-on-surface-variant">Sun</div>
+<!-- Rows -->
+<div class="bg-surface-container-low p-3 border-r border-b border-outline-variant/10 text-label-md text-on-surface-variant">4pm-6pm</div>
+<div class="p-2 border-r border-b border-outline-variant/10"><div class="h-full bg-secondary-container/20 border border-secondary/40 rounded p-1 text-[10px] text-secondary">Early Bird</div></div>
+<div class="p-2 border-r border-b border-outline-variant/10"><div class="h-full bg-secondary-container/20 border border-secondary/40 rounded p-1 text-[10px] text-secondary">Early Bird</div></div>
+<div class="p-2 border-r border-b border-outline-variant/10"><div class="h-full bg-secondary-container/20 border border-secondary/40 rounded p-1 text-[10px] text-secondary">Early Bird</div></div>
+<div class="p-2 border-r border-b border-outline-variant/10"><div class="h-full bg-secondary-container/20 border border-secondary/40 rounded p-1 text-[10px] text-secondary">Early Bird</div></div>
+<div class="p-2 border-r border-b border-outline-variant/10"><div class="h-full bg-primary-container/20 border border-primary/40 rounded p-1 text-[10px] text-primary">Golden Hour</div></div>
+<div class="p-2 border-r border-b border-outline-variant/10"></div>
+<div class="p-2 border-b border-outline-variant/10"></div>
+<div class="bg-surface-container-low p-3 border-r border-outline-variant/10 text-label-md text-on-surface-variant">6pm-9pm</div>
+<div class="p-2 border-r border-outline-variant/10"></div>
+<div class="p-2 border-r border-outline-variant/10"></div>
+<div class="p-2 border-r border-outline-variant/10"><div class="h-full bg-tertiary-container/20 border border-tertiary/40 rounded p-1 text-[10px] text-tertiary">Midweek Mix</div></div>
+<div class="p-2 border-r border-outline-variant/10"></div>
+<div class="p-2 border-r border-outline-variant/10"><div class="h-full bg-primary-container/20 border border-primary/40 rounded p-1 text-[10px] text-primary">Golden Hour</div></div>
+<div class="p-2 border-r border-outline-variant/10"><div class="h-full bg-secondary-container/20 border border-secondary/40 rounded p-1 text-[10px] text-secondary">Weekend Warmup</div></div>
+<div class="p-2 border-outline-variant/10"><div class="h-full bg-secondary-container/20 border border-secondary/40 rounded p-1 text-[10px] text-secondary">Weekend Warmup</div></div>
+</div>
+</div>
+<div class="mt-4 flex gap-4 text-label-md text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> Standard Discount</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> High Occupancy Boost</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span> Inventory Clearance</span>
+</div>
+</div>
+<!-- Dynamic Pricing Rule Builder -->
+<div class="col-span-12 lg:col-span-4 glass-panel rounded-xl p-6 space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">auto_fix_high</span>
+<h2 class="font-title-lg text-title-lg text-on-surface">Rule Builder</h2>
+</div>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-label-md text-on-surface-variant block uppercase">Trigger Condition</label>
+<select class="w-full bg-surface-container border border-outline-variant rounded-lg p-2 text-body-md text-on-surface focus:ring-1 focus:ring-primary">
+<option>Occupancy &gt; 85%</option>
+<option>Inventory &lt; 10% (Low Stock)</option>
+<option>Time: Mon-Fri After 10 PM</option>
+<option>Event: Major Local Sports</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-label-md text-on-surface-variant block uppercase">Action Type</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 border border-primary/50 bg-primary/10 text-primary rounded-lg text-label-md">Increase %</button>
+<button class="py-2 border border-outline-variant hover:bg-surface-bright/10 rounded-lg text-label-md">Flat Rate +/-</button>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-md text-on-surface-variant block uppercase">Value</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg p-2 text-body-md text-on-surface focus:ring-1 focus:ring-primary" type="number" value="10"/>
+<span class="absolute right-3 text-on-surface-variant">%</span>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-on-primary font-bold rounded-lg flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                            Save Rule
+                        </button>
+</div>
+<div class="pt-4 border-t border-outline-variant/10">
+<h3 class="text-label-md text-on-surface-variant uppercase mb-3">Recently Active</h3>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low border border-outline-variant/10">
+<span class="text-body-md">Surcharge (Peak)</span>
+<span class="px-2 py-0.5 bg-secondary/20 text-secondary rounded text-[10px]">+15%</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low border border-outline-variant/10">
+<span class="text-body-md">Clearance (Draft)</span>
+<span class="px-2 py-0.5 bg-tertiary/20 text-tertiary rounded text-[10px]">-20%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Selection Area -->
+<div class="col-span-12 glass-panel rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Product Selection &amp; Live Preview</h2>
+<p class="text-on-surface-variant text-body-md">Apply current strategy to categories or select individual items.</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex rounded-lg overflow-hidden border border-outline-variant">
+<button class="px-4 py-2 bg-surface-container-high text-primary font-label-md">Categories</button>
+<button class="px-4 py-2 hover:bg-surface-container-high text-on-surface-variant font-label-md border-l border-outline-variant">Individual Items</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-high text-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="px-6 py-4 font-normal">Product Category</th>
+<th class="px-6 py-4 font-normal text-center">Active Items</th>
+<th class="px-6 py-4 font-normal">Base Price (Avg)</th>
+<th class="px-6 py-4 font-normal">Adjusted Price</th>
+<th class="px-6 py-4 font-normal">Live Margin</th>
+<th class="px-6 py-4 font-normal">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-bright/5 transition-colors group">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">local_bar</span>
+</div>
+<span class="font-title-lg text-on-surface">Premium Spirits</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-surface-container px-3 py-1 rounded-full text-label-md">24 Items</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">$14.50</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-secondary font-bold">$16.25</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">trending_up</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-secondary">72%</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary/20 rounded-lg transition-colors"><span class="material-symbols-outlined text-primary text-[20px]">edit</span></button>
+<button class="p-2 hover:bg-error/20 rounded-lg transition-colors"><span class="material-symbols-outlined text-error text-[20px]">visibility_off</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright/5 transition-colors group">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">sports_bar</span>
+</div>
+<span class="font-title-lg text-on-surface">Draft Beer</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-surface-container px-3 py-1 rounded-full text-label-md">12 Items</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">$8.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-bold">$6.50</span>
+<span class="material-symbols-outlined text-tertiary text-[16px]">trending_down</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-tertiary">54%</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary/20 rounded-lg transition-colors"><span class="material-symbols-outlined text-primary text-[20px]">edit</span></button>
+<button class="p-2 hover:bg-error/20 rounded-lg transition-colors"><span class="material-symbols-outlined text-error text-[20px]">visibility_off</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright/5 transition-colors group">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">wine_bar</span>
+</div>
+<span class="font-title-lg text-on-surface">House Wine</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-surface-container px-3 py-1 rounded-full text-label-md">8 Items</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">$11.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-on-surface font-bold">$11.00</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">remove</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-on-surface-variant">61%</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary/20 rounded-lg transition-colors"><span class="material-symbols-outlined text-primary text-[20px]">edit</span></button>
+<button class="p-2 hover:bg-error/20 rounded-lg transition-colors"><span class="material-symbols-outlined text-error text-[20px]">visibility_off</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB - Restricted to Dashboard Context -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+<script>
+        // Simple Interaction: Toggle selection buttons
+        const selectionButtons = document.querySelectorAll('.flex.rounded-lg button');
+        selectionButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectionButtons.forEach(b => {
+                    b.classList.remove('bg-surface-container-high', 'text-primary');
+                    b.classList.add('hover:bg-surface-container-high', 'text-on-surface-variant');
+                });
+                btn.classList.add('bg-surface-container-high', 'text-primary');
+                btn.classList.remove('hover:bg-surface-container-high', 'text-on-surface-variant');
+            });
+        });
+
+        // Simple visual pulse for active rules
+        setInterval(() => {
+            const activeIndicator = document.querySelector('.border-l-4.border-tertiary-container');
+            if (activeIndicator) {
+                activeIndicator.style.transition = 'border-color 1s ease';
+                activeIndicator.style.borderColor = activeIndicator.style.borderColor === 'rgba(202, 129, 0, 0.4)' ? '#ca8100' : 'rgba(202, 129, 0, 0.4)';
+            }
+        }, 2000);
+    </script>
+</body></html>

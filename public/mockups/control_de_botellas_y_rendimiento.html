@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarOps Pro - Control de Botellas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#3e2400",
+                    "on-primary-container": "#00285d",
+                    "on-surface": "#e1e2ec",
+                    "secondary-fixed-dim": "#4edea3",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-tint": "#adc6ff",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface": "#10131a",
+                    "primary-container": "#4d8eff",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#005ac2",
+                    "inverse-on-surface": "#2e3038",
+                    "outline": "#8c909f",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-surface-variant": "#c2c6d6",
+                    "primary-fixed-dim": "#adc6ff",
+                    "surface-dim": "#10131a",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-secondary-fixed": "#002113",
+                    "surface-container-lowest": "#0b0e15",
+                    "surface-container-low": "#191b23",
+                    "on-tertiary": "#472a00",
+                    "primary": "#adc6ff",
+                    "on-background": "#e1e2ec",
+                    "tertiary-container": "#ca8100",
+                    "surface-container-highest": "#32353c",
+                    "inverse-surface": "#e1e2ec",
+                    "surface-bright": "#363941",
+                    "surface-container-high": "#272a31",
+                    "surface-variant": "#32353c",
+                    "secondary": "#4edea3",
+                    "on-tertiary-fixed": "#2a1700",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "outline-variant": "#424754",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-secondary": "#003824",
+                    "tertiary": "#ffb95f",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-primary": "#002e6a",
+                    "on-error": "#690005",
+                    "surface-container": "#1d2027",
+                    "background": "#10131a",
+                    "error-container": "#93000a",
+                    "on-primary-fixed": "#001a42",
+                    "on-secondary-container": "#00311f",
+                    "secondary-container": "#00a572"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "24px",
+                    "table-row-height": "56px",
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "touch-target-min": "44px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "title-lg": ["Inter"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "numeric-data": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #10131a;
+            color: #e1e2ec;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .bottle-level-gradient {
+            background: linear-gradient(0deg, #4d8eff 0%, #adc6ff 100%);
+        }
+        .neon-glow-error {
+            box-shadow: 0 0 15px rgba(255, 180, 171, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #191b23;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #424754;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopNavBar (JSON Anchor) -->
+<header class="bg-surface/80 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant shadow-sm flex justify-between items-center w-full px-container-margin h-table-row-height">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">BarOps Pro</span>
+<div class="hidden md:flex gap-6 ml-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">DASHBOARD</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">INVENTORY</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">REPORTS</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface placeholder:text-on-surface-variant" placeholder="Buscar botella..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">Shift Open</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a senior bar manager in a high-end, low-lit cocktail lounge. The person has a focused and authoritative expression. The lighting is dramatic, with deep shadows and warm amber highlights reflecting off polished glassware in the background. High-fidelity cinematic photography style with a shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6qkRn9lChOTyB1YSRey8eM7TKH3Iq1D0GcZS7l8gxKkqTy_wWMJPeMoAp-_TOfKtLOjNbLq1okEC4IDy7bSM50dp8q2TVp43Oa6ICbkhV-naYVepMryOKGYGXu689isizMS6UEQ6CdUR8Sl8D2xVIbee_Zx_jck35O3yv8ibHWtHF22NWpEn7jMdXHVjhdfq4Tt2Ur6m8ZR177mLL0gGprcNWm55vkkMl9k9uGksFDHZ-yxWtPT1ngQ"/>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar (JSON Anchor) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container pt-20">
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary-container/10" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all">
+                    New Entry
+                </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 flex-1 p-container-margin">
+<!-- Header Section -->
+<div class="mb-stack-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Liquor Control</h1>
+<p class="text-on-surface-variant mt-1">Monitoreo de rendimiento y pesaje de botellas en tiempo real.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-surface-container-high px-4 py-2.5 rounded-lg border border-outline-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">scale</span>
+<span class="font-label-md">Registrar Pesaje</span>
+</button>
+<button class="flex items-center gap-2 bg-primary px-4 py-2.5 rounded-lg text-on-primary font-label-md hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Nueva Botella</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dashboard Stats Grid (Bento Pattern) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-lg">
+<!-- Varianza ml -->
+<div class="glass-card p-stack-md rounded-xl col-span-1">
+<span class="text-label-md text-on-surface-variant block mb-2 uppercase tracking-widest">Varianza ml</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-[32px] text-error">-1,420 ml</span>
+<span class="text-error bg-error-container/20 px-2 py-0.5 rounded text-[12px] font-bold">-4.2%</span>
+</div>
+<div class="mt-4 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 75%"></div>
+</div>
+</div>
+<!-- Varianza Monetaria -->
+<div class="glass-card p-stack-md rounded-xl col-span-1">
+<span class="text-label-md text-on-surface-variant block mb-2 uppercase tracking-widest">Pérdida Valor</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-[32px] text-on-surface">$284.50</span>
+<span class="text-on-surface-variant text-[12px]">USD</span>
+</div>
+<p class="text-[12px] text-on-surface-variant mt-3">Calculado a precio de costo promedio.</p>
+</div>
+<!-- Rendimiento Global -->
+<div class="glass-card p-stack-md rounded-xl col-span-2 relative overflow-hidden">
+<div class="relative z-10">
+<span class="text-label-md text-on-surface-variant block mb-2 uppercase tracking-widest">Rendimiento Operativo</span>
+<div class="flex justify-between items-end">
+<div>
+<span class="font-display-lg text-[40px] text-secondary">95.8%</span>
+<p class="text-on-surface-variant text-sm mt-1">Eficiencia del bar este turno.</p>
+</div>
+<div class="flex gap-1 h-12 items-end">
+<div class="w-1.5 h-[40%] bg-secondary/30 rounded-t"></div>
+<div class="w-1.5 h-[60%] bg-secondary/30 rounded-t"></div>
+<div class="w-1.5 h-[80%] bg-secondary/30 rounded-t"></div>
+<div class="w-1.5 h-[90%] bg-secondary/50 rounded-t"></div>
+<div class="w-1.5 h-[100%] bg-secondary rounded-t"></div>
+</div>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px] text-secondary">bar_chart</span>
+</div>
+</div>
+</div>
+<!-- Main Layout: Bottles List vs Performance -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-gutter">
+<!-- Bottle Inventory (Left side) -->
+<div class="xl:col-span-2 space-y-gutter">
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h2 class="font-title-lg text-title-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">liquor</span>
+                                Inventario de Barra
+                            </h2>
+<div class="flex gap-2">
+<span class="px-3 py-1 rounded-full bg-primary-container/20 text-primary text-[11px] font-bold uppercase tracking-wider">42 ABIERTAS</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">128 CERRADAS</span>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left">
+<thead class="bg-surface-container-lowest/50 text-on-surface-variant font-label-md text-[11px] uppercase tracking-widest">
+<tr>
+<th class="px-6 py-4">Botella / Marca</th>
+<th class="px-4 py-4 text-center">Estado</th>
+<th class="px-4 py-4 text-center">Contenido Real</th>
+<th class="px-4 py-4 text-center">Esperado (POS)</th>
+<th class="px-4 py-4 text-right">Varianza</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="A macro studio photograph of a premium, clear tequila bottle with an elegant label on a dark obsidian background. Sharp focus on the glass texture and liquid refraction. Minimalist bar aesthetic with cool blue and cyan rim lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFQYgyJIW5TM5jIIOldJLpk2zFu4pG_-TJXC2oZo2W1izHiGTpHCNXBeQEc5qz40BzVzO98d-kqZG2MAu__0CwUo4vRbrsld_kI6YKcpBVY4IobdssaJP9QRgDrQMRNDkARuJFuMJGhXhametcwojGtCKML_d5ArH2r3_nx7zNgX4Cy7TsXOYb-lJhu8eA9YlAHTOCY7Kr9c5uTjEmKjSsFGUT08jS6RZGGA3LSqV_4_YItu0gAymL2w"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Don Julio 70</p>
+<p class="text-[11px] text-on-surface-variant">Tequila • 750ml</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-secondary/10 text-secondary border border-secondary/20">ABIERTA</span>
+</td>
+<td class="px-4 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<span class="font-numeric-data">420 ml</span>
+<div class="w-12 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bottle-level-gradient" style="width: 56%"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center text-on-surface-variant font-numeric-data">450 ml</td>
+<td class="px-4 py-4 text-right">
+<span class="text-error font-bold">-30 ml</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="Close up product photography of a deep mahogany bourbon bottle with a craft paper label. The bottle is placed on a reflective dark surface. Warm amber lighting creates a rich, inviting glow within the liquid. Modern high-contrast commercial bar style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKYGjm5LQ2E3sSPJxp49V3k6LP3e5oV0cvcgLE6vy83wdF1YO2G3Fndmw-kdDo0BDzPxLnNbGVNXFWFNLDFwz1nX6zCr3XCn1dYXN7XKGBiP-6V85rr2Jh2bar-PmVLO7eXLeqVKaFP1hUolcIgZ4RlWokEGpMN5i8mzgQ0qeN4obJxtz7qwL_VsCE77KETUbU1voc5VTf-LTkBIVFswJUdLbr2TB-LMCBZeM7QVRvAJn9lwrLsGhtUw"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Woodford Reserve</p>
+<p class="text-[11px] text-on-surface-variant">Bourbon • 1000ml</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-secondary/10 text-secondary border border-secondary/20">ABIERTA</span>
+</td>
+<td class="px-4 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<span class="font-numeric-data">850 ml</span>
+<div class="w-12 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bottle-level-gradient" style="width: 85%"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center text-on-surface-variant font-numeric-data">845 ml</td>
+<td class="px-4 py-4 text-right">
+<span class="text-secondary font-bold">+5 ml</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 (Closed) -->
+<tr class="hover:bg-surface-variant/20 transition-colors group opacity-60">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="Product shot of a classic London dry gin bottle with a distinctive green tint and red wax seal. Clean, high-key studio lighting with soft shadows. The atmosphere is sharp and clinical yet high-end." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd8XsUPLtyNUJhjwgJ96O7s89RfVXCTxY55O3tzCSu77hWSHzF7LVYa5dZPho4sXuqjsSuio2Rw2j8yFnKtEeTxE2UaXg6tvZpoHJvWIk35Wr0nSLyTTe2oDxL8NCtje5Bx8M3JuS9Y6OSTEortLT-P2PVds_mR8oO8O8NJ1MR5vffHBLD9YY8JOPMN-Kb5ftVG3KXs74EOlJgrlCnBvN2etIVhQBDi96ZaPgV90GYBS6BUv-yf3ATmQ"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Tanqueray No. Ten</p>
+<p class="text-[11px] text-on-surface-variant">Gin • 750ml</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface-variant">CERRADA</span>
+</td>
+<td class="px-4 py-4 text-center text-on-surface-variant font-numeric-data">750 ml</td>
+<td class="px-4 py-4 text-center text-on-surface-variant font-numeric-data">750 ml</td>
+<td class="px-4 py-4 text-right">
+<span class="text-on-surface-variant font-bold">0 ml</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low border-t border-outline-variant text-center">
+<button class="text-primary font-label-md text-label-md hover:underline">Ver todas las botellas (170)</button>
+</div>
+</div>
+<!-- History of Adjustments -->
+<div class="glass-card rounded-xl">
+<div class="p-4 border-b border-outline-variant">
+<h2 class="font-title-lg text-title-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">history</span>
+                                Historial de Ajustes
+                            </h2>
+</div>
+<div class="p-2">
+<div class="space-y-1">
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-variant/20 transition-all">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-full bg-error/10 text-error">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Merma: Botella Rota</p>
+<p class="text-[12px] text-on-surface-variant">Grey Goose (Saldo: 450ml) • Por: Carlos R.</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-error font-bold">-$42.00</p>
+<p class="text-[10px] text-on-surface-variant">22:14 - Hoy</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-variant/20 transition-all">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-full bg-tertiary/10 text-tertiary">
+<span class="material-symbols-outlined text-[20px]">celebration</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Cortesía: VIP Lounge</p>
+<p class="text-[12px] text-on-surface-variant">Macallan 12 (60ml) • Autorizado por Gerencia</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-tertiary font-bold">-$18.50</p>
+<p class="text-[10px] text-on-surface-variant">21:45 - Hoy</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Performance Charts -->
+<div class="space-y-gutter">
+<!-- Weighing Entry Interface -->
+<div class="glass-card rounded-xl p-stack-md border-primary/30 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2">
+<span class="flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</div>
+<h3 class="text-label-md text-primary font-bold mb-4 uppercase tracking-widest">Escala en Línea</h3>
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/30 text-center mb-4">
+<p class="text-on-surface-variant text-[11px] mb-1">PESO ACTUAL (NETO)</p>
+<div class="flex items-center justify-center gap-2">
+<span class="font-display-lg text-[48px] text-on-surface">1,245</span>
+<span class="text-primary font-bold">gr</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Botella detectada:</span>
+<span class="text-on-surface font-bold">Hendrick's Gin</span>
+</div>
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Contenido calculado:</span>
+<span class="text-on-surface font-bold">620 ml</span>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-bold text-sm hover:brightness-110 active:scale-95 transition-all mt-2">
+                                Confirmar Registro
+                            </button>
+</div>
+</div>
+<!-- Performance Comparison -->
+<div class="glass-card rounded-xl p-stack-md">
+<h3 class="font-title-lg text-title-lg mb-4">Top Merma por Marca</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-sm font-bold">Casamigos Reposado</span>
+<span class="text-error text-sm font-numeric-data">-18%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 82%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-sm font-bold">Bacardi Carta Blanca</span>
+<span class="text-tertiary text-sm font-numeric-data">-12%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 70%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-sm font-bold">Absolut Vodka</span>
+<span class="text-secondary text-sm font-numeric-data">-3%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Graph Placeholder -->
+<div class="glass-card rounded-xl p-stack-md h-64 flex flex-col">
+<h3 class="text-label-md text-on-surface-variant font-bold mb-4 uppercase tracking-widest">Rendimiento 24h</h3>
+<div class="flex-1 flex items-end gap-2 px-2">
+<div class="flex-1 bg-primary/20 rounded-t h-[40%] hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface text-[10px] px-2 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100">85%</div>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[55%] hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface text-[10px] px-2 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100">88%</div>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[75%] hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface text-[10px] px-2 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100">92%</div>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[60%] hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface text-[10px] px-2 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100">89%</div>
+</div>
+<div class="flex-1 bg-primary rounded-t h-[95%] hover:brightness-110 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface text-[10px] px-2 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100">98%</div>
+</div>
+<div class="flex-1 bg-primary/60 rounded-t h-[85%] hover:bg-primary/80 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface text-[10px] px-2 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100">94%</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-on-surface-variant font-numeric-data">
+<span>18:00</span>
+<span>20:00</span>
+<span>22:00</span>
+<span>00:00</span>
+<span>02:00</span>
+<span>04:00</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Anchor) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 bg-surface-container-high border-t border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">table_restaurant</span>
+<span class="font-label-md text-label-md">Tables</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<!-- FAB (Suppressed based on context: Details/Management Screen) -->
+<!-- Not rendered as per instructions: Focus on management content -->
+<script>
+        // Micro-interactions and data simulations
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Flash interaction
+                row.classList.add('bg-primary/5');
+                setTimeout(() => row.classList.remove('bg-primary/5'), 300);
+            });
+        });
+
+        // Simulating weighing variations
+        setInterval(() => {
+            const weighValue = document.querySelector('.font-display-lg');
+            if (weighValue && weighValue.textContent === "1,245") {
+                const variation = Math.floor(Math.random() * 5) - 2;
+                const newValue = (1245 + variation).toString();
+                // Minimalist tick update
+            }
+        }, 3000);
+    </script>
+</body></html>

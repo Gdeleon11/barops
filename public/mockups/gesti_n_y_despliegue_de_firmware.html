@@ -1,0 +1,529 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Nocturne Ops | Firmware Update Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.2);
+        }
+
+        .step-active {
+            @apply text-primary border-primary;
+        }
+
+        /* Custom Scrollbar for the dark theme */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #10131a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #32353c;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #424754;
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1d2027",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary": "#003824",
+                        "on-primary-container": "#00285d",
+                        "background": "#10131a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-container-high": "#272a31",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-surface-variant": "#c2c6d6",
+                        "surface-container-low": "#191b23",
+                        "surface-container-lowest": "#0b0e15",
+                        "surface": "#10131a",
+                        "primary-container": "#4d8eff",
+                        "on-primary-fixed-variant": "#004395",
+                        "secondary-container": "#00a572",
+                        "tertiary-container": "#ca8100",
+                        "surface-container-highest": "#32353c",
+                        "secondary-fixed-dim": "#4edea3",
+                        "secondary": "#4edea3",
+                        "primary-fixed": "#d8e2ff",
+                        "on-tertiary-container": "#3e2400",
+                        "on-surface": "#e1e2ec",
+                        "on-primary": "#002e6a",
+                        "inverse-surface": "#e1e2ec",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-background": "#e1e2ec",
+                        "on-tertiary": "#472a00",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#005236",
+                        "inverse-primary": "#005ac2",
+                        "surface-tint": "#adc6ff",
+                        "surface-bright": "#363941",
+                        "primary": "#adc6ff",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#001a42",
+                        "outline": "#8c909f",
+                        "on-tertiary-fixed": "#2a1700",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffb95f",
+                        "outline-variant": "#424754",
+                        "inverse-on-surface": "#2e3038",
+                        "surface-dim": "#10131a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#00311f",
+                        "surface-variant": "#32353c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "touch-target-min": "44px",
+                        "stack-lg": "32px",
+                        "container-margin": "24px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "table-row-height": "56px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-container-margin h-table-row-height bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 z-50">
+<div class="flex items-center gap-gutter">
+<span class="text-title-lg font-headline-lg tracking-tight text-primary dark:text-primary-fixed-dim">Nocturne Ops</span>
+<div class="hidden md:flex gap-stack-md ml-stack-lg">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-variant/50 transition-colors px-3 py-1 rounded-lg text-label-md font-label-md" href="#">Dashboard</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary px-3 py-1 text-label-md font-label-md" href="#">Operations</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-variant/50 transition-colors px-3 py-1 rounded-lg text-label-md font-label-md" href="#">Network</a>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">help</span>
+</button>
+<button class="p-2 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-table-row-height bg-surface-container dark:bg-surface-container border-r border-outline-variant/20 w-64 hidden lg:flex">
+<div class="p-gutter">
+<h2 class="text-headline-md font-headline-md text-primary">System Hub</h2>
+<p class="text-label-md font-label-md text-on-surface-variant">Terminal #042</p>
+</div>
+<nav class="flex-1 flex flex-col mt-stack-md">
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant dark:hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Command</span>
+</a>
+<a class="flex items-center gap-stack-md text-primary dark:text-primary-fixed-dim border-l-4 border-primary bg-primary-container/10 px-gutter py-stack-md transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-label-md font-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant dark:hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-label-md font-label-md">Network</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant dark:hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-label-md font-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant dark:text-on-surface-variant px-gutter py-stack-md hover:bg-surface-variant dark:hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-label-md font-label-md">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto p-gutter border-t border-outline-variant/20 flex flex-col gap-stack-sm">
+<a class="flex items-center gap-stack-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-20 pb-12 px-container-margin min-h-screen">
+<div class="max-w-7xl mx-auto space-y-gutter">
+<!-- Header Section: Title & High-Level Metrics -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Firmware Management</h1>
+<p class="text-body-md text-on-surface-variant">Manage and deploy core system binaries across your venue's hardware fleet.</p>
+</div>
+<div class="flex gap-stack-md">
+<div class="bg-surface-container-high px-gutter py-stack-sm rounded-lg border border-outline-variant/30 flex items-center gap-stack-md neon-glow-primary">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-widest">Active Fleet</span>
+<div class="flex items-baseline gap-2">
+<span class="text-title-lg font-headline-md text-primary">124</span>
+<span class="text-label-md text-secondary">/ 128 Online</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-4xl opacity-50">router</span>
+</div>
+<div class="bg-surface-container-high px-gutter py-stack-sm rounded-lg border border-outline-variant/30 flex items-center gap-stack-md">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-widest">Global Stable</span>
+<span class="text-title-lg font-headline-md text-tertiary">v4.2.2-S</span>
+</div>
+<span class="material-symbols-outlined text-tertiary text-4xl opacity-50">verified</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Update Deployment Center (Col 1-8) -->
+<div class="xl:col-span-8 space-y-gutter">
+<div class="bg-surface-container-low p-gutter rounded-xl border border-outline-variant/20 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-center mb-stack-lg">
+<h3 class="text-title-lg font-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">rocket_launch</span>
+                                Deployment Orchestrator
+                            </h3>
+<span class="bg-primary-container/20 text-primary px-3 py-1 rounded-full text-label-md">Ready for deployment</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-stack-md">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Select Firmware Package</label>
+<div class="relative">
+<select class="w-full bg-surface-container-highest border border-outline-variant/50 rounded-lg py-3 px-gutter text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent appearance-none">
+<option>v4.2.2-stable (Production Ready)</option>
+<option>v4.3.0-rc1 (Release Candidate)</option>
+<option>v4.1.9-lts (Long Term Support)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+<p class="text-label-md text-on-surface-variant">Contains critical security patches and improved thermal logic for KDS terminals.</p>
+</div>
+<div class="space-y-stack-md">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Target Groups</label>
+<div class="flex flex-wrap gap-2">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-label-md font-bold flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                        All Terminals
+                                    </button>
+<button class="border border-outline-variant text-on-surface-variant px-4 py-2 rounded-lg text-label-md font-bold hover:border-primary transition-all active:scale-95">Kitchen KDS</button>
+<button class="border border-outline-variant text-on-surface-variant px-4 py-2 rounded-lg text-label-md font-bold hover:border-primary transition-all active:scale-95">Bar POS</button>
+<button class="border border-outline-variant text-on-surface-variant px-4 py-2 rounded-lg text-label-md font-bold hover:border-primary transition-all active:scale-95">Mobile Handhelds</button>
+</div>
+</div>
+</div>
+<div class="mt-stack-lg pt-stack-lg border-t border-outline-variant/10 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-surface-container bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-xl">tv</span>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface-container bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-xl">tablet_android</span>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface-container bg-surface-container-highest flex items-center justify-center text-label-md text-on-surface-variant">
+                                        +122
+                                    </div>
+</div>
+<span class="text-body-md text-on-surface-variant">Targeting 124 total devices across 4 regions.</span>
+</div>
+<button class="border border-outline-variant text-on-surface-variant hover:bg-surface-variant/10 px-6 py-3 rounded-lg text-title-lg font-bold flex items-center gap-stack-md transition-all active:scale-95 mr-4">
+    Pause Deployment
+    <span class="material-symbols-outlined">pause_circle</span>
+</button><button class="bg-primary text-on-primary-fixed hover:brightness-110 px-8 py-3 rounded-lg text-title-lg font-bold shadow-xl flex items-center gap-stack-md transition-all active:scale-95 neon-glow-primary scale-105">
+                                Initiate Batch Update
+                                <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<!-- Execution Timeline / Progress -->
+<div class="bg-surface-container-low rounded-xl border border-outline-variant/20 overflow-hidden">
+<div class="p-gutter border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-highest/30">
+<h3 class="text-title-lg font-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">analytics</span>
+                                Real-time Execution
+                            </h3>
+<div class="flex items-center gap-stack-md">
+<span class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                                    Live Stream
+                                </span>
+</div>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<!-- Device Row 1 -->
+<div class="p-gutter flex items-center gap-gutter hover:bg-surface-variant/10 transition-colors">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary">kitchen</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-2">
+<span class="text-body-md font-bold text-on-surface">KDS-East-01</span>
+<span class="text-label-md text-on-surface-variant">v4.2.1 → v4.2.2</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4 shadow-[0_0_8px_rgba(78,222,163,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<div class="flex gap-4">
+<span class="text-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-xs">check_circle</span> DL</span>
+<span class="text-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-xs">check_circle</span> VER</span>
+<span class="text-label-md text-secondary font-bold flex items-center gap-1 animate-pulse-slow">
+<span class="material-symbols-outlined text-xs">downloading</span> INST
+                                            </span>
+<span class="text-label-md text-on-surface-variant/40 flex items-center gap-1"><span class="material-symbols-outlined text-xs">restart_alt</span> REBT</span>
+</div>
+<span class="text-label-md text-secondary">75% • Installing...</span>
+</div>
+</div>
+</div>
+<!-- Device Row 2 -->
+<div class="p-gutter flex items-center gap-gutter hover:bg-surface-variant/10 transition-colors">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary">point_of_sale</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-2">
+<span class="text-body-md font-bold text-on-surface">POS-Main-Bar-02</span>
+<span class="text-label-md text-on-surface-variant">v4.2.1 → v4.2.2</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-full shadow-[0_0_8px_rgba(78,222,163,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-label-md text-secondary flex items-center gap-1 font-bold"><span class="material-symbols-outlined text-xs">task_alt</span> Deployment Successful</span>
+<span class="text-label-md text-on-surface-variant">Rebooted 2m ago</span>
+</div>
+</div>
+</div>
+<!-- Device Row 3 -->
+<div class="p-gutter flex items-center gap-gutter hover:bg-surface-variant/10 transition-colors bg-error-container/10">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary">tablet_mac</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-2">
+<span class="text-body-md font-bold text-on-surface">HAND-Server-09</span>
+<span class="text-label-md text-on-surface-variant">v4.1.8 → v4.2.2</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error w-1/4 shadow-[0_0_8px_rgba(255,180,171,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-label-md text-error flex items-center gap-1 font-bold uppercase tracking-tight"><span class="material-symbols-outlined text-xs">error</span> Verification Failed: Checksum Mismatch</span>
+<button class="text-label-md text-primary font-bold hover:underline">Retry Device</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Col 9-12) -->
+<div class="xl:col-span-4 space-y-gutter">
+<!-- Scheduling & Policies -->
+<div class="bg-surface-container-low p-gutter rounded-xl border border-outline-variant/20">
+<h3 class="text-title-lg font-headline-md mb-stack-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">calendar_clock</span>
+                            Policy &amp; Schedule
+                        </h3>
+<div class="space-y-stack-md">
+<div class="flex items-center justify-between p-stack-md bg-surface-container-high/50 rounded-lg border border-outline-variant/10">
+<div class="flex flex-col">
+<span class="text-body-md font-bold">Auto-Schedule</span>
+<span class="text-label-md text-on-surface-variant">Deploy during low-traffic</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer font-label-md">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-stack-md bg-surface-container-high/30 rounded-lg border border-outline-variant/10">
+<label class="text-label-md text-on-surface-variant block mb-2 font-label-md">PREFERRED WINDOW</label>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">schedule</span>
+<span class="text-body-md font-numeric-data">04:00 AM — 06:00 AM</span>
+<button class="ml-auto text-primary text-label-md font-bold">Edit</button>
+</div>
+</div>
+<hr class="border-outline-variant/10">
+<div class="space-y-stack-sm">
+<label class="flex items-center gap-stack-md cursor-pointer group font-label-md">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center group-hover:border-primary transition-colors">
+<div class="w-3 h-3 bg-primary rounded-sm opacity-100"></div>
+</div>
+<span class="text-body-md">Auto-reboot on success</span>
+</label>
+<label class="flex items-center gap-stack-md cursor-pointer group font-label-md">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center group-hover:border-primary transition-colors">
+<div class="w-3 h-3 bg-primary rounded-sm opacity-100"></div>
+</div>
+<span class="text-body-md">State backup before install</span>
+</label>
+<label class="flex items-center gap-stack-md cursor-pointer group opacity-50 font-label-md">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center"></div>
+<span class="text-body-md">Force update (Override usage)</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Detailed Logs -->
+<div class="bg-surface-container-low p-gutter rounded-xl border border-outline-variant/20 flex flex-col h-[400px]">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="text-title-lg font-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">terminal</span>
+                                Deployment Logs
+                            </h3>
+<button class="p-1 hover:bg-surface-variant/50 rounded transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-stack-md rounded-lg font-mono text-[11px] overflow-y-auto space-y-1 border border-outline-variant/20">
+<div class="text-on-surface-variant"><span class="text-secondary">[12:45:01]</span> Orchestrator initialized. Version: 4.2.2-stable.</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:45:03]</span> Broadcaster: Scanning network for target [all_pos].</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:45:08]</span> Network discovery complete. 124 nodes detected.</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:45:10]</span> Push: Binary transfer initiated for region [MAIN_BAR].</div>
+<div class="text-secondary"><span class="text-secondary">[12:45:22]</span> Success: KDS-East-04 has confirmed checksum.</div>
+<div class="text-error"><span class="text-secondary">[12:45:30]</span> Error: HAND-Server-09 reported bit-flip on segment 4.</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:45:31]</span> Retry policy triggered for HAND-Server-09. Waiting...</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:46:05]</span> Push: Region [KITCHEN_WEST] binary complete.</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:46:12]</span> Signal: Triggering soft-reboot for 12 nodes.</div>
+<div class="text-on-surface-variant"><span class="text-secondary">[12:46:15]</span> Monitoring: Heartbeat lost from region [KITCHEN_WEST] (Expected).</div>
+<div class="animate-pulse inline-block w-2 h-4 bg-primary align-middle ml-1"></div>
+</div>
+<button class="mt-stack-md text-label-md font-bold text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center gap-1">
+                            Download Full Log Archive
+                            <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Health Snapshot Cards -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/20 group hover:border-primary transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-md text-on-surface-variant">Update Success Rate</span>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="text-headline-md font-headline-md">99.2%</div>
+<div class="text-label-md text-secondary">+0.4% from last batch</div>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/20 group hover:border-primary transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-md text-on-surface-variant">Average Install Time</span>
+<span class="material-symbols-outlined text-tertiary">timer</span>
+</div>
+<div class="text-headline-md font-headline-md">4m 22s</div>
+<div class="text-label-md text-on-surface-variant">v4.2.2 is 12% faster</div>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/20 group hover:border-primary transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-md text-on-surface-variant">Storage Occupancy</span>
+<span class="material-symbols-outlined text-primary">storage</span>
+</div>
+<div class="text-headline-md font-headline-md">64GB / 256GB</div>
+<div class="text-label-md text-on-surface-variant">Central firmware repo</div>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/20 group hover:border-error transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-md text-on-surface-variant">Security Alerts</span>
+<span class="material-symbols-outlined text-error">gpp_maybe</span>
+</div>
+<div class="text-headline-md font-headline-md text-error">02</div>
+<div class="text-label-md text-on-surface-variant">Legacy bins detected</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Bottom NavBar (md:hidden) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container border-t border-outline-variant/20 px-container-margin h-16 flex items-center justify-around z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Command</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-bold">Ops</span>
+</button>
+<div class="relative -top-4">
+<button class="border border-outline-variant text-on-surface-variant hover:bg-surface-variant/10 px-6 py-3 rounded-lg text-title-lg font-bold flex items-center gap-stack-md transition-all active:scale-95 mr-4">
+    Pause Deployment
+    <span class="material-symbols-outlined">pause_circle</span>
+</button><button class="w-12 h-12 bg-primary text-on-primary-fixed rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform neon-glow-primary scale-105">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-[10px]">Net</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">System</span>
+</button>
+</nav>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 -z-10 pointer-events-none opacity-20">
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-secondary/10 blur-[150px] rounded-full"></div>
+</div>
+<script>
+        // Simple Interaction Logic
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 150);
+            });
+        });
+    </script>
+
+
+</body></html>

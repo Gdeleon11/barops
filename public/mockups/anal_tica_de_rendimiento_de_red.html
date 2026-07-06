@@ -1,0 +1,543 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Nocturne Ops | Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .neon-glow-cyan { box-shadow: 0 0 15px rgba(173, 198, 255, 0.2); }
+        .neon-glow-amber { box-shadow: 0 0 15px rgba(255, 185, 95, 0.2); }
+        .neon-glow-error { box-shadow: 0 0 15px rgba(255, 180, 171, 0.2); }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #10131a; }
+        ::-webkit-scrollbar-thumb { background: #32353c; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #424754; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#3e2400",
+                      "on-background": "#e1e2ec",
+                      "surface-dim": "#10131a",
+                      "primary-fixed": "#d8e2ff",
+                      "on-primary-fixed-variant": "#004395",
+                      "surface-container-high": "#272a31",
+                      "on-surface": "#e1e2ec",
+                      "error": "#ffb4ab",
+                      "on-tertiary": "#472a00",
+                      "on-secondary": "#003824",
+                      "on-secondary-container": "#00311f",
+                      "surface-tint": "#adc6ff",
+                      "inverse-on-surface": "#2e3038",
+                      "secondary-fixed-dim": "#4edea3",
+                      "background": "#10131a",
+                      "surface-container-highest": "#32353c",
+                      "surface": "#10131a",
+                      "inverse-surface": "#e1e2ec",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#363941",
+                      "primary": "#adc6ff",
+                      "secondary-fixed": "#6ffbbe",
+                      "inverse-primary": "#005ac2",
+                      "primary-container": "#4d8eff",
+                      "secondary-container": "#00a572",
+                      "secondary": "#4edea3",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-primary-fixed": "#001a42",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-secondary-fixed": "#002113",
+                      "surface-container-low": "#191b23",
+                      "surface-variant": "#32353c",
+                      "on-primary-container": "#00285d",
+                      "tertiary": "#ffb95f",
+                      "tertiary-container": "#ca8100",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container": "#1d2027",
+                      "outline-variant": "#424754",
+                      "on-surface-variant": "#c2c6d6",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-error": "#690005",
+                      "tertiary-fixed": "#ffddb8",
+                      "on-tertiary-fixed": "#2a1700",
+                      "on-primary": "#002e6a",
+                      "outline": "#8c909f",
+                      "surface-container-lowest": "#0b0e15"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "table-row-height": "56px",
+                      "touch-target-min": "44px",
+                      "container-margin": "24px",
+                      "stack-lg": "32px",
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Outfit"],
+                      "headline-md": ["Outfit"],
+                      "label-md": ["Inter"],
+                      "numeric-data": ["Inter"],
+                      "headline-lg-mobile": ["Outfit"],
+                      "title-lg": ["Inter"],
+                      "headline-lg": ["Outfit"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/20 shadow-sm flex items-center justify-between px-container-margin h-table-row-height">
+<div class="flex items-center gap-stack-md">
+<span class="font-display-lg text-headline-md font-bold text-primary tracking-tight">NetOps Command</span>
+</div>
+<div class="flex-1 max-w-md ml-12 hidden md:block">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg pl-10 pr-4 py-2 text-body-md focus:ring-2 focus:ring-primary/50 placeholder-on-surface-variant/50" placeholder="Search network nodes..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 rounded-full hover:bg-surface-container-highest transition-colors active:scale-95 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-highest transition-colors active:scale-95 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center border border-primary/20">
+<img class="h-full w-full rounded-full object-cover" data-alt="Close-up portrait of a high-tech network administrator avatar, looking professional and elite, with subtle cybernetic enhancements. The lighting is deep blue and neon cyan, matching a dark-mode command center aesthetic. High fidelity digital art style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvCoSIyCEPJ2Scdg8HOU2DrqqwFYIVBFzeITT3N5rFOpEBvZ4aoCX2jcXFcDueT8dK2SCawlru7bazqDSWNPKRW_UlBynEA4bz0Acw1xkN9jOVuv0BorL5j0V4VNIsIQ92qlP3kEYnx_qTJLOlZaJTISZriqm-2JIyFYgyr4dvI15ueTFbmHYSyIpo3axUvmRMfJovqBLYTTV1uLech7XdQ4FR1HxYwks_6H9Vskd86mLsYzlIqFYeCw">
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-low/90 backdrop-blur-lg border-r border-outline-variant/10 flex flex-col pt-20 pb-8 hidden md:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-stack-md mb-2">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary" data-weight="fill">hub</span>
+</div>
+<div>
+<h3 class="font-display-lg text-title-lg text-primary leading-tight">Network Hub</h3>
+<p class="text-label-md text-secondary">Active Nodes: 1,240</p>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-md text-label-md">Command</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard_customize</span>
+<span class="font-label-md text-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-md text-label-md">Network</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<!-- Active Item: Analytics -->
+<a class="flex items-center gap-stack-md text-primary bg-primary/10 border-l-4 border-primary px-4 py-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-weight="fill">monitoring</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</div>
+<div class="mt-auto border-t border-outline-variant/10 pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Logs</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="md:ml-64 pt-20 px-container-margin pb-12">
+<!-- Header & Filters -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-stack-lg">
+<div>
+<h1 class="font-display-lg text-headline-lg text-on-background">Analítica de Red</h1>
+<p class="font-body-md text-on-surface-variant">Monitoreo de rendimiento en tiempo real y métricas históricas.</p>
+</div>
+<div class="flex bg-surface-container-low p-1 rounded-xl border border-outline-variant/20">
+<button class="px-4 py-2 rounded-lg text-label-md bg-surface-container-highest text-primary font-bold shadow-sm">Última Hora</button>
+<button class="px-4 py-2 rounded-lg text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors">Turno Actual</button>
+<button class="px-4 py-2 rounded-lg text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors">24h</button>
+<button class="px-4 py-2 rounded-lg text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors">7 Días</button>
+</div>
+</div>
+<!-- KPI Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-stack-lg">
+<!-- Uptime -->
+<div class="glass-panel p-stack-md rounded-xl neon-glow-cyan border-l-4 border-secondary">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-md text-on-surface-variant uppercase tracking-widest">Uptime %</span>
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-background">99.98</span>
+<span class="text-label-md text-secondary">+0.02%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-4 overflow-hidden">
+<div class="bg-secondary h-full" style="width: 99.98%"></div>
+</div>
+</div>
+<!-- Latency -->
+<div class="glass-panel p-stack-md rounded-xl border-l-4 border-primary">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-md text-on-surface-variant uppercase tracking-widest">Avg Latency</span>
+<span class="material-symbols-outlined text-primary">speed</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-background">12</span>
+<span class="text-body-md text-on-surface-variant">ms</span>
+</div>
+<p class="text-label-md text-primary mt-4">Estable (Óptimo)</p>
+</div>
+<!-- Total Traffic -->
+<div class="glass-panel p-stack-md rounded-xl border-l-4 border-tertiary">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-md text-on-surface-variant uppercase tracking-widest">Total Traffic</span>
+<span class="material-symbols-outlined text-tertiary">database</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-background">428</span>
+<span class="text-body-md text-on-surface-variant">GB</span>
+</div>
+<p class="text-label-md text-tertiary mt-4">Pico de consumo detectado</p>
+</div>
+<!-- Alerts -->
+<div class="glass-panel p-stack-md rounded-xl neon-glow-error border-l-4 border-error" style="transition: box-shadow 1s ease-in-out; box-shadow: rgba(255, 180, 171, 0.4) 0px 0px 20px;">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-md text-on-surface-variant uppercase tracking-widest">Alerts</span>
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-background">3</span>
+<span class="text-body-md text-on-surface-variant">Devices</span>
+</div>
+<p class="text-label-md text-error mt-4">Requiere atención inmediata</p>
+</div>
+</div>
+<!-- Charts Section (Bento Grid Style) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-stack-lg">
+<!-- Latency Chart -->
+<div class="lg:col-span-8 glass-panel rounded-xl p-stack-md relative overflow-hidden h-[400px]">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-display-lg text-title-lg text-on-background">Latencia Histórica (24h)</h3>
+<p class="text-label-md text-on-surface-variant">Comparativa entre nodos críticos en milisegundos.</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-label-md text-on-surface-variant">Gateway</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-label-md text-on-surface-variant">POS Cluster</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="text-label-md text-on-surface-variant">KDS</span>
+</div>
+<button class="flex items-center gap-1 px-2 py-1 rounded bg-surface-container-highest border border-outline-variant/20 text-label-md text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all active:scale-95">
+  <span class="material-symbols-outlined text-[16px]">settings_input_component</span>
+  <span class="">Ajustar Umbrales</span>
+</button></div>
+</div>
+<!-- Chart Visualization Placeholder -->
+<div class="absolute inset-x-6 bottom-6 top-24 flex items-end justify-between">
+<div class="flex-1 h-full flex flex-col justify-between text-label-md text-on-surface-variant/40 pr-4">
+<span class="">40ms</span>
+<span class="">30ms</span>
+<span class="">20ms</span>
+<span class="">10ms</span>
+<span class="">0ms</span>
+</div>
+<div class="flex-[12] h-full relative border-l border-b border-outline-variant/20">
+<!-- Simulated Line Graph Path (SVG) -->
+<svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><!-- Warning Threshold Line (25ms) -->
+<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="#ffb95f" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"></line>
+<!-- Critical Threshold Line (50ms - off chart but represented at top) -->
+<line x1="0" y1="0" x2="100" y2="0" stroke="#ffb4ab" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"></line>
+<!-- Gateway Line -->
+<path class="text-primary opacity-80" d="M0,80 Q10,75 20,85 T40,78 T60,82 T80,75 T100,80" fill="none" stroke="currentColor" stroke-width="2"></path>
+<path class="fill-primary/10" d="M0,80 Q10,75 20,85 T40,78 T60,82 T80,75 T100,80 L100,100 L0,100 Z"></path>
+<!-- POS Line -->
+<path class="text-secondary opacity-80" d="M0,70 Q15,60 30,75 T50,65 T75,80 T100,70" fill="none" stroke="currentColor" stroke-width="2"></path>
+<!-- KDS Line -->
+<path class="text-tertiary opacity-80" d="M0,90 Q20,85 40,95 T60,88 T85,92 T100,85" fill="none" stroke="currentColor" stroke-width="2"></path>
+</svg>
+<!-- Grid Lines -->
+<div class="absolute inset-0 grid grid-cols-6 pointer-events-none">
+<div class="border-r border-outline-variant/5"></div>
+<div class="border-r border-outline-variant/5"></div>
+<div class="border-r border-outline-variant/5"></div>
+<div class="border-r border-outline-variant/5"></div>
+<div class="border-r border-outline-variant/5"></div>
+</div>
+<div class="absolute left-2 top-[62.5%] -translate-y-1/2 flex items-center gap-2 pointer-events-none">
+  <span class="text-[10px] font-bold text-tertiary/60 uppercase tracking-tighter">Umbral Warning (25ms)</span>
+</div></div>
+</div>
+</div>
+<!-- Bandwidth Distribution -->
+<div class="lg:col-span-4 glass-panel rounded-xl p-stack-md h-[400px] flex flex-col">
+<h3 class="font-display-lg text-title-lg text-on-background mb-1">Distribución de Ancho de Banda</h3>
+<p class="text-label-md text-on-surface-variant mb-8">Consumo por tipo de servicio.</p>
+<div class="flex-1 flex flex-col justify-center gap-6">
+<div class="space-y-2">
+<div class="flex justify-between text-label-md text-on-surface-variant">
+<span class="">POS Terminal Clusters</span>
+<span class="text-on-surface font-bold">42%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full shadow-[0_0_10px_rgba(173,198,255,0.4)]" style="width: 42%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-md text-on-surface-variant">
+<span class="">Guest WiFi (VLAN 20)</span>
+<span class="text-on-surface font-bold">28%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 28%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-md text-on-surface-variant">
+<span class="">Kitchen Display Systems</span>
+<span class="text-on-surface font-bold">18%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 18%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-md text-on-surface-variant">
+<span class="">Audio &amp; Streaming</span>
+<span class="text-on-surface font-bold">12%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden">
+<div class="bg-outline h-full" style="width: 12%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Node Status Table -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-low/50">
+<div>
+<h3 class="font-display-lg text-title-lg text-on-background">Estado de Nodos Críticos</h3>
+<p class="text-label-md text-on-surface-variant">Telemetría de hardware en tiempo real.</p>
+</div>
+<button class="flex items-center gap-2 text-label-md text-primary font-bold hover:underline">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Exportar Reporte
+                </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-lowest text-label-md text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">
+<th class="px-6 py-4 font-semibold">Nodo / Gateway</th>
+<th class="px-6 py-4 font-semibold text-center">Estado</th>
+<th class="px-6 py-4 font-semibold">Carga CPU</th>
+<th class="px-6 py-4 font-semibold">Uso Memoria</th>
+<th class="px-6 py-4 font-semibold">Temperatura</th>
+<th class="px-6 py-4 font-semibold text-right">Uptime</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-high/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">router</span>
+</div>
+<div>
+<span class="block font-title-lg text-body-lg text-on-background">GW-MAIN-01</span>
+<span class="text-label-md text-on-surface-variant">192.168.1.1</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-label-md border border-secondary/20 font-bold">ONLINE</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<span class="font-numeric-data text-body-md w-8">12%</span>
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full min-w-[80px]">
+<div class="bg-secondary h-full rounded-full" style="width: 12%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-numeric-data text-on-surface">3.2 GB / 16 GB</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">thermostat</span>
+<span class="text-numeric-data">42°C</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data text-on-surface-variant">14d 06h 22m</td>
+</tr>
+<tr class="hover:bg-surface-container-high/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-sm">hub</span>
+</div>
+<div>
+<span class="block font-title-lg text-body-lg text-on-background">SW-CORE-02</span>
+<span class="text-label-md text-on-surface-variant">192.168.1.10</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-label-md border border-tertiary/20 font-bold">WARNING</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<span class="font-numeric-data text-body-md w-8">78%</span>
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full min-w-[80px]">
+<div class="bg-tertiary h-full rounded-full" style="width: 78%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-numeric-data text-on-surface">12.8 GB / 16 GB</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-[18px]">thermostat</span>
+<span class="text-numeric-data">68°C</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data text-on-surface-variant">04d 18h 45m</td>
+</tr>
+<tr class="hover:bg-surface-container-high/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-error/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-sm">dns</span>
+</div>
+<div>
+<span class="block font-title-lg text-body-lg text-on-background">AP-BAR-OUTSIDE</span>
+<span class="text-label-md text-on-surface-variant">192.168.1.45</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full bg-error/10 text-error text-label-md border border-error/20 font-bold">CRITICAL</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<span class="font-numeric-data text-body-md w-8">92%</span>
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full min-w-[80px]">
+<div class="bg-error h-full rounded-full shadow-[0_0_5px_rgba(255,180,171,0.5)]" style="width: 92%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-numeric-data text-on-surface">1.9 GB / 2 GB</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-error animate-pulse">
+<span class="material-symbols-outlined text-[18px]">thermostat</span>
+<span class="text-numeric-data">82°C</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-numeric-data text-on-surface-variant">00d 02h 11m</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation (Visible on mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full h-[64px] bg-surface-container-low border-t border-outline-variant/10 flex md:hidden items-center justify-around z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">terminal</span>
+<span class="text-[10px] font-medium">Command</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-[10px] font-medium">Network</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-weight="fill">monitoring</span>
+<span class="text-[10px] font-bold">Analytics</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Config</span>
+</button>
+</nav>
+<script>
+        // Interactive table hover effect and micro-interactions
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.add('scale-[0.99]');
+                setTimeout(() => row.classList.remove('scale-[0.99]'), 100);
+            });
+        });
+
+        // Simple pulse effect for critical alerts
+        const alerts = document.querySelectorAll('.neon-glow-error');
+        setInterval(() => {
+            alerts.forEach(alert => {
+                alert.style.transition = 'box-shadow 1s ease-in-out';
+                alert.style.boxShadow = alert.style.boxShadow.includes('rgba') ? 'none' : '0 0 20px rgba(255, 180, 171, 0.4)';
+            });
+        }, 1500);
+    </script>
+
+
+</body></html>

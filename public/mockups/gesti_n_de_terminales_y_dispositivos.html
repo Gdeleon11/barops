@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarOps Pro | Network &amp; Device Command</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #10131a; /* surface-dim */
+            color: #e1e2ec; /* on-surface */
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.15);
+        }
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .topology-line {
+            background: linear-gradient(90deg, transparent, #adc6ff, transparent);
+            background-size: 200% 100%;
+            animation: move-gradient 3s linear infinite;
+        }
+        @keyframes move-gradient {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #191b23; }
+        ::-webkit-scrollbar-thumb { background: #32353c; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#00a572",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-tertiary": "#472a00",
+                    "on-primary-fixed-variant": "#004395",
+                    "surface-dim": "#10131a",
+                    "surface-container-highest": "#32353c",
+                    "on-primary-container": "#00285d",
+                    "background": "#10131a",
+                    "surface-variant": "#32353c",
+                    "tertiary-fixed": "#ffddb8",
+                    "error": "#ffb4ab",
+                    "inverse-surface": "#e1e2ec",
+                    "surface-container-high": "#272a31",
+                    "primary-fixed": "#d8e2ff",
+                    "outline-variant": "#424754",
+                    "surface-container-lowest": "#0b0e15",
+                    "surface-bright": "#363941",
+                    "on-background": "#e1e2ec",
+                    "on-primary-fixed": "#001a42",
+                    "secondary-fixed-dim": "#4edea3",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-secondary-fixed": "#002113",
+                    "outline": "#8c909f",
+                    "inverse-primary": "#005ac2",
+                    "surface-container": "#1d2027",
+                    "surface-container-low": "#191b23",
+                    "on-primary": "#002e6a",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#3e2400",
+                    "secondary": "#4edea3",
+                    "primary-container": "#4d8eff",
+                    "on-surface": "#e1e2ec",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary": "#003824",
+                    "surface": "#10131a",
+                    "on-secondary-container": "#00311f",
+                    "on-surface-variant": "#c2c6d6",
+                    "error-container": "#93000a",
+                    "tertiary-container": "#ca8100",
+                    "surface-tint": "#adc6ff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary": "#adc6ff",
+                    "tertiary": "#ffb95f",
+                    "inverse-on-surface": "#2e3038"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "container-margin": "24px",
+                    "stack-lg": "32px",
+                    "unit": "4px",
+                    "table-row-height": "56px",
+                    "touch-target-min": "44px",
+                    "stack-md": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "numeric-data": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Outfit"],
+                    "title-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="flex overflow-hidden h-screen bg-surface-dim">
+<!-- SideNavBar (Shared Component Logic) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-surface-container-low border-r border-outline-variant/10 flex flex-col py-stack-lg hidden md:flex">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">router</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">BarOps Pro</h2>
+<p class="text-[10px] uppercase tracking-widest text-outline">Elite Management</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-highest transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-md bg-primary-container text-on-primary-container rounded-lg px-4 py-3 border-l-4 border-primary shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+<span class="font-label-md text-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-highest transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-highest transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-container-highest transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Subscriptions</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-outline-variant/10 pt-6">
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">add</span>
+                New Order
+            </button>
+<div class="mt-6 space-y-1">
+<a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-2 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-error px-4 py-2 hover:bg-error-container/20 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar (Shared Component Logic) -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-container-margin h-table-row-height">
+<div class="flex items-center gap-stack-md">
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Devices &amp; Network</h1>
+<div class="hidden lg:flex items-center ml-6 gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">Overview</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-body-md text-body-md" href="#">Topology</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-body-md text-body-md" href="#">Logs</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex relative">
+<input class="bg-surface-container-high border-none rounded-full px-4 py-1.5 pl-10 text-body-md w-64 focus:ring-1 focus:ring-primary" placeholder="Search devices..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Close-up high-resolution portrait of a professional restaurant manager with a confident expression, set against a blurred background of a sophisticated dark-lit cocktail bar with golden ambient lighting. The style is cinematic and polished, reflecting a high-end hospitality environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXwxWPL954ocBrWHaq-MqoIiQpoqa22I5WWrZHFKmVMNS4rST7oHHhUpxXuXPMntgeWTAB6ogPqnMHtRMFjGoeR6oMbT5BO4l9ssZydOj2kk1vsuBZUvUFRFjCTJKfRRjvGl-Po6HM_dDgJWSu95Ku5Js8iXU8mp_Nx1jvcsG-L4j30glF6-JrVvqcc9AtVNVmcFwcq4jqEwha-kRf6CZkDrhnqxXDUtOmoMf3DUeDM05tW8xWgzvY9A"/>
+</div>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-container-margin space-y-stack-lg">
+<!-- Hero Stats Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-low rounded-xl p-stack-md border border-outline-variant/10 group hover:border-primary/30 transition-all cursor-default relative overflow-hidden">
+
+<div class="relative z-10">
+<p class="text-outline font-label-md text-label-md uppercase tracking-wider">Total Devices</p>
+<h3 class="font-display-lg text-display-lg text-primary mt-1">42</h3>
+<p class="text-secondary font-numeric-data text-numeric-data mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +3 this week
+                        </p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-stack-md border border-outline-variant/10 hover:border-secondary/30 transition-all cursor-default">
+<p class="text-outline font-label-md text-label-md uppercase tracking-wider">Active Terminals</p>
+<h3 class="font-display-lg text-display-lg text-secondary mt-1">38</h3>
+<p class="text-on-surface-variant font-numeric-data text-numeric-data mt-2">4 idle / standby</p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-stack-md border border-outline-variant/10 border-l-4 border-l-error/60 relative">
+<p class="text-outline font-label-md text-label-md uppercase tracking-wider">Critical Alerts</p>
+<h3 class="font-display-lg text-display-lg text-error mt-1">02</h3>
+<div class="absolute top-4 right-4 h-3 w-3 bg-error rounded-full status-pulse"></div>
+<p class="text-error font-numeric-data text-numeric-data mt-2">Requires immediate action</p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-stack-md border border-outline-variant/10 hover:border-tertiary/30 transition-all cursor-default">
+<p class="text-outline font-label-md text-label-md uppercase tracking-wider">Network Health</p>
+<h3 class="font-display-lg text-display-lg text-tertiary mt-1">98<span class="text-headline-md">%</span></h3>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-tertiary h-full w-[98%]"></div>
+</div>
+</div>
+</section>
+<!-- Filters & Dashboard Tools -->
+<div class="flex flex-col md:flex-row justify-between items-center gap-gutter bg-surface-container-low/50 p-4 rounded-xl border border-outline-variant/5">
+<div class="flex flex-wrap items-center gap-stack-md w-full md:w-auto">
+<div class="relative min-w-[160px]">
+<select class="appearance-none w-full bg-surface-container-high border-outline-variant/20 rounded-lg px-4 py-2 pr-10 text-label-md text-on-surface focus:ring-primary focus:border-primary">
+<option>All Device Types</option>
+<option>POS Terminal</option>
+<option>KDS (Kitchen Display)</option>
+<option>BDS (Bar Display)</option>
+<option>Router</option>
+<option>Printer</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+<div class="flex gap-2 p-1 bg-surface-container-high rounded-lg">
+<button class="px-4 py-1.5 rounded-md text-label-md bg-primary text-on-primary">All</button>
+<button class="px-4 py-1.5 rounded-md text-label-md text-on-surface-variant hover:text-on-surface">Online</button>
+<button class="px-4 py-1.5 rounded-md text-label-md text-on-surface-variant hover:text-on-surface">Offline</button>
+<button class="px-4 py-1.5 rounded-md text-label-md text-on-surface-variant hover:text-on-surface">Warning</button>
+</div>
+</div>
+<div class="flex items-center gap-stack-md w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-surface-container-high border border-outline-variant/20 rounded-lg text-label-md font-semibold hover:bg-surface-container-highest transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+                        Force Sync
+                    </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-surface-container-high border border-outline-variant/20 rounded-lg text-label-md font-semibold hover:bg-surface-container-highest transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                        Export Report
+                    </button>
+</div>
+</div>
+<!-- Main Layout: Grid + Side Topology -->
+<div class="flex flex-col xl:flex-row gap-stack-lg">
+<!-- Device Grid -->
+<div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Device Card: POS 01 -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-primary/5 transition-all group">
+<div class="p-stack-md flex items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface">Main Bar POS 01</h4>
+<p class="text-on-surface-variant font-numeric-data text-numeric-data">192.168.1.104</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-secondary/20 text-secondary px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span> Online
+                                </span>
+<div class="mt-2 flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_4_bar</span>
+<span class="font-numeric-data text-[12px]">92%</span>
+</div>
+</div>
+</div>
+<div class="px-stack-md pb-4 space-y-3">
+<div class="flex justify-between text-[11px] text-outline font-medium uppercase tracking-tighter">
+<span>Model: ProTouch X2</span>
+<span>OS: BarOS 4.2.1-Stable</span>
+</div>
+<!-- Mini Health Graph Placeholder -->
+<div class="h-12 w-full bg-surface-container-high rounded flex items-end gap-1 px-2 py-1 overflow-hidden">
+<div class="bg-secondary/40 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[75%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[65%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[70%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[95%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 border-t border-outline-variant/10">
+<button class="py-3 text-[11px] font-bold text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span> REBOOT
+                            </button>
+<button class="py-3 text-[11px] font-bold text-on-surface-variant border-x border-outline-variant/10 hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">system_update_alt</span> UPDATE
+                            </button>
+<button class="py-3 text-[11px] font-bold text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">article</span> LOGS
+                            </button>
+</div>
+</div>
+<!-- Device Card: Kitchen KDS (Warning State) -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-tertiary/5 transition-all group">
+<div class="p-stack-md flex items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-tertiary/10 rounded-xl flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">countertops</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface">Main Kitchen KDS</h4>
+<p class="text-on-surface-variant font-numeric-data text-numeric-data">192.168.1.112</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-tertiary/20 text-tertiary px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary rounded-full animate-pulse"></span> Latency
+                                </span>
+<div class="mt-2 flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_1_bar</span>
+<span class="font-numeric-data text-[12px]">34%</span>
+</div>
+</div>
+</div>
+<div class="px-stack-md pb-4 space-y-3">
+<div class="flex justify-between text-[11px] text-outline font-medium uppercase tracking-tighter">
+<span>Model: ViewSonic PD24</span>
+<span>OS: BarOS 4.1.8-Stable</span>
+</div>
+<div class="h-12 w-full bg-surface-container-high rounded flex items-end gap-1 px-2 py-1 overflow-hidden">
+<div class="bg-tertiary/40 w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-tertiary/40 w-full h-[35%] rounded-t-sm"></div>
+<div class="bg-error/60 w-full h-[15%] rounded-t-sm"></div>
+<div class="bg-tertiary/40 w-full h-[30%] rounded-t-sm"></div>
+<div class="bg-error/60 w-full h-[10%] rounded-t-sm"></div>
+<div class="bg-tertiary/40 w-full h-[25%] rounded-t-sm"></div>
+<div class="bg-tertiary w-full h-[40%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 border-t border-outline-variant/10">
+<button class="py-3 text-[11px] font-bold text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span> REBOOT
+                            </button>
+<button class="py-3 text-[11px] font-bold text-on-surface-variant border-x border-outline-variant/10 hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">system_update_alt</span> UPDATE
+                            </button>
+<button class="py-3 text-[11px] font-bold text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">article</span> LOGS
+                            </button>
+</div>
+</div>
+<!-- Device Card: Entrance Router -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-primary/5 transition-all group">
+<div class="p-stack-md flex items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">router</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface">Core Router Alpha</h4>
+<p class="text-on-surface-variant font-numeric-data text-numeric-data">192.168.1.1</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-secondary/20 text-secondary px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span> Online
+                                </span>
+<div class="mt-2 flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">podcasts</span>
+<span class="font-numeric-data text-[12px]">Ethernet</span>
+</div>
+</div>
+</div>
+<div class="px-stack-md pb-4 space-y-3">
+<div class="flex justify-between text-[11px] text-outline font-medium uppercase tracking-tighter">
+<span>Model: Ubiquiti UDM Pro</span>
+<span>OS: UniFi OS 3.1.2</span>
+</div>
+<div class="h-12 w-full bg-surface-container-high rounded flex items-end gap-1 px-2 py-1 overflow-hidden">
+<div class="bg-secondary w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[92%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[95%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[91%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[95%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[98%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 border-t border-outline-variant/10">
+<button class="py-3 text-[11px] font-bold text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span> REBOOT
+                            </button>
+<button class="py-3 text-[11px] font-bold text-on-surface-variant border-x border-outline-variant/10 hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">settings_suggest</span> CONFIG
+                            </button>
+<button class="py-3 text-[11px] font-bold text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">article</span> LOGS
+                            </button>
+</div>
+</div>
+<!-- Device Card: Receipt Printer (Offline) -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl overflow-hidden grayscale opacity-70">
+<div class="p-stack-md flex items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-outline/10 rounded-xl flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[28px]">print</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface">Lounge Printer 02</h4>
+<p class="text-on-surface-variant font-numeric-data text-numeric-data">192.168.1.145</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-error/20 text-error px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-error rounded-full"></span> Offline
+                                </span>
+<div class="mt-2 flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-[16px]">link_off</span>
+<span class="font-numeric-data text-[12px]">0%</span>
+</div>
+</div>
+</div>
+<div class="px-stack-md pb-4 space-y-3">
+<div class="flex justify-between text-[11px] text-outline font-medium uppercase tracking-tighter">
+<span>Model: Epson TM-T88VI</span>
+<span>Last Seen: 2h ago</span>
+</div>
+<div class="h-12 w-full bg-surface-container-high/50 rounded flex items-center justify-center">
+<p class="text-[10px] text-outline uppercase tracking-widest">No Connection Data</p>
+</div>
+</div>
+<div class="grid grid-cols-1 border-t border-outline-variant/10">
+<button class="py-3 text-[11px] font-bold text-error hover:bg-error/10 transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[18px]">build</span> TROUBLESHOOT
+                            </button>
+</div>
+</div>
+</div>
+<!-- Side Panel: Network Topology -->
+<div class="w-full xl:w-96 space-y-gutter">
+<div class="bg-surface-container-low rounded-xl border border-outline-variant/10 p-stack-md h-full flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-title-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">hub</span>
+                                Network Topology
+                            </h3>
+<button class="text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+</div>
+<!-- Abstract Topology Visualizer -->
+<div class="flex-1 min-h-[400px] relative flex flex-col items-center justify-center gap-8 py-8">
+<!-- Internet Source -->
+<div class="w-16 h-16 rounded-full bg-primary-container/20 border-2 border-primary flex items-center justify-center relative z-20">
+<span class="material-symbols-outlined text-primary text-[32px]">public</span>
+<div class="absolute -bottom-1 w-20 h-2 bg-primary/20 blur-md"></div>
+</div>
+<div class="h-12 w-0.5 bg-outline-variant/30 topology-line"></div>
+<!-- Core Gateway -->
+<div class="w-24 h-24 rounded-2xl bg-surface-container-highest border border-primary/50 shadow-[0_0_20px_rgba(173,198,255,0.1)] flex flex-col items-center justify-center p-2 relative z-20">
+<span class="material-symbols-outlined text-primary text-[32px]">router</span>
+<span class="text-[10px] mt-1 font-bold text-on-surface-variant uppercase">Core Gateway</span>
+</div>
+<div class="relative w-full h-24 flex justify-center">
+<!-- Splitter Lines -->
+<svg class="absolute inset-0 w-full h-full text-outline-variant/30" preserveaspectratio="none">
+<path d="M 50% 0 L 20% 100% M 50% 0 L 50% 100% M 50% 0 L 80% 100%" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+</svg>
+<!-- Alert: Bottleneck -->
+<div class="absolute top-2 left-1/2 -translate-x-1/2 -mt-4">
+<div class="bg-error/20 border border-error text-error text-[9px] px-2 py-0.5 rounded-full font-bold animate-bounce flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span> BOTTLENECK DETECTED
+                                    </div>
+</div>
+</div>
+<!-- Endpoints -->
+<div class="flex justify-between w-full px-4 relative z-20">
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border border-outline-variant/30 group-hover:border-primary transition-all flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">terminal</span>
+</div>
+<span class="text-[9px] font-bold text-outline">BAR POS CLUSTER</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border border-error/50 flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-error status-pulse">kitchen</span>
+</div>
+<span class="text-[9px] font-bold text-error">KITCHEN KDS</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border border-outline-variant/30 group-hover:border-primary transition-all flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">wifi</span>
+</div>
+<span class="text-[9px] font-bold text-outline">GUEST WIFI</span>
+</div>
+</div>
+</div>
+<!-- Bottleneck Detail Card -->
+<div class="mt-auto bg-error/10 rounded-xl border border-error/20 p-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error">speed</span>
+<div>
+<h5 class="text-error font-bold text-[12px]">Packet Loss Warning</h5>
+<p class="text-on-surface-variant text-[11px] mt-1 leading-relaxed">
+                                        High congestion on Subnet 192.168.1.x. Switching to secondary channel is recommended for Kitchen KDS devices.
+                                    </p>
+<button class="mt-3 w-full bg-error text-white py-2 rounded-lg text-[11px] font-bold active:scale-95 transition-transform">
+                                        OPTIMIZE CHANNEL
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Notifications / Active Logs Activity -->
+<section class="bg-surface-container-low border border-outline-variant/10 rounded-xl p-stack-md">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-title-lg text-title-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                        Live Operational Activity
+                    </h4>
+<span class="text-secondary font-numeric-data text-numeric-data flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span> SYSTEM NOMINAL
+                    </span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-outline-variant/10">
+<tr class="text-outline uppercase text-[10px] font-bold tracking-widest">
+<th class="pb-3 px-2">Timestamp</th>
+<th class="pb-3 px-2">Device</th>
+<th class="pb-3 px-2">Event Type</th>
+<th class="pb-3 px-2">Description</th>
+<th class="pb-3 px-2 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-4 px-2 font-numeric-data text-on-surface-variant text-[13px]">14:22:45</td>
+<td class="py-4 px-2 font-medium text-on-surface text-[13px]">Main Bar POS 01</td>
+<td class="py-4 px-2"><span class="bg-secondary/10 text-secondary px-2 py-1 rounded text-[11px] font-bold uppercase">Auth Success</span></td>
+<td class="py-4 px-2 text-on-surface-variant text-[13px]">Manager override successful for table #42</td>
+<td class="py-4 px-2 text-right"><button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">open_in_new</span></button></td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-4 px-2 font-numeric-data text-on-surface-variant text-[13px]">14:21:02</td>
+<td class="py-4 px-2 font-medium text-on-surface text-[13px]">Kitchen KDS</td>
+<td class="py-4 px-2"><span class="bg-tertiary/10 text-tertiary px-2 py-1 rounded text-[11px] font-bold uppercase">Latency Spike</span></td>
+<td class="py-4 px-2 text-on-surface-variant text-[13px]">Ping exceeded 450ms (Channel Congestion)</td>
+<td class="py-4 px-2 text-right"><button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">open_in_new</span></button></td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-4 px-2 font-numeric-data text-on-surface-variant text-[13px]">14:18:12</td>
+<td class="py-4 px-2 font-medium text-on-surface text-[13px]">Entrance Router</td>
+<td class="py-4 px-2"><span class="bg-primary/10 text-primary px-2 py-1 rounded text-[11px] font-bold uppercase">Security Scan</span></td>
+<td class="py-4 px-2 text-on-surface-variant text-[13px]">No unauthorized intrusions detected in periodic scan</td>
+<td class="py-4 px-2 text-right"><button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">open_in_new</span></button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+<!-- FAB for Quick Device Discovery -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg shadow-primary/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">sensors</span>
+<span class="absolute right-16 bg-surface-container-high border border-outline-variant/20 px-4 py-2 rounded-lg text-label-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl">Scan for New Devices</span>
+</button>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon && icon.textContent === 'refresh') {
+                    icon.classList.add('animate-spin');
+                    setTimeout(() => icon.classList.remove('animate-spin'), 1500);
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shift Reconciliation - Nocturne Operational</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .variance-glow-pos { text-shadow: 0 0 8px rgba(78, 222, 163, 0.4); }
+        .variance-glow-neg { text-shadow: 0 0 8px rgba(255, 180, 171, 0.4); }
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#d8e2ff",
+                        "on-background": "#e1e2ec",
+                        "surface-container-high": "#272a31",
+                        "surface-container-lowest": "#0b0e15",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container": "#1d2027",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#3e2400",
+                        "inverse-surface": "#e1e2ec",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary": "#003824",
+                        "on-error": "#690005",
+                        "surface-dim": "#10131a",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "outline": "#8c909f",
+                        "on-secondary-container": "#00311f",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "inverse-primary": "#005ac2",
+                        "surface-container-low": "#191b23",
+                        "on-surface": "#e1e2ec",
+                        "surface-container-highest": "#32353c",
+                        "on-surface-variant": "#c2c6d6",
+                        "primary-fixed-dim": "#adc6ff",
+                        "secondary": "#4edea3",
+                        "primary": "#adc6ff",
+                        "primary-container": "#4d8eff",
+                        "secondary-container": "#00a572",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary": "#ffb95f",
+                        "on-tertiary": "#472a00",
+                        "inverse-on-surface": "#2e3038",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-variant": "#32353c",
+                        "surface-tint": "#adc6ff",
+                        "on-primary": "#002e6a",
+                        "tertiary-container": "#ca8100",
+                        "surface": "#10131a",
+                        "on-primary-fixed": "#001a42",
+                        "background": "#10131a",
+                        "on-primary-container": "#00285d",
+                        "outline-variant": "#424754",
+                        "surface-bright": "#363941",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "container-margin": "24px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "table-row-height": "56px",
+                        "touch-target-min": "44px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "numeric-data": ["Inter"],
+                        "headline-md": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "numeric-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-lg min-h-screen pb-20 md:pb-0 md:pl-64 pt-14">
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm flex justify-between items-center h-14 px-container-margin">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Nocturne Operational</div>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors" href="#">Dashboard</a>
+<a class="font-body-lg text-body-lg text-primary border-b-2 border-primary pb-1" href="#">Shifts</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors" href="#">Reports</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors" href="#">Payouts</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-highest/50 rounded-full transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-highest/50 rounded-full transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</div>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded-lg font-label-md hover:brightness-110 active:scale-95 transition-all">Close Register</button>
+</div>
+</header>
+<!-- Side Navigation (Desktop) -->
+<aside class="fixed left-0 top-0 pt-16 h-full flex flex-col h-screen w-64 hidden md:flex border-r border-outline-variant/20 bg-surface-container-low dark:bg-surface-container-low">
+<div class="px-6 py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">nightlight</span>
+</div>
+<div>
+<div class="font-label-md text-on-surface font-bold">Main Bar Terminal</div>
+<div class="text-[10px] text-on-surface-variant">Station #04</div>
+</div>
+</div>
+<nav class="flex-1 px-4 mt-6 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Cash Drawers</span>
+</a>
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 border-l-4 border-secondary font-label-md" href="#">
+<span class="material-symbols-outlined">timer</span>
+<span>Active Shifts</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">balance</span>
+<span>Reconciliation</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md rounded-lg" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span>Vault</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/10">
+<button class="w-full bg-secondary text-on-secondary py-3 rounded-xl font-label-md flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">add</span>
+<span>New Cash Drop</span>
+</button>
+</div>
+<div class="px-4 py-6 flex flex-col gap-1 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 transition-colors font-label-md" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 transition-colors font-label-md" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span>Lock Station</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="p-container-margin max-w-7xl mx-auto space-y-stack-lg">
+<!-- Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Reconciliación y Cierre de Turno</h1>
+<p class="text-on-surface-variant font-body-md">Station #04 • Terminal 1A • Manager: Julian Voss</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-surface-container-high px-4 py-2 rounded-lg border border-outline-variant/20">
+<span class="text-on-surface-variant text-[10px] uppercase font-bold tracking-widest block">Shift Duration</span>
+<span class="font-numeric-data text-primary">08:12:44</span>
+</div>
+<div class="bg-secondary/10 px-4 py-2 rounded-lg border border-secondary/20">
+<span class="text-secondary text-[10px] uppercase font-bold tracking-widest block">Status</span>
+<span class="font-label-md text-secondary">Active Count</span>
+</div>
+</div>
+</div>
+<!-- Reconciliation Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Side: Expected Totals -->
+<div class="lg:col-span-5 space-y-stack-md">
+<h2 class="font-title-lg text-title-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                    Efectivo Esperado
+                </h2>
+<div class="glass-panel rounded-xl p-6 space-y-6">
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">payments</span>
+<span class="text-on-surface font-body-lg">Cash Sales</span>
+</div>
+<span class="font-numeric-data text-on-surface text-lg">$1,240.50</span>
+</div>
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+<span class="text-on-surface font-body-lg">Credit/Debit</span>
+</div>
+<span class="font-numeric-data text-on-surface text-lg">$4,822.00</span>
+</div>
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">delivery_dining</span>
+<span class="text-on-surface font-body-lg">Delivery Apps</span>
+</div>
+<span class="font-numeric-data text-on-surface text-lg">$850.25</span>
+</div>
+<div class="flex justify-between items-center pt-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">database</span>
+<span class="text-on-surface font-bold text-title-lg">Total System</span>
+</div>
+<span class="font-numeric-data text-secondary text-2xl font-bold" id="expected-total">$6,912.75</span>
+</div>
+</div>
+</div>
+<!-- Tips Distribution Section -->
+<div class="glass-panel rounded-xl p-6">
+<h3 class="font-label-md text-on-surface-variant uppercase tracking-widest mb-4">Tips Distribution</h3>
+<div class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container rounded-lg p-4">
+<span class="block text-on-surface-variant text-xs">Pooled Tips</span>
+<span class="font-numeric-data text-primary text-xl font-bold">$412.00</span>
+</div>
+<div class="bg-surface-container rounded-lg p-4">
+<span class="block text-on-surface-variant text-xs">Direct to Staff</span>
+<span class="font-numeric-data text-on-surface text-xl">$128.50</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Actual Count & Variance -->
+<div class="lg:col-span-7 space-y-stack-md">
+<h2 class="font-title-lg text-title-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calculate</span>
+                    Conteo Físico
+                </h2>
+<div class="glass-panel rounded-xl p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Inputs -->
+<div class="space-y-5">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-md">Cash (Physical Count)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full bg-surface-container-high border-outline-variant/30 rounded-lg py-3 pl-8 pr-4 text-on-surface font-numeric-data focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" id="actual-cash" step="0.01" type="number" value="0.00"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-md">Credit/Debit (Merchant Totals)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full bg-surface-container-high border-outline-variant/30 rounded-lg py-3 pl-8 pr-4 text-on-surface font-numeric-data focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" id="actual-credit" step="0.01" type="number" value="0.00"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-md">Delivery Vouchers</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full bg-surface-container-high border-outline-variant/30 rounded-lg py-3 pl-8 pr-4 text-on-surface font-numeric-data focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" id="actual-delivery" step="0.01" type="number" value="0.00"/>
+</div>
+</div>
+</div>
+<!-- Real-time Variance Visualizer -->
+<div class="bg-surface-container rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-4 border border-outline-variant/10">
+<h3 class="text-on-surface-variant font-label-md uppercase tracking-widest">Diferencia (Varianza)</h3>
+<div class="font-display-lg text-display-lg variance-glow-neg text-error" id="variance-amount">
+                                -$6,912.75
+                            </div>
+<div class="bg-error-container/20 text-error px-4 py-1.5 rounded-full font-label-md flex items-center gap-2" id="variance-status">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                                Incomplete Count
+                            </div>
+<p class="text-[10px] text-on-surface-variant max-w-[200px]">Differences over $5.00 require a manager note and authorization.</p>
+</div>
+</div>
+</div>
+<!-- Manager Authorization -->
+<div class="glass-panel rounded-xl p-6 space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">security</span>
+<span class="text-on-surface font-title-lg">Manager Authorization</span>
+</div>
+<span class="text-on-surface-variant font-label-md">Required for Variances &gt; $5</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-md">Authorization PIN</label>
+<input class="bg-surface-container-high border-outline-variant/30 rounded-lg py-3 px-4 text-center tracking-[1em] text-xl text-on-surface focus:ring-2 focus:ring-primary outline-none" maxlength="4" placeholder="••••" type="password"/>
+</div>
+<div class="flex flex-col items-center justify-center border-2 border-dashed border-outline-variant/20 rounded-xl bg-surface-container-high/30 hover:bg-surface-container-high/50 cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant mb-1">fingerprint</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">Biometric Scan</span>
+</div>
+</div>
+<textarea class="w-full bg-surface-container-high border-outline-variant/30 rounded-lg p-4 text-on-surface font-body-md focus:ring-2 focus:ring-primary outline-none min-h-[80px]" placeholder="Reason for variance (optional)..."></textarea>
+</div>
+<!-- Action Button -->
+<div class="pt-4">
+<button class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline-md flex items-center justify-center gap-4 hover:brightness-110 active:scale-[0.99] transition-all shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined">lock_clock</span>
+<span>Cerrar Caja y Turno</span>
+</button>
+<p class="text-center text-on-surface-variant font-label-md mt-4">Once closed, this session cannot be modified without regional administrator access.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full h-16 bg-surface-container dark:bg-surface-container-highest border-t border-outline-variant/30 shadow-lg flex justify-around items-center px-4 z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 scale-95 active:scale-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary font-bold active:bg-surface-bright/20 scale-95 active:scale-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-label-md">Shifts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 scale-95 active:scale-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-md">Reconcile</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-bright/20 scale-95 active:scale-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md">Reports</span>
+</a>
+</nav>
+<script>
+        const expectedVal = 6912.75;
+        const cashInput = document.getElementById('actual-cash');
+        const creditInput = document.getElementById('actual-credit');
+        const deliveryInput = document.getElementById('actual-delivery');
+        const varianceEl = document.getElementById('variance-amount');
+        const statusEl = document.getElementById('variance-status');
+
+        function updateVariance() {
+            const actualTotal = parseFloat(cashInput.value || 0) + 
+                                parseFloat(creditInput.value || 0) + 
+                                parseFloat(deliveryInput.value || 0);
+            
+            const variance = actualTotal - expectedVal;
+            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(variance);
+            
+            varianceEl.textContent = formatted;
+
+            if (Math.abs(variance) < 0.01) {
+                varianceEl.className = "font-display-lg text-display-lg variance-glow-pos text-secondary";
+                statusEl.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span> Perfect Balance';
+                statusEl.className = "bg-secondary-container/20 text-secondary px-4 py-1.5 rounded-full font-label-md flex items-center gap-2";
+            } else if (variance > 0) {
+                varianceEl.className = "font-display-lg text-display-lg variance-glow-pos text-secondary";
+                statusEl.innerHTML = '<span class="material-symbols-outlined text-[18px]">trending_up</span> Over / Sobrante';
+                statusEl.className = "bg-secondary-container/20 text-secondary px-4 py-1.5 rounded-full font-label-md flex items-center gap-2";
+            } else {
+                varianceEl.className = "font-display-lg text-display-lg variance-glow-neg text-error";
+                statusEl.innerHTML = '<span class="material-symbols-outlined text-[18px]">trending_down</span> Short / Faltante';
+                statusEl.className = "bg-error-container/20 text-error px-4 py-1.5 rounded-full font-label-md flex items-center gap-2";
+            }
+        }
+
+        [cashInput, creditInput, deliveryInput].forEach(input => {
+            input.addEventListener('input', updateVariance);
+        });
+    </script>
+</body></html>
